@@ -38,31 +38,30 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
-     emacs-lisp
-     ;; git
-     helm
-     ;; lsp
-     ;; markdown
-     multiple-cursors
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     osx
+     evil-better-jumper
+     better-defaults
+     spell-checking
      treemacs
-     (lsp lsp-eslint-server-command '("node" "/Users/jessebellingham/.emacs.d/.cache/lsp/eslint-2.1.23/unzipped/extension/server/out/eslintServer.js" "--stdio`"))
+     lsp
      react
      html
      (typescript :variables typescript-fmt-on-save t typescript-fmt-tool 'prettier typescript-linter 'eslint typescript-lsp-linter nil typescript-backend 'lsp)
      (javascript :variables javascript-fmt-tool 'prettier javascript-backend 'lsp)
-     prettier auto-completion emacs-lisp git helm lsp markdown multiple-cursors org
+     prettier
+     auto-completion
+     emacs-lisp
+     git
+     helm
+     markdown
+     multiple-cursors
+     org
      (shell :variables shell-default-height 30 shell-default-position 'bottom)
-     syntax-checking version-control 
-)
+     syntax-checking
+     version-control
+     csharp
+     dotnet
+     neotree)
 
 
    ;; List of additional packages that will be installed without being wrapped
