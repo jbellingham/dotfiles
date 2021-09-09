@@ -38,49 +38,31 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     osx
-     evil-better-jumper
-     better-defaults
-     html
-     tide
-     react
-     ;; (node :variables node-add-modules-path t)
-     (typescript :variables
-                 tide-tsserver-executable "~/.asdf/shims/tsserver"
-                 typescript-backend 'tide
-                 typescript-fmt-tool 'prettier
-                 typescript-linter 'eslint)
-     (javascript :variables
-                 javascript-backend 'tide
-                 javascript-fmt-tool 'prettier
-                 node-add-modules-path t)
-     ;; (typescript :variables
-     ;;             tide-tsserver-executable nil ;; "~/.asdf/shims/tsserver"
-     ;;             typescript-fmt-on-save t
-     ;;             typescript-backend 'tide
-     ;;             typescript-fmt-tool 'prettier
-     ;;             typescript-linter 'eslint)
-     ;; (javascript :variables
-     ;;             javascript-fmt-on-save t
-     ;;             javascript-backend 'tide
-     ;;             javascript-fmt-tool 'prettier)
+     ;; auto-completion
+     ;; better-defaults
      emacs-lisp
-     git
+     ;; git
      helm
      ;; lsp
-     markdown
+     ;; markdown
      multiple-cursors
-     org
+     ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
+     ;; spell-checking
+     ;; syntax-checking
      ;; version-control
-     csharp
-     dotnet
-     auto-completion
-     neotree)
+     treemacs
+     (lsp lsp-eslint-server-command '("node" "/Users/jessebellingham/.emacs.d/.cache/lsp/eslint-2.1.23/unzipped/extension/server/out/eslintServer.js" "--stdio`"))
+     react
+     html
+     (typescript :variables typescript-fmt-on-save t typescript-fmt-tool 'prettier typescript-linter 'eslint typescript-lsp-linter nil typescript-backend 'lsp)
+     (javascript :variables javascript-fmt-tool 'prettier javascript-backend 'lsp)
+     prettier auto-completion emacs-lisp git helm lsp markdown multiple-cursors org
+     (shell :variables shell-default-height 30 shell-default-position 'bottom)
+     syntax-checking version-control 
+)
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -93,13 +75,8 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
    '(
-     rjsx-mode
-     yasnippet-snippets
-     prettier-js
-     flycheck
      all-the-icons
-     all-the-icons-dired
-   )
+     all-the-icons-dired)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -379,7 +356,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -577,80 +554,8 @@ dump."
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
-before packages are loaded."
-  (global-visual-line-mode t)
-  (setq neo-theme 'icons)
-  ;; (defun tide-setup-hook ()
-  ;;     (tide-setup)
-  ;;     (eldoc-mode)
-  ;;     (tide-hl-identifier-mode +1)
-  ;;     (setq web-mode-enable-auto-quoting nil)
-  ;;     (setq web-mode-markup-indent-offset 2)
-  ;;     (setq web-mode-code-indent-offset 2)
-  ;;     (setq web-mode-attr-indent-offset 2)
-  ;;     (setq web-mode-attr-value-indent-offset 2)
-  ;;     ;; (setq lsp-eslint-server-command '("node" (concat (getenv "HOME") "/var/src/vscode-eslint/server/out/eslintServer.js") "--stdio"))
-  ;;     (set (make-local-variable 'company-backends)
-  ;;         '((company-tide company-files :with company-yasnippet)
-  ;;           (company-dabbrev-code company-dabbrev))))
-
-  ;; custom key-bindings
-  (define-key evil-normal-state-map (kbd "C-s") 'mwim-end-of-code-or-line)
-)
-
-;; use rjsx-mode for .js* files except json and use tide with rjsx
-;; (add-to-list 'auto-mode-alist '("\\.js.*$" . rjsx-mode))
-;; (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
-;; (add-to-list 'package-archives
-             ;; '("melpa" . "http://melpa.org/packages/"))
-;; (add-hook 'rjsx-mode-hook 'tide-setup-hook)
-
-
-;; web-mode extra config
-;; (add-hook 'web-mode-hook 'tide-setup-hook
-;;           (lambda () (pcase (file-name-extension buffer-file-name)
-;;                   ("tsx" ('tide-setup-hook))
-;;                   (_ (my-web-mode-hook)))))
-
-;; (flycheck-add-mode 'typescript-ts 'web-mode)
-;; (add-hook 'web-mode-hook 'company-mode)
-;; (add-hook 'web-mode-hook 'prettier-js-mode)
-;; (add-hook 'web-mode-hook #'turn-on-smartparens-mode t)
-;; yasnippet
-;; (yas-global-mode 1)
-
-;; flycheck
-;; (global-flycheck-mode)
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; company-mode 
-;; (add-hook 'after-init-hook 'global-company-mode)
-;; (add-hook 'css-mode-hook 'prettier-js-mode)
-
+before packages are loaded.")
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(blink-cursor-mode t)
- '(column-number-mode t)
- '(evil-want-Y-yank-to-eol nil)
- '(package-selected-packages
-   '(better-jumper ag all-the-icons-dired reveal-in-osx-finder osx-trash osx-dictionary osx-clipboard launchctl unfill mwim smeargle orgit-forge orgit mmm-mode markdown-toc helm-gitignore helm-git-grep gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md forge yaml markdown-mode magit ghub closql emacsql-sqlite emacsql treepy magit-section git-commit with-editor transient flyspell-correct-helm flyspell-correct auto-dictionary neotree yasnippet-snippets ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org tide tagedit symon symbol-overlay string-inflection string-edit spaceline-all-the-icons slim-mode scss-mode sass-mode rjsx-mode restart-emacs request rainbow-delimiters quickrun pug-mode prettier-js popwin pcre2el password-generator paradox overseer org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file omnisharp npm-mode nodejs-repl nameless multi-line macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc info+ indent-guide impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-css-scss helm-ag google-translate golden-ratio gnuplot font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr emmet-mode elisp-slime-nav editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent add-node-modules-path ace-link ace-jump-helm-line))
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
