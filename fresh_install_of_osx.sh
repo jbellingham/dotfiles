@@ -39,15 +39,6 @@ sudo chmod -R 600 ${HOME}/.ssh/*
 #####################
 curl -L http://install.ohmyz.sh | sh
 
-curl -L https://gist.githubusercontent.com/jbellingham/88961767677615562467243fc95a9fec/raw -o ${HOME}/.zprofile
-curl -L https://gist.githubusercontent.com/jbellingham/43fef5a31125ee444ea68915875a37d7/raw -o ${HOME}/.zshrc
-curl -L https://gist.githubusercontent.com/jbellingham/40721d9c020586fa7b34d04dcb030f39/raw -o ${HOME}/.zshrc.custom
-# curl -L TODO -o ${HOME}/.aliases
-curl -L https://gist.githubusercontent.com/jbellingham/512ef536e2fee8d641a88556b9f80897/raw -o ${HOME}/.p10k.zsh
-
-curl -L https://gist.githubusercontent.com/jbellingham/71a6a4ba989d15da95598805ebfca774/raw -o ${HOME}/.gitignore
-curl -L https://gist.githubusercontent.com/jbellingham/4ef43bc00593ab02d62f135e2a260e4f/raw -o ${HOME}/.gitconfig
-
 ##################################
 # Install custom plugins for zsh #
 ##################################
@@ -74,7 +65,6 @@ sudo chown -fR "$(whoami)":admin ${HOMEBREW_PREFIX}
 # Note: This list is the 'first-set' of installations from brew, followed by the others inside the Brewfile. Done as an extra bootstrap step - so as to avoid installation issues when running the full bundle
 # brew install direnv git gnupg zsh
 
-curl -L https://gist.githubusercontent.com/jbellingham/07bc1468f8de98b7eecf91bce3e28387/raw -o ${HOME}/Brewfile
 brew bundle   # You can run this here - but be prepared to have errors reported due to missing java
 
 #######################################
