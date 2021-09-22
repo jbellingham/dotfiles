@@ -1,0 +1,17 @@
+{
+    "theme": "dark",
+    "snippet": {
+        "expanded": true,
+        "newSnippetPrivate": false,
+        "sorting": "updated_at", 
+        "sortingReverse": true
+    },
+    "editor" : {
+        "tabSize": 4,
+        "validateFilename": true
+    },
+    "userPanel": {
+        "hideProfilePhoto": true
+    }
+}
+ 

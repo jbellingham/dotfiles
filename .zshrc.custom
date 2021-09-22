@@ -1,0 +1,88 @@
+# file location: ~/.zshrc.custom
+
+# Note: This file depends on the ~/.zshrc that is also shared for some shell functions
+
+load_file_if_exists "$HOME/.aliases"
+
+# Homebrew
+export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet/tools"
+
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_CLEANUP_MAX_AGE_DAYS=3
+export HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS=3
+export HOMEBREW_BAT=1
+export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
+export HOMEBREW_VERBOSE_USING_DOTS=1
+export HOMEBREW_BUNDLE_FILE=$HOME/Brewfile
+
+if [[ "$OSTYPE" = darwin* ]] ; then
+  # setopt glob_dots                # no special treatment for file names with a leading dot
+  # # setopt no_auto_menu             # require an extra TAB press to open the completion menu
+  # setopt auto_menu                # automatically use menu completion
+  # setopt list_beep
+  # # setopt correct_all              # autocorrect commands
+  # setopt always_to_end            # move cursor to end if word had one match
+
+  setopt append_history
+  setopt share_history            # share history between different instances of the shell
+  setopt inc_append_history       # append command to history file immediately after execution
+  setopt hist_ignore_all_dups     # do not put duplicated command into history list
+  setopt hist_ignore_dups
+  setopt hist_allow_clobber
+  setopt hist_reduce_blanks       # remove unnecessary blanks
+  setopt hist_save_no_dups        # do not save duplicated command
+  setopt auto_cd                  # cd into directory if the name is not an alias or function, but matches a directory
+  setopt auto_pushd               # Make cd push the old directory onto the directory stack.
+  setopt pushd_silent             # Do not print the directory stack after pushd or popd.
+  setopt pushd_ignore_dups        # Don’t push multiple copies of the same directo
+  setopt beep
+  setopt extended_glob
+  setopt auto_list                # Automatically list choices on an ambiguous completion.
+  setopt list_ambiguous
+  setopt list_types               # If the file being listed is a directory, show a trailing slash
+
+
+  # console colors
+  autoload -U colors && colors
+fi
+
+### Fix slowness of pastes with zsh-syntax-highlighting.zsh
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+### Fix slowness of pastes
+
+
+# If brew exists, do the following
+command_exists brew
+if [ $? -eq 0 ]; then
+
+  # Load asdf path changes at the end (even though this is loaded as part of omz's plugins - since the PATH gets messed up)
+  ASDF_DIR=$HOMEBREW_PREFIX/opt/asdf
+  if [ -d $ASDF_DIR ]; then
+    # TODO: Not sure if the 'autoload' is needed or not - will need to verify, but the rest of this is already loaded by the zsh-plugin
+    # autoload -Uz bashcompinit && bashcompinit
+    load_file_if_exists "$ASDF_DIR/asdf.sh"
+  fi
+
+  # zlib - required for installing python via asdf
+  ZLIB_DIR=$HOMEBREW_PREFIX/opt/zlib
+  if [ -d $ZLIB_DIR ]; then
+    export LDFLAGS="-L$ZLIB_DIR/lib $LDFLAGS"
+    export CPPFLAGS="-I$ZLIB_DIR/include $CPPFLAGS"
+  fi
+fi
+
+# setup named directories
+# hash -d dmno=~/dev/dmno
+# hash -d OneDAT=~/dev/dmno/OneDigital.AdminTools
+
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
+# iTerm2 shell integrations
+load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
