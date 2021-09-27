@@ -8,8 +8,8 @@ Plug 'sheerun/vim-polyglot'
 
 " files hierarchy tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " toggle NERDTree with ctrl-e, similar to vscode
 nmap <C-E> :NERDTreeToggle<CR>
@@ -53,9 +53,12 @@ let g:user_emmet_settings = {
 \  },
 \}
 
+Plug 'tpope/vim-surround'
+
 " awesome completion tool
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = ['coc-tsserver', 'coc-snippets', 'coc-prettier', 'coc-marketplace', 'coc-html', 'coc-eslint', 'coc-simple-react-snippets', 'coc-omnisharp', 'coc-json', 'coc-css']
 
 " use <Tab> key to trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -97,7 +100,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 
 " https://github.com/tpope/vim-vinegar
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
+
+Plug 'justinmk/vim-dirvish'
 
 " run tests via vim command
 Plug 'vim-test/vim-test'
@@ -107,12 +112,16 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 " Handy cheatsheet for finding keyboard shortcuts
 Plug 'sudormrfbin/cheatsheet.nvim'
 
+" Enable session save and restore
+Plug 'tpope/vim-obsession'
+
 Plug 'nvim-lua/popup.nvim'
 
 " enable find in files
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-telescope/telescope-project.nvim'
 
 " vim-plug end, add plugins to &runtimepath
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
