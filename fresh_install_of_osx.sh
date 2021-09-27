@@ -67,6 +67,9 @@ sudo chown -fR "$(whoami)":admin ${HOMEBREW_PREFIX}
 
 brew bundle   # You can run this here - but be prepared to have errors reported due to missing java
 
+# install plugin manager for tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 #######################################
 # Install font for better readability #
 #######################################
