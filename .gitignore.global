@@ -2,3 +2,4 @@
 .tool-versions
 .envrc
 .vscode/
+Session.vim
