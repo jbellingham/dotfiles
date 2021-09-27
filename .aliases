@@ -23,3 +23,5 @@ alias cat="bat"
 # navigation
 alias ui="cd ~/dev/dmno/OneDigital.AdminTools"
 alias dmno="cd ~/dev/dmno"
+
+alias vim="nvim -S Session.vim"

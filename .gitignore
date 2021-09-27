@@ -4,6 +4,9 @@
 !.config
 .config/*
 !.config/nvim
+.config/coc/*
+!.config/coc
+!.config/coc/ultisnips
 
 !.ripgreprc
 
