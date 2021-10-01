@@ -3,6 +3,7 @@
 # Note: This file depends on the ~/.zshrc that is also shared for some shell functions
 
 load_file_if_exists "$HOME/.aliases"
+load_file_if_exists "${HOME}/.zshrc.functions"
 
 # Homebrew
 export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet/tools"
