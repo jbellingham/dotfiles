@@ -4,8 +4,15 @@
 !.config
 .config/*
 !.config/nvim
-.config/coc/*
+.config/nvim/*
+!.config/nvim/coc-settings.json
+
+!.config/nvim/lua
+.config/nvim/lua/*
+!.config/nvim/lua/custom
+
 !.config/coc
+.config/coc/*
 !.config/coc/ultisnips
 
 !.ripgreprc
