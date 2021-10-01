@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "typescriptreact", "typescript", "javascript", "javascriptreact"],
+  "coc.preferences.diagnostic.virtualText": true,
   "eslint.autoFixOnSave": true,
   "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 }
