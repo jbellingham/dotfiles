@@ -1,0 +1,7 @@
+function help() {
+  local query_string=""
+  for word in $@; do
+    query_string+="$word+"
+  done
+  curl "https://cht.sh/$query_string"
+}
