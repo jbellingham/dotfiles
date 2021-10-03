@@ -30,7 +30,7 @@ hooks.add("setup_mappings", function(map)
    map("n", "<leader>conf", ":e ~/.config/nvim/lua/custom/init.lua <cr>")
    -- map("n", "<leader>qf", "<Plug>(coc-fix-current)")
    -- todo: fix this ^
-   map("n", "<leader>qf", ":CocCommand tsserver.executeAutofix <cr>")
+   -- map("n", "<leader>qf", ":CocCommand tsserver.executeAutofix <cr>")
    -- map("n", "<leader>rn", "<Plug>(coc-rename)")
 -- nmap <leader>rn <Plug>(coc-rename)
 end)
@@ -51,15 +51,27 @@ hooks.add("install_plugins", function(use)
     use {
       'neoclide/coc.nvim',
       branch = 'release',
-      after = "nvim-lspconfig",
+      -- after = "nvim-lspconfig",
       config = function()
         require("custom.coc-config")
       end,
     }
-    use {'tpope/vim-fugitive'}
+    use {"tpope/vim-fugitive", event = "BufRead"}
+    use {
+      "tpope/vim-surround"
+      -- event = "VimEnter"
+    }
     use {'airblade/vim-gitgutter'}
-    use {'sudormrfbin/cheatsheet.nvim'}
+    use {
+      'sudormrfbin/cheatsheet.nvim',
+      event = 'BufRead'
+    }
     use {'tpope/vim-obsession'}
+    -- use {
+    --   "fatih/vim-go",
+    --   event = "BufEnter",
+    --   ft = "go"
+    -- }
     -- use {
     --   "jose-elias-alvarez/null-ls.nvim",
     --   -- load it after nvim-lspconfig , since we'll use some lspconfig stuff in null-ls config!
