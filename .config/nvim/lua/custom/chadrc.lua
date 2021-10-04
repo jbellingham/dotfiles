@@ -22,11 +22,11 @@ M.options, M.ui, M.mappings, M.plugins = {}, {}, {}, {}
 -- NvChad included plugin options & overrides
 M.plugins = {
    options = {
-      --  lspconfig = {
-      --    -- servers = {"html", "cssls"}
-      --    servers = {},
-      -- },
-   },
+       lspconfig = {
+         setup_lspconf = "custom.plugins.lsp-config"
+         -- servers = {"html", "cssls"}
+         -- servers = {},
+      },
    -- To change the Packer `config` of a plugin that comes with NvChad,
    -- add a table entry below matching the plugin github name
    --              '-' -> '_', remove any '.lua', '.nvim' extensions
