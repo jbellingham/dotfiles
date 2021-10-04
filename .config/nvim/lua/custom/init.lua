@@ -48,14 +48,23 @@ end)
 -- end)
 
 hooks.add("install_plugins", function(use)
-    use {
-      'neoclide/coc.nvim',
-      branch = 'release',
-      -- after = "nvim-lspconfig",
+   use {
+      "jose-elias-alvarez/null-ls.nvim",
+      after = "nvim-lspconfig",
       config = function()
-        require("custom.coc-config")
+         require("custom.plugins.null-ls").setup()
       end,
-    }
+   }
+
+-- load it after nvim-lspconfig , since we'll use some lspconfig stuff in null-ls config!
+    -- use {
+    --   'neoclide/coc.nvim',
+    --   branch = 'release',
+    --   -- after = "nvim-lspconfig",
+    --   config = function()
+    --     require("custom.coc-config")
+    --   end,
+    -- }
     use {"tpope/vim-fugitive", event = "BufRead"}
     use {
       "tpope/vim-surround"
@@ -64,8 +73,7 @@ hooks.add("install_plugins", function(use)
     use {'airblade/vim-gitgutter'}
     use {
       'sudormrfbin/cheatsheet.nvim',
-      event = 'BufRead'
-    }
+      event = 'BufRead' }
     use {'tpope/vim-obsession'}
     -- use {
     --   "fatih/vim-go",
