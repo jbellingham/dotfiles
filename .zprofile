@@ -19,3 +19,5 @@ load_file_if_exists() {
 command_exists() {
   type $1 &> /dev/null 2>&1
 }
+
+export PATH="$PATH:/Users/jessebellingham/.local/bin"
