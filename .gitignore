@@ -7,6 +7,12 @@
 .config/nvim/*
 !.config/nvim/coc-settings.json
 
+!.config/lvim
+.config/lvim/*
+!.config/lvim/config.lua
+!.config/lvim/lua
+!.config/lvim/lua/user
+
 !.config/nvim/lua
 .config/nvim/lua/*
 !.config/nvim/lua/custom
