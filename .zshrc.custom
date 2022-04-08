@@ -6,7 +6,11 @@ load_file_if_exists "$HOME/.aliases"
 load_file_if_exists "${HOME}/.zshrc.functions"
 
 # Homebrew
-export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet/tools"
+export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools"
+
+# enables batect compatibility with colima
+export DOCKER_HOST="unix:///${HOME}/.colima/docker.sock"
+export DOTNET_ROOT="${HOME}/.dotnet"
 
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=3
@@ -65,7 +69,8 @@ command_exists brew
 if [ $? -eq 0 ]; then
 
   # Load asdf path changes at the end (even though this is loaded as part of omz's plugins - since the PATH gets messed up)
-  ASDF_DIR=$HOMEBREW_PREFIX/opt/asdf
+  # ASDF_DIR=$HOMEBREW_PREFIX/opt/asdf
+  ASDF_DIR=$HOME/.asdf
   if [ -d $ASDF_DIR ]; then
     # TODO: Not sure if the 'autoload' is needed or not - will need to verify, but the rest of this is already loaded by the zsh-plugin
     # autoload -Uz bashcompinit && bashcompinit

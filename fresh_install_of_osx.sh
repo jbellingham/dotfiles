@@ -104,7 +104,7 @@ sudo chmod -R 600 ${HOME}/.ssh/*
 
 exec zsh
 
-asdf plugin-add dotnet-core
+# asdf plugin-add dotnet-core
 # asdf plugin-add java
 # asdf plugin-add ruby
 # asdf plugin-add dart
@@ -167,6 +167,17 @@ exec zsh
 ###################################################################
 osx_defaults.sh -y
 capture_defaults.sh i
+
+curl https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh >> ~/dotnet-install.sh
+chmod +x ~/dotnet-install.sh
+# usage
+~/dotnet-install.sh -h
+# install latest
+~/dotnet-install.sh --channel Current
+# install LTS
+~/dotnet-install.sh --channel LTS
+# use global.json to use a specified version of dotnet per-directory
+# https://docs.microsoft.com/en-us/dotnet/core/tools/global-json
 
 # dotnet tool install -g dotnet-sonarscanner
 dotnet tool install -g dotnet-format
