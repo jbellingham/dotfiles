@@ -3,3 +3,9 @@
 .envrc
 .vscode/
 Session.vim
+node_modules
+
+.serverless
+.dynamodb
+__pycache__
+venv/
