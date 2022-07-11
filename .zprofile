@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zprofile.pre.zsh" ]] && . "$HOME/.fig/shell/zprofile.pre.zsh"
 # file location: ~/.zprofile
 
 # login shell - only env vars and other functions that don't load anything should go in here
@@ -21,3 +23,6 @@ command_exists() {
 }
 
 export PATH="$PATH:/Users/jessebellingham/.local/bin"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zprofile.post.zsh" ]] && . "$HOME/.fig/shell/zprofile.post.zsh"
