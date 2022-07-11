@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 # file location: ~/.zshrc
 
 zmodload zsh/zprof
@@ -133,3 +135,6 @@ command_exists code
 # fi
 
 load_file_if_exists "${HOME}/.zshrc.custom"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"

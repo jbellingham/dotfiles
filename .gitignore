@@ -40,3 +40,8 @@
 !Brewfile
 !.tool-versions
 !.leptonrc
+!.tmux.conf
+!.gnupg
+.gnupg/*
+!.gnupg/gpg-agent.conf
+

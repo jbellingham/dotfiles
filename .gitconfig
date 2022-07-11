@@ -123,14 +123,6 @@
   pullsub = sf "git pull"
   # show diffs with colored words (red word is deleted, green word is added)
   dcolor = diff --color-words
-[gpg]
-	program = null
-[commit]
-	gpgSign = false
-[tag]
-	forceSignAnnotated = false
-[url "https://"]
-	insteadOf = git://
 [core]
 	excludesfile = ~/.gitignore.global
 [pull]
