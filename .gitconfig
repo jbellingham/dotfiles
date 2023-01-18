@@ -5,6 +5,8 @@
 # [General] Since some of the settings are specific to my setup (ie presence of fles), I have marked those lines with comments 'Personal' - you can go ahead and change those to your equivalents or delete them altogether
 
 # Note: Even though this will show up twice in `git config -l` - it will still be overridden based on the order of the includeIf lines below
+[user]
+	name = Jesse Bellingham
 [includeIf "gitdir/i:~/"]             # Personal
   path = ~/.gitconfig-oss.inc         # Personal
 [advice]
@@ -125,6 +127,7 @@
   dcolor = diff --color-words
 [core]
 	excludesfile = ~/.gitignore.global
+	sshCommand = "ssh -i ~/dev/.ssh/id_rsa-personal"
 [pull]
 	rebase = false
 [diff]
@@ -141,3 +144,10 @@
 
 [interactive]
     diffFilter = delta --color-only --features=interactive
+[init]
+	templatedir = /Users/jessebellingham/.git-template
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

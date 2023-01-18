@@ -146,6 +146,12 @@ brew bundle  # This will use the Brewfile to install/upgrade all the libraries a
 
 exec zsh
 
+
+# Install Talisman as a pre-commit hook
+# https://github.com/thoughtworks/talisman#recommended-approach
+bash -c "$(curl --silent https://thoughtworks.github.io/talisman/scripts/install.bash)"
+exec zsh
+
 # <FOLLOW instructions on https://github.com/vic/asdf-link to install for jdk>
 #
 # For eg:
