@@ -9,3 +9,5 @@ node_modules
 .dynamodb
 __pycache__
 venv/
+
+.talismanrc

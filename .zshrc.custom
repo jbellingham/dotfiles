@@ -5,8 +5,13 @@
 load_file_if_exists "$HOME/.aliases"
 load_file_if_exists "${HOME}/.zshrc.functions"
 
+export GEM_HOME=$HOME/.gem
+
 # Homebrew
-export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools"
+export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$PATH"
+
+# Talisman
+export TALISMAN_HOME=$HOME/.talisman/bin
 
 # enables batect compatibility with colima
 export DOCKER_HOST="unix:///${HOME}/.colima/docker.sock"

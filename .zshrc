@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # file location: ~/.zshrc
 
 zmodload zsh/zprof
@@ -23,6 +23,7 @@ export ZSH=${HOME}/.oh-my-zsh
 # load_file_if_exists "${ZSH_CUSTOM}/themes/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using 'git clone'
 
 eval "$(oh-my-posh --init --shell zsh --config $(brew --prefix oh-my-posh)/themes/atomic.omp.json)"
+eval "$(jump shell zsh)"
 # ZSH_THEME="powerlevel10k/powerlevel10k"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -133,8 +134,7 @@ command_exists code
 # if command -v pyenv 1>/dev/null 2>&1; then
 #   eval "$(pyenv init -)"
 # fi
-
 load_file_if_exists "${HOME}/.zshrc.custom"
 
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
