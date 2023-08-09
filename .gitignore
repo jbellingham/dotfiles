@@ -45,3 +45,7 @@
 .gnupg/*
 !.gnupg/gpg-agent.conf
 
+**/*.aif
+**/*.aif.asd
+*.aif
+*.aif.asd
