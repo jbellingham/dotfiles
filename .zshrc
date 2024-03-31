@@ -1,7 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# file location: ~/.zshrc
-
 zmodload zsh/zprof
 
 source ${HOME}/.zprofile
@@ -21,8 +17,9 @@ export ZSH=${HOME}/.oh-my-zsh
 # load_file_if_exists "${HOME}/.p10k.zsh"
 # load_file_if_exists "${HOMEBREW_PREFIX}/opt/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using brew
 # load_file_if_exists "${ZSH_CUSTOM}/themes/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using 'git clone'
-
-eval "$(oh-my-posh --init --shell zsh --config $(brew --prefix oh-my-posh)/themes/atomic.omp.json)"
+OMP_VERSION=$(oh-my-posh version)
+eval "$(oh-my-posh --init --shell zsh --config /nix/store/$(ls /nix/store | grep "oh-my-posh-$OMP_VERSION" | head -1)/share/oh-my-posh/themes/1_shell.omp.json)"
+# eval "$(oh-my-posh --init --shell zsh --config /nix/store/$(ls /nix/store | grep "oh-my-posh-$OMP_VERSION" | head -1)/share/oh-my-posh/themes/atomic.omp.json)"
 eval "$(jump shell zsh)"
 # ZSH_THEME="powerlevel10k/powerlevel10k"
 # Set name of the theme to load --- if set to "random", it will
@@ -136,5 +133,3 @@ command_exists code
 # fi
 load_file_if_exists "${HOME}/.zshrc.custom"
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
