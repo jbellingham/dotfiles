@@ -14,9 +14,16 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
-          pkgs.brave
+          # pkgs.brave
+          pkgs.dbeaver
+          pkgs.docker
+          pkgs.jetbrains-toolbox
           pkgs.raycast
+          pkgs.rectangle
+          pkgs.spotify
           pkgs.vim
+          pkgs.vscode
+          pkgs.wezterm
         ];
 
       # Auto upgrade nix package and the daemon service.
@@ -46,12 +53,12 @@
   in
   {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#jessebellingham
-    darwinConfigurations."jessebellingham" = nix-darwin.lib.darwinSystem {
+    # $ darwin-rebuild build --flake .#Jesses-MacBook-Pro
+    darwinConfigurations."Jesses-MacBook-Pro" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."jessebellingham".pkgs;
+    darwinPackages = self.darwinConfigurations."Jesses-MacBook-Pro".pkgs;
   };
 }
