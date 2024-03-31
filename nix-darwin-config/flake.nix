@@ -1,4 +1,7 @@
 {
+  # Install nix with `curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install macos`
+  # https://github.com/DeterminateSystems/nix-installer/issues/753
+
   description = "Example Darwin system flake";
 
   inputs = {
@@ -14,17 +17,52 @@
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
-          # pkgs.brave
-          pkgs.dbeaver
-          pkgs.docker
-          pkgs.jetbrains-toolbox
-          pkgs.raycast
-          pkgs.rectangle
-          pkgs.spotify
-          pkgs.vim
-          pkgs.vscode
-          pkgs.wezterm
+          # https://search.nixos.org/packages
+          # ---
+          # cli tools
+          # ---
+          pkgs.bat
+          pkgs.direnv
+          pkgs.jump
+          pkgs.oh-my-posh
+          pkgs.tldr
+          # pkgs.vim
+
         ];
+
+      homebrew = {
+        enable = true;
+        brews = [
+          "trash"
+        ];
+        casks = [
+          # ---
+          # GUI Apps
+          # ---
+          "1password"
+          "brave-browser"
+          "cheatsheet"
+          "discord"
+          "docker"
+          "flux"
+          "fork"
+          "firefox"
+          "google-chrome"
+          "jetbrains-toolbox"
+          "notion"
+          "raycast"
+          "rectangle"
+          "spotify"
+          "stats"
+          "visual-studio-code"
+          "wezterm"
+        ];
+      };
+
+      # enables installing applications that are not completely free (_any_ paid component flags it as unfree)
+      nixpkgs.config.allowUnfree = true;
+      # enables installing applications that don't list darwin as a supported OS
+      nixpkgs.config.allowUnsupportedSystem = true;
 
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
