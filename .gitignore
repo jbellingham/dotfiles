@@ -45,6 +45,8 @@
 .gnupg/*
 !.gnupg/gpg-agent.conf
 
+!nix-darwin-config
+
 **/*.aif
 **/*.aif.asd
 *.aif
