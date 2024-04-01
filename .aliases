@@ -28,3 +28,7 @@ alias top="btop"
 # alias vim="lvim -S Session.vim"
 alias vim="vim -S Session.vim"
 alias grep="grep -iF --color=auto"
+
+alias intellij="open -na 'IntelliJ IDEA Ultimate.app'"
+alias rebuildmac="(cd ~/nix-darwin-config && make)"
+alias editmac="(cd ~/nix-darwin-config && code .)"
