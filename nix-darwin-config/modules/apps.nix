@@ -7,10 +7,11 @@ environment.systemPackages = with pkgs;
         # cli tools
         # ---
         bat
-        direnv
+        # direnv
         jump
         oh-my-posh
         tldr
+        zsh-fzf-tab
         # vim
 
     ];
@@ -19,6 +20,7 @@ environment.systemPackages = with pkgs;
         enable = true;
         brews = [
             "trash"
+            "direnv"
         ];
         casks = [
             # ---
