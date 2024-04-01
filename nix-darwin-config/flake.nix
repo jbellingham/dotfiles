@@ -15,49 +15,6 @@
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [
-          # https://search.nixos.org/packages
-          # ---
-          # cli tools
-          # ---
-          pkgs.bat
-          pkgs.direnv
-          pkgs.jump
-          pkgs.oh-my-posh
-          pkgs.tldr
-          # pkgs.vim
-
-        ];
-
-      homebrew = {
-        enable = true;
-        brews = [
-          "trash"
-        ];
-        casks = [
-          # ---
-          # GUI Apps
-          # ---
-          "1password"
-          "brave-browser"
-          "cheatsheet"
-          "discord"
-          "docker"
-          "flux"
-          "fork"
-          "firefox"
-          "google-chrome"
-          "jetbrains-toolbox"
-          "notion"
-          "raycast"
-          "rectangle"
-          "spotify"
-          "stats"
-          "visual-studio-code"
-          "wezterm"
-        ];
-      };
 
       # enables installing applications that are not completely free (_any_ paid component flags it as unfree)
       nixpkgs.config.allowUnfree = true;
@@ -93,7 +50,10 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#Jesses-MacBook-Pro
     darwinConfigurations."Jesses-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+      modules = [
+        configuration
+        ./modules/apps.nix
+        ];
     };
 
     # Expose the package set, including overlays, for convenience.
