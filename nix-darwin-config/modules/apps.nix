@@ -37,6 +37,7 @@ environment.systemPackages = with pkgs;
         ];
         brews = [
             "borders"
+            "dep-tree"
             "direnv"
             "lua"
             "nowplaying-cli"
@@ -66,6 +67,7 @@ environment.systemPackages = with pkgs;
             "jetbrains-toolbox"
             "logi-options-plus"
             "notion"
+            "obsidian"
             "raycast"
             "rectangle"
             "spotify"
@@ -79,6 +81,7 @@ environment.systemPackages = with pkgs;
             # ---
             "font-hack-nerd-font"
             "font-jetbrains-mono-nerd-font"
+            "font-monaspace"
             "font-sf-mono"
             "font-sf-pro"
             "sf-symbols"

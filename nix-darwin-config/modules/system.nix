@@ -100,8 +100,7 @@
   };
 
   fonts = {
-    fontDir.enable = true;
-    fonts = [
+    packages = [
         pkgs.hack-font
         pkgs.meslo-lg
         pkgs.meslo-lgs-nf
@@ -167,7 +166,7 @@
 
     intellij = "open -na 'IntelliJ IDEA Ultimate.app'";
     goland = "open -na 'GoLand.app'";
-    rebuildmac = "(cd ~/nix-darwin-config && make)";
+    rebuildmac = "(cd ~/nix-darwin-config && make && git push)";
     editmac = "(cd ~/nix-darwin-config && code .)";
 
     startyabai = "yabai --start-service";
