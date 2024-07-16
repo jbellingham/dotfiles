@@ -1,6 +1,9 @@
 [user]
 	name = Jesse Bellingham
-	email = 146690707+jbellingham-eh@users.noreply.github.com
+[includeIf "gitdir/i:~/"]             # Personal
+  path = ~/.gitconfig-personal.inc    # Personal
+[includeIf "gitdir/i:~/dev/work/"]    # Work
+  path = ~/.gitconfig-work.inc        # Work
 [alias]
 	what = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
@@ -10,6 +13,7 @@
 	# show git log visualised as a branch tree
 	tree = log --graph --decorate --oneline
 	co = checkout
+	fixup = "!f() { TARGET=$(git rev-parse $1); git commit --fixup=$TARGET ${@:2} && GIT_SEQUENCE_EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
