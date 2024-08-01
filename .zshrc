@@ -131,3 +131,5 @@ command_exists code
 load_file_if_exists "${HOME}/.zshrc.custom"
 
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+eval "$(mcfly init zsh)"

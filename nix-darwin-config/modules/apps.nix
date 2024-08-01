@@ -6,6 +6,7 @@ environment.systemPackages = with pkgs;
         # ---
         # cli tools
         # ---
+        ant
         awscli2
         bat
         btop
@@ -16,6 +17,7 @@ environment.systemPackages = with pkgs;
         git-extras
         jump
         jq
+        mcfly
         nodePackages."npm-check-updates"
         oh-my-posh
         shellcheck
