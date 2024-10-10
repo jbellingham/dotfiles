@@ -6,6 +6,42 @@ properties:
   resources:
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
+      description: Installing Microsoft.PowerShell
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Microsoft.PowerShell"
+      source: winget
+    id: Microsoft.PowerShell
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Python.Python.3.11
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Python.Python.3.11"
+      source: winget
+    id: Python.Python.3.11
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Microsoft.DotNet.SDK.7
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Microsoft.DotNet.SDK.7"
+      source: winget
+    id: Microsoft.DotNet.SDK.7
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing GitHub.GitHubDesktop
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "GitHub.GitHubDesktop"
+      source: winget
+    id: GitHub.GitHubDesktop
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
       description: Installing Microsoft.VisualStudio.2022.Community
       allowPrerelease: true
       securityContext: current
@@ -13,33 +49,6 @@ properties:
       id: "Microsoft.VisualStudio.2022.Community"
       source: winget
     id: Microsoft.VisualStudio.2022.Community
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    directives:
-      description: Installing 7zip.7zip
-      allowPrerelease: true
-      securityContext: current
-    settings:
-      id: "7zip.7zip"
-      source: winget
-    id: 7zip.7zip
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    directives:
-      description: Installing JetBrains.IntelliJIDEA.Community
-      allowPrerelease: true
-      securityContext: current
-    settings:
-      id: "JetBrains.IntelliJIDEA.Community"
-      source: winget
-    id: JetBrains.IntelliJIDEA.Community
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    directives:
-      description: Installing Docker.DockerDesktop
-      allowPrerelease: true
-      securityContext: current
-    settings:
-      id: "Docker.DockerDesktop"
-      source: winget
-    id: Docker.DockerDesktop
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing Microsoft.VisualStudioCode
@@ -67,4 +76,31 @@ properties:
       id: "Microsoft.PowerToys"
       source: winget
     id: Microsoft.PowerToys
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing 7zip.7zip
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "7zip.7zip"
+      source: winget
+    id: 7zip.7zip
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing JetBrains.IntelliJIDEA.Community
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "JetBrains.IntelliJIDEA.Community"
+      source: winget
+    id: JetBrains.IntelliJIDEA.Community
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Docker.DockerDesktop
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Docker.DockerDesktop"
+      source: winget
+    id: Docker.DockerDesktop
   configurationVersion: 0.2.0
