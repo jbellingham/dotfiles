@@ -1,6 +1,9 @@
 zmodload zsh/zprof
-
 source ${HOME}/.zprofile
+source ~/completion.zsh
+autoload -U compinit; compinit
+source ~/dotfiles/zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
+
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=${HOME}/bin:${HOMEBREW_PREFIX}/bin:$PATH
@@ -17,24 +20,23 @@ export ZSH=${HOME}/.oh-my-zsh
 # load_file_if_exists "${HOME}/.p10k.zsh"
 # load_file_if_exists "${HOMEBREW_PREFIX}/opt/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using brew
 # load_file_if_exists "${ZSH_CUSTOM}/themes/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using 'git clone'
-OMP_VERSION=$(oh-my-posh version)
 eval "$(oh-my-posh --init --shell zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
-# eval "$(oh-my-posh --init --shell zsh --config /nix/store/$(ls /nix/store | grep "oh-my-posh-$OMP_VERSION" | head -1)/share/oh-my-posh/themes/atomic.omp.json)"
-eval "$(jump shell zsh)"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-# ZSH_THEME="agnoster"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ${ZSH}/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+arch=`uname -m`
+if [[ $arch =~ "arm" ]]
+then
+    eval "$(jump shell zsh)"
+else
+    . /usr/share/autojump/autojump.sh
+fi
+eval "$(mcfly init zsh)"
+
+
+if [[ -d "/home/linuxbrew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [[ -d "/opt/homebrew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -80,19 +82,15 @@ ENABLE_CORRECTION="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than ${ZSH}/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+HIST_STAMPS="yyyy-mm-dd"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ${ZSH}/plugins/
 # Custom plugins may be added to ${ZSH_CUSTOM}/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(evalcache asdf brew sudo fzf-tab zsh-autosuggestions zsh-syntax-highlighting macos)
-
-source ${ZSH}/oh-my-zsh.sh
+# plugins=(evalcache asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos)
+plugins=(asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos)
 
 # command_exists direnv && _evalcache direnv hook zsh
 
@@ -116,20 +114,4 @@ command_exists code
 # Compilation flags
 [[ $arch =~ "x86" ]] && export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="${EDITOR} ~/.zshrc"
-# alias ohmyzsh="${EDITOR} ${ZSH}"
-
-# command_exists yabai
-# [[ $? -eq 0 ]] && yabai --start-service
-
 load_file_if_exists "${HOME}/.zshrc.custom"
-
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-
-eval "$(mcfly init zsh)"

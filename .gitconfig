@@ -1,9 +1,6 @@
 [user]
 	name = Jesse Bellingham
-[includeIf "gitdir/i:~/"]             # Personal
-  path = ~/.gitconfig-personal.inc    # Personal
-[includeIf "gitdir/i:~/dev/work/"]    # Work
-  path = ~/.gitconfig-work.inc        # Work
+    email = 5078290+jbellingham@users.noreply.github.com
 [alias]
 	what = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
@@ -20,16 +17,6 @@
 	process = git-lfs filter-process
 	required = true
 [core]
-	excludesfile = /Users/jessebellingham/.gitignore.global
-	editor = vi
 	autocrlf = input
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[commit]
-	template = /Users/jessebellingham/.stCommitMsg
 [init]
 	defaultBranch = main

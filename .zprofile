@@ -1,8 +1,3 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-
-# Added by Toolbox App
-export PATH="$PATH:/Users/jessebellingham/Library/Application Support/JetBrains/Toolbox/scripts"
 
 # file location: ~/.zprofile
 
@@ -26,8 +21,10 @@ command_exists() {
   type $1 &> /dev/null 2>&1
 }
 
-export PATH="$PATH:/Users/jessebellingham/.local/bin"
+export PATH=$PATH:/home/jesse/.local/bin
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 
 
 # Added by Toolbox App
+export PATH="$PATH:/Users/jessebellingham/Library/Application Support/JetBrains/Toolbox/scripts"
 export PATH="$PATH:/usr/local/bin"
