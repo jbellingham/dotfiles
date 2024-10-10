@@ -1,7 +1,5 @@
 zmodload zsh/zprof
 source ${HOME}/.zprofile
-source ~/completion.zsh
-autoload -U compinit; compinit
 source ~/dotfiles/zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
 
 
@@ -90,7 +88,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(evalcache asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos)
-plugins=(asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos)
+plugins=(asdf brew sudo macos)
 
 # command_exists direnv && _evalcache direnv hook zsh
 
@@ -113,5 +111,8 @@ command_exists code
 
 # Compilation flags
 [[ $arch =~ "x86" ]] && export ARCHFLAGS="-arch x86_64"
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 load_file_if_exists "${HOME}/.zshrc.custom"
