@@ -4,6 +4,7 @@
 
 properties:
   resources:
+  # PowerShell
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing Microsoft.PowerShell
@@ -13,6 +14,9 @@ properties:
       id: "Microsoft.PowerShell"
       source: winget
     id: Microsoft.PowerShell
+
+  # ---- SDKS ----
+  # Python
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing Python.Python.3.11
@@ -22,6 +26,8 @@ properties:
       id: "Python.Python.3.11"
       source: winget
     id: Python.Python.3.11
+
+  # .NET 7
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing Microsoft.DotNet.SDK.7
@@ -31,6 +37,9 @@ properties:
       id: "Microsoft.DotNet.SDK.7"
       source: winget
     id: Microsoft.DotNet.SDK.7
+
+  # ---- Git ----
+  # GitHub Desktop
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing GitHub.GitHubDesktop
@@ -40,24 +49,8 @@ properties:
       id: "GitHub.GitHubDesktop"
       source: winget
     id: GitHub.GitHubDesktop
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    directives:
-      description: Installing Microsoft.VisualStudio.2022.Community
-      allowPrerelease: true
-      securityContext: current
-    settings:
-      id: "Microsoft.VisualStudio.2022.Community"
-      source: winget
-    id: Microsoft.VisualStudio.2022.Community
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    directives:
-      description: Installing Microsoft.VisualStudioCode
-      allowPrerelease: true
-      securityContext: current
-    settings:
-      id: "Microsoft.VisualStudioCode"
-      source: winget
-    id: Microsoft.VisualStudioCode
+
+  # Git
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing Git.Git
@@ -67,24 +60,20 @@ properties:
       id: "Git.Git"
       source: winget
     id: Git.Git
+
+  # ---- Dev ----
+  # Visual Studio Community
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
-      description: Installing Microsoft.PowerToys
+      description: Installing Microsoft.VisualStudio.2022.Community
       allowPrerelease: true
       securityContext: current
     settings:
-      id: "Microsoft.PowerToys"
+      id: "Microsoft.VisualStudio.2022.Community"
       source: winget
-    id: Microsoft.PowerToys
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    directives:
-      description: Installing 7zip.7zip
-      allowPrerelease: true
-      securityContext: current
-    settings:
-      id: "7zip.7zip"
-      source: winget
-    id: 7zip.7zip
+    id: Microsoft.VisualStudio.2022.Community
+
+  # IntelliJ Community
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing JetBrains.IntelliJIDEA.Community
@@ -94,6 +83,19 @@ properties:
       id: "JetBrains.IntelliJIDEA.Community"
       source: winget
     id: JetBrains.IntelliJIDEA.Community
+
+  # VS Code
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Microsoft.VisualStudioCode
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Microsoft.VisualStudioCode"
+      source: winget
+    id: Microsoft.VisualStudioCode
+
+  # Docker Desktop
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
       description: Installing Docker.DockerDesktop
@@ -104,3 +106,69 @@ properties:
       source: winget
     id: Docker.DockerDesktop
   configurationVersion: 0.2.0
+
+  # ---- Tools ----
+  # PowerToys
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Microsoft.PowerToys
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Microsoft.PowerToys"
+      source: winget
+    id: Microsoft.PowerToys
+
+  # 7zip
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing 7zip.7zip
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "7zip.7zip"
+      source: winget
+    id: 7zip.7zip
+
+  # ---- Applications ----
+  # Discord
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Discord.Discord
+      securityContext: current
+    settings:
+      id: "Discord.Discord"
+      source: winget
+    id: Discord.Discord
+  configurationVersion: 0.2.0
+
+  # Spotify
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Spotify.Spotify
+      securityContext: current
+    settings:
+      id: "Spotify.Spotify"
+      source: winget
+    id: Spotify.Spotify
+  configurationVersion: 0.2.0
+
+  # Steam
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Valve.Steam
+      securityContext: current
+    settings:
+      id: "Valve.Steam"
+      source: winget
+    id: Valve.Steam
+  configurationVersion: 0.2.0
+
+  # 1Password
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing 1Password.1Password
+      securityContext: current
+    settings:
+      id: "1Password.1Password"
+      source: winget
