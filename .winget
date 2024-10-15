@@ -105,7 +105,6 @@ properties:
       id: "Docker.DockerDesktop"
       source: winget
     id: Docker.DockerDesktop
-  configurationVersion: 0.2.0
 
   # ---- Tools ----
   # PowerToys
@@ -140,7 +139,6 @@ properties:
       id: "Discord.Discord"
       source: winget
     id: Discord.Discord
-  configurationVersion: 0.2.0
 
   # Spotify
   - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -151,7 +149,6 @@ properties:
       id: "Spotify.Spotify"
       source: winget
     id: Spotify.Spotify
-  configurationVersion: 0.2.0
 
   # Steam
   - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -162,7 +159,6 @@ properties:
       id: "Valve.Steam"
       source: winget
     id: Valve.Steam
-  configurationVersion: 0.2.0
 
   # 1Password
   - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -172,3 +168,4 @@ properties:
     settings:
       id: "1Password.1Password"
       source: winget
+  configurationVersion: 0.2.0
