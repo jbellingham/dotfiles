@@ -2,9 +2,8 @@
 
 # Note: This file depends on the ~/.zshrc that is also shared for some shell functions
 
+load_file_if_exists "${HOME}/.aliases"
 load_file_if_exists "${HOME}/.zshrc.functions"
-
-export GEM_HOME=$HOME/.gem
 
 # Homebrew
 export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$PATH"
@@ -103,5 +102,3 @@ fi
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
 # iTerm2 shell integrations
 load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
-
-
