@@ -73,22 +73,16 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 ### Fix slowness of pastes
 
+ASDF_DIR=$HOME/.asdf
+if [ -d $ASDF_DIR ]; then
+  load_file_if_exists "$ASDF_DIR/asdf.sh"
+fi
 
 # If brew exists, do the following
 command_exists brew
 if [ $? -eq 0 ]; then
 
   # Load asdf path changes at the end (even though this is loaded as part of omz's plugins - since the PATH gets messed up)
-  # ASDF_DIR=$HOMEBREW_PREFIX/opt/asdf
-  # ASDF_DIR=$HOME/.asdf
-  # if [ -d $ASDF_DIR ]; then
-    # TODO: Not sure if the 'autoload' is needed or not - will need to verify, but the rest of this is already loaded by the zsh-plugin
-    # autoload -Uz bashcompinit && bashcompinit
-    # load_file_if_exists "$ASDF_DIR/asdf.sh"
-
-  # . /opt/homebrew/opt/asdf/libexec/asdf.sh
-  # ASDF_DIR=/opt/homebrew/opt/asdf
-  # fi
 
 
   # zlib - required for installing python via asdf
