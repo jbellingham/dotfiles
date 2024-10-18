@@ -1,5 +1,9 @@
 # alias rm to trash cli for safer deleting
-alias rm="trash -F"
+command_exists trash
+if [ $? -eq 0 ]; then
+    alias rm="trash -F"
+fi
+
 # remove file from quarantine
 alias unquarantine="sudo xattr -rd com.apple.quarantine"
 # docker
@@ -24,4 +28,5 @@ alias tmuxa="tmux attach"
 alias bu="brew upgrade"
 alias dockerdebug="docker run -ti --entrypoint sh"
 alias intellij="open -na 'IntelliJ IDEA Ultimate.app'"
-alias hgrep="history 1 | grep";
+alias hgrep="history 1 | grep"
+alias sail="sh $([ -f sail ] && echo sail || echo vendor/bin/sail)"

@@ -117,10 +117,14 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 load_file_if_exists "${HOME}/.zshrc.custom"
 
-. ~/.asdf/plugins/golang/set-env.zsh
+if [ -f ~/.asdf/plugins/golang/set-env.zsh ]; then
+    . ~/.asdf/plugins/golang/set-env.zsh
+fi
 
 eval "$(mcfly init zsh)"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export PATH="/home/jesse/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/jesse/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
