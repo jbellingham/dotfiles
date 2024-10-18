@@ -1,0 +1,27 @@
+# alias rm to trash cli for safer deleting
+alias rm="trash -F"
+# remove file from quarantine
+alias unquarantine="sudo xattr -rd com.apple.quarantine"
+# docker
+alias dlist="docker ps -a && docker images"
+alias dps="docker ps"
+alias dcb="docker-compose build"
+alias dcu="docker-compose up"
+alias dcd="docker-compose down"
+# kubernetes
+alias k="kubectl"
+alias kns="kubens"
+# safely (moves to trash instead of immediately deleting) recursively delete all node_modules down from the call site -- uses trash cli (brew install trash)
+# -F flag asks Finder to do the trashing to allow "put back" feature
+alias killnm="find . -name node_modules -type d -prune -exec trash -F {} +"
+# dotnet
+alias drunp="dotnet run --project"
+alias cat="bat"
+alias top="btop"
+# alias vim="lvim -S Session.vim"
+alias grep="grep -iF --color=auto"
+alias tmuxa="tmux attach"
+alias bu="brew upgrade"
+alias dockerdebug="docker run -ti --entrypoint sh"
+alias intellij="open -na 'IntelliJ IDEA Ultimate.app'"
+alias hgrep="history 1 | grep";
