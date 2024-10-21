@@ -15,8 +15,10 @@ environment.systemPackages = with pkgs;
         gh
         git
         git-extras
+        jhead
         jump
         jq
+        mc
         mcfly
         nodePackages."npm-check-updates"
         oh-my-posh
@@ -67,6 +69,7 @@ environment.systemPackages = with pkgs;
             "firefox"
             "google-chrome"
             "jetbrains-toolbox"
+            "jprofiler"
             "logi-options-plus"
             "notion"
             "obsidian"
@@ -75,6 +78,7 @@ environment.systemPackages = with pkgs;
             "spotify"
             "stats"
             "visual-studio-code"
+            "visualvm"
             "wakatime"
             "wezterm"
 
