@@ -1,6 +1,6 @@
 zmodload zsh/zprof
 source ${HOME}/.zprofile
-source ~/dotfiles/zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
+source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
 
 
 # If you come from bash you might have to change your $PATH.
@@ -18,7 +18,10 @@ export ZSH=${HOME}/.oh-my-zsh
 # load_file_if_exists "${HOME}/.p10k.zsh"
 # load_file_if_exists "${HOMEBREW_PREFIX}/opt/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using brew
 # load_file_if_exists "${ZSH_CUSTOM}/themes/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using 'git clone'
-eval "$(oh-my-posh --init --shell zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
+command_exists oh-my-posh
+if [ $? -eq 0 ]; then
+    eval "$(oh-my-posh --init --shell zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
+fi
 
 arch=`uname -m`
 if [[ $arch =~ "arm" ]]
@@ -28,13 +31,6 @@ else
     . /usr/share/autojump/autojump.sh
 fi
 eval "$(mcfly init zsh)"
-
-
-if [[ -d "/home/linuxbrew" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-elif [[ -d "/opt/homebrew" ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
