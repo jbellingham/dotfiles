@@ -4,6 +4,18 @@
 
 properties:
   resources:
+  # --- Terminal ---
+  # Windows Terminal
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Microsoft.WindowsTerminal
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Microsoft.WindowsTerminal"
+      source: winget
+    id: Microsoft.WindowsTerminal
+
   # PowerShell
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
@@ -14,6 +26,15 @@ properties:
       id: "Microsoft.PowerShell"
       source: winget
     id: Microsoft.PowerShell
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing JanDeDobbeleer.OhMyPosh
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "JanDeDobbeleer.OhMyPosh"
+      source: winget
+    id: JanDeDobbeleer.OhMyPosh
 
   # ---- SDKS ----
   # Python
@@ -95,6 +116,15 @@ properties:
       source: winget
     id: Microsoft.VisualStudioCode
 
+  # DBeaver
+  - settings:
+      source: winget
+      id: dbeaver.dbeaver
+    resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      allowPrerelease: true
+      description: DBeaver Community Edition
+
   # Docker Desktop
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
@@ -129,6 +159,36 @@ properties:
       source: winget
     id: 7zip.7zip
 
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Proton.ProtonMailBridge
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Proton.ProtonMailBridge"
+      source: winget
+    id: Proton.ProtonMailBridge
+
+  # ProtonVPN
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing ProtonTechnologies.ProtonVPN
+      securityContext: current
+    settings:
+      id: "ProtonTechnologies.ProtonVPN"
+      source: winget
+    id: ProtonTechnologies.ProtonVPN
+
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Logitech.OptionsPlus
+      allowPrerelease: true
+      securityContext: current
+    settings:
+      id: "Logitech.OptionsPlus"
+      source: winget
+    id: Logitech.OptionsPlus
+
   # ---- Applications ----
   # Discord
   - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -140,15 +200,34 @@ properties:
       source: winget
     id: Discord.Discord
 
-  # Spotify
+  # Slack
   - resource: Microsoft.WinGet.DSC/WinGetPackage
     directives:
-      description: Installing Spotify.Spotify
+      description: Installing SlackTechnologies.Slack
       securityContext: current
     settings:
-      id: "Spotify.Spotify"
+      id: "SlackTechnologies.Slack"
       source: winget
-    id: Spotify.Spotify
+    id: SlackTechnologies.Slack
+
+  - resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      description: Installing Mozilla.Thunderbird
+      securityContext: current
+    settings:
+      id: "Mozilla.Thunderbird"
+      source: winget
+    id: Mozilla.Thunderbird
+
+  # # Spotify
+  # - resource: Microsoft.WinGet.DSC/WinGetPackage
+  #   directives:
+  #     description: Installing Spotify.Spotify
+  #     securityContext: current
+  #   settings:
+  #     id: "Spotify.Spotify"
+  #     source: winget
+  #   id: Spotify.Spotify
 
   # Steam
   - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -160,12 +239,79 @@ properties:
       source: winget
     id: Valve.Steam
 
-  # 1Password
-  - resource: Microsoft.WinGet.DSC/WinGetPackage
-    directives:
-      description: Installing 1Password.1Password
-      securityContext: current
-    settings:
-      id: "1Password.1Password"
+  - settings:
       source: winget
+      id: Amazon.Games
+    directives:
+      description: Amazon Games
+      allowPrerelease: true
+    resource: Microsoft.WinGet.DSC/WinGetPackage
+
+  - settings:
+      source: winget
+      id: EpicGames.EpicGamesLauncher
+    directives:
+      description: Epic Games Launcher
+      allowPrerelease: true
+    resource: Microsoft.WinGet.DSC/WinGetPackage
+
+  - settings:
+      id: GOG.Galaxy
+      source: winget
+    directives:
+      allowPrerelease: true
+      description: GOG GALAXY
+    resource: Microsoft.WinGet.DSC/WinGetPackage
+
+  # 1Password
+  # - resource: Microsoft.WinGet.DSC/WinGetPackage
+  #   directives:
+  #     description: Installing 1Password.1Password
+  #     securityContext: current
+  #   settings:
+  #     id: "1Password.1Password"
+  #     source: winget
+
+
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+
+###########################################################################
+# This configuration will modify various Windows Settings.                #
+# PowerShell module: Microsoft.Windows.Developer (v0.2.1-alpha)           #
+###########################################################################
+
+  - resource: Microsoft.Windows.Developer/Taskbar
+    directives:
+      description: Modify taskbar settings
+      allowPrerelease: true
+    settings:
+      Alignment: Left # [KeepCurrentValue, Middle]
+      HideLabelsMode: Always # [KeepCurrentValue, WhenFull, Always]
+      SearchBoxMode: ShowIconAndLabel # [KeepCurrentValue, ShowIconOnly, SearchBox, Hide]
+      TaskViewButton: Show # [KeepCurrentValue, Hide]
+      WidgetsButton: Show # [KeepCurrentValue, Hide]
+      RestartExplorer: True # Use caution when setting `RestartExplorer: true` as this will force explorer to close. Required for `HideLabelsMode`.
+  - resource: Microsoft.Windows.Developer/WindowsExplorer
+    directives:
+      description: Modify Windows Explorer settings
+      allowPrerelease: true
+    settings:
+      FileExtensions: Show # [KeepCurrentValue, Hide]
+      HiddenFiles: Show # [KeepCurrentValue, Hide]
+      ItemCheckBoxes: Hide # [KeepCurrentValue, Hide]
+      RestartExplorer: True # Use caution when setting `RestartExplorer: true` as this will force explorer to close. Required for all WindowsExplorer settings.
+  - resource: Microsoft.Windows.Developer/ShowSecondsInClock
+    directives:
+      description: Show seconds in clock
+      allowPrerelease: true
+    settings:
+      Ensure: Present
+  - resource: Microsoft.Windows.Developer/EnableDarkMode
+    directives:
+      description: Disable dark mode
+      allowPrerelease: true
+    settings:
+      Ensure: Present
+      # Use caution when setting `RestartExplorer: true` as this will force explorer to close.
+      RestartExplorer: true # Required to apply changes
   configurationVersion: 0.2.0
