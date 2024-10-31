@@ -11,6 +11,11 @@
 	tree = log --graph --decorate --oneline
 	co = checkout
 	fixup = "!f() { TARGET=$(git rev-parse $1); git commit --fixup=$TARGET ${@:2} && GIT_SEQUENCE_EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
+
+	# Creates a stash of your work, but doesn't reset the working tree. Handy for:
+	# Putting in hours of work and being afraid that the commit hook might delete shit again
+	# Progress commits that you don't want to end up in the commit history but might want to get back to
+	protect = "!f() { git stash store -m \"${1:-Created with protect}\" $(git stash create ${1:-Created with protect} ); }; f"
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

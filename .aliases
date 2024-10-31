@@ -2,31 +2,51 @@
 command_exists trash
 if [ $? -eq 0 ]; then
     alias rm="trash -F"
+
+    # safely (moves to trash instead of immediately deleting) recursively delete all node_modules down from the call site -- uses trash cli (brew install trash)
+    # -F flag asks Finder to do the trashing to allow "put back" feature
+    alias killnm="find . -name node_modules -type d -prune -exec trash -F {} +"
 fi
 
 # remove file from quarantine
 alias unquarantine="sudo xattr -rd com.apple.quarantine"
+
 # docker
 alias dlist="docker ps -a && docker images"
 alias dps="docker ps"
 alias dcb="docker-compose build"
 alias dcu="docker-compose up"
 alias dcd="docker-compose down"
+alias dp="docker image prune"
+alias dspace="docker system df"
+alias dtail="docker logs -f --tail 20"
+
 # kubernetes
 alias k="kubectl"
 alias kns="kubens"
-# safely (moves to trash instead of immediately deleting) recursively delete all node_modules down from the call site -- uses trash cli (brew install trash)
-# -F flag asks Finder to do the trashing to allow "put back" feature
-alias killnm="find . -name node_modules -type d -prune -exec trash -F {} +"
+
 # dotnet
 alias drunp="dotnet run --project"
+
+# laravel
+alias sail="sh $([ -f sail ] && echo sail || echo vendor/bin/sail)"
+
 alias cat="bat"
 alias top="btop"
 # alias vim="lvim -S Session.vim"
-alias grep="grep -iF --color=auto"
 alias tmuxa="tmux attach"
 alias bu="brew upgrade"
 alias dockerdebug="docker run -ti --entrypoint sh"
-alias intellij="open -na 'IntelliJ IDEA Ultimate.app'"
+alias reload='source ~/.zshrc'
 alias hgrep="history 1 | grep"
-alias sail="sh $([ -f sail ] && echo sail || echo vendor/bin/sail)"
+alias grep="grep -iF --color=auto"
+alias formatjson="pbpaste | jq . | pbcopy"
+alias aliases="alias | less"
+alias home="code $HOME"
+
+alias intellij="open -na 'IntelliJ IDEA Ultimate.app'"
+
+
+# Work-specific
+alias stopseqta="(cd ~/dev/work/seqta/seqta-suite-core/seqta-suite && docker compose stop)"
+alias startseqta="(cd ~/dev/work/seqta/seqta-suite-core/seqta-suite && docker compose up -d)"
