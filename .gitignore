@@ -50,6 +50,7 @@
 
 !nix-darwin-config
 !nixos-config
+!.wezterm.lua
 
 **/*.aif
 **/*.aif.asd

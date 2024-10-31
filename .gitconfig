@@ -18,6 +18,7 @@
 	required = true
 [core]
 	autocrlf = input
+	excludesfile = ~/.gitignore.global
 [init]
 	defaultBranch = main
 [push]
