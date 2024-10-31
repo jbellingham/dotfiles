@@ -1,6 +1,5 @@
 zmodload zsh/zprof
 source ${HOME}/.zprofile
-source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
 
 
 # If you come from bash you might have to change your $PATH.
@@ -83,10 +82,10 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ${ZSH_CUSTOM}/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(evalcache asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos)
-plugins=(asdf brew sudo macos)
+plugins=(evalcache asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos direnv)
+source $ZSH/oh-my-zsh.sh
 
-# command_exists direnv && _evalcache direnv hook zsh
+command_exists direnv && _evalcache direnv hook zsh
 
 # User configuration
 
@@ -110,6 +109,7 @@ command_exists code
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
 
 load_file_if_exists "${HOME}/.zshrc.custom"
 
@@ -118,6 +118,7 @@ if [ -f ~/.asdf/plugins/golang/set-env.zsh ]; then
 fi
 
 eval "$(mcfly init zsh)"
+eval "$(direnv hook zsh)"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
