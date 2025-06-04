@@ -59,6 +59,24 @@ properties:
       source: winget
     id: Microsoft.DotNet.SDK.7
 
+  # Ripgrep - a grep alternative
+  - settings:
+      source: winget
+      id: BurntSushi.ripgrep.GNU
+    resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      allowPrerelease: true
+      description: Installing BurntSushi.ripgrep.GNU
+
+  # fd - a find alternative
+  - settings:
+      source: winget
+      id: sharkdp.fd
+    resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      allowPrerelease: true
+      description: Installing sharkdp.fd
+
   # ---- Git ----
   # GitHub Desktop
   - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -115,6 +133,14 @@ properties:
       id: "Microsoft.VisualStudioCode"
       source: winget
     id: Microsoft.VisualStudioCode
+
+  - settings:
+      source: winget
+      id: GNU.Emacs
+    resource: Microsoft.WinGet.DSC/WinGetPackage
+    directives:
+      allowPrerelease: true
+      description: GNU Emacs
 
   # DBeaver
   - settings:
