@@ -1,5 +1,6 @@
 .DS_Store
 .tool-versions
+.sdkmanrc
 .envrc
 .vscode/
 Session.vim

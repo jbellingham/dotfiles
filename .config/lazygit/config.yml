@@ -1,0 +1,12 @@
+# Copy to ~/Library/Application\ Support/lazygit/config.yml
+# after installing lazygit https://github.com/jesseduffield/lazygit
+---
+customCommands:
+  - context: files
+    key: "t"
+    command: "git checkout --theirs {{.SelectedFile.Name}}"
+    description: "Takes the changes from the 'theirs' version of the file"
+  - context: files
+    key: "o"
+    command: "git checkout --ours {{.SelectedFile.Name}}"
+    description: "Takes the changes from the 'ours' version of the file"

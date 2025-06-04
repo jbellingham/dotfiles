@@ -24,6 +24,8 @@
 !.config/sketchybar
 !.config/yabai
 
+!.config/lazygit
+
 !.ripgreprc
 
 !.p10k.zsh
@@ -50,6 +52,7 @@
 
 !nix-darwin-config
 !nixos-config
+!.wezterm.lua
 
 **/*.aif
 **/*.aif.asd
