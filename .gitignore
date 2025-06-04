@@ -43,6 +43,7 @@
 !.gitconfig
 !.gitconfig-oss.inc
 !Brewfile
+!packages.config
 !.tool-versions
 !.leptonrc
 !.tmux.conf
