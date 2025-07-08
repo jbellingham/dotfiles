@@ -8,8 +8,10 @@ environment.systemPackages = with pkgs;
         # ---
         awscli2
         bat
+        btop
         darwin.trash
         fzf
+        gh
         git
         jump
         jq
@@ -19,7 +21,6 @@ environment.systemPackages = with pkgs;
         zsh-fzf-tab
 
         # fonts
-        hack-font
         meslo-lg
         meslo-lgs-nf
         source-code-pro
