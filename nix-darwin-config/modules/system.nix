@@ -169,6 +169,7 @@
     editmac = "(cd ~/nix-darwin-config && code .)";
 
     startyabai = "yabai --start-service";
-    restartyabai = "yabai --restart-service"
+    stopyabai = "yabai --stop-service";
+    restartyabai = "yabai --restart-service";
   };
 }
