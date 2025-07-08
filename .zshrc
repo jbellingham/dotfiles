@@ -125,8 +125,8 @@ command_exists code
 # alias zshconfig="${EDITOR} ~/.zshrc"
 # alias ohmyzsh="${EDITOR} ${ZSH}"
 
-command_exists yabai
-[[ $? -eq 0 ]] && yabai --start-service
+# command_exists yabai
+# [[ $? -eq 0 ]] && yabai --start-service
 
 load_file_if_exists "${HOME}/.zshrc.custom"
 
