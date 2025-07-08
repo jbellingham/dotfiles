@@ -1,5 +1,9 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zprofile.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zprofile.pre.zsh"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+
+# Added by Toolbox App
+export PATH="$PATH:/Users/jessebellingham/Library/Application Support/JetBrains/Toolbox/scripts"
+
 # file location: ~/.zprofile
 
 # login shell - only env vars and other functions that don't load anything should go in here
@@ -27,6 +31,3 @@ export PATH="$PATH:/Users/jessebellingham/.local/bin"
 
 # Added by Toolbox App
 export PATH="$PATH:/usr/local/bin"
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zprofile.post.zsh" ]] && builtin source "$HOME/.fig/shell/zprofile.post.zsh"

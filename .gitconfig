@@ -1,153 +1,31 @@
-# file location: ~/.gitconfig
-
-# Note:
-# [Windows users] If you are on windows, please search for the word 'windows' - and fix those lines - they seem to cause some trouble
-# [General] Since some of the settings are specific to my setup (ie presence of fles), I have marked those lines with comments 'Personal' - you can go ahead and change those to your equivalents or delete them altogether
-
-# Note: Even though this will show up twice in `git config -l` - it will still be overridden based on the order of the includeIf lines below
 [user]
 	name = Jesse Bellingham
-[includeIf "gitdir/i:~/"]             # Personal
-  path = ~/.gitconfig-oss.inc         # Personal
-[advice]
-  detachedHead = true
+	email = 146690707+jbellingham-eh@users.noreply.github.com
 [alias]
-  # Run git commands in all immediate sub-folders that are git repos (TODO: Not working since it ALWAYS selects from the user's home directory)
-  # all = "!f() { find \"${FOLDER:-.}\" -mindepth ${MINDEPTH:-1} -maxdepth ${MAXDEPTH:-2} -name .git -type d | xargs -I{} bash -c \"echo {} && git -C {}/../ $1\"; }; echo `pwd`; f"
-  # find dangling commits
-  dangling = fsck --no-reflog
-  # edit global git configuration
-  ec = config --global -e
-  # find files/folders with the parameter as part of the name
-  f = "!git ls-files | grep -i"
-  # if a local commit exists, then amend it, else create a new commit with the specified message. Aborts if diverged or nothing to commit
-  sci = "!sh -c '\
-    if $(git status | grep -q \"have diverged\"); then \
-      echo \"Diverged branches: aborting\"; \
-      exit 1; \
-    elif ! $(git status | grep -q \"to unstage\"); then \
-      echo \"Nothing to commit: aborting\"; \
-      exit 1; \
-    else \
-      if $(git status | grep -q \"is ahead of\"); then \
-        echo \"Amending existing commit\"; \
-        git amq; \
-      else \
-        echo \"Creating new commit\"; \
-        echo $0; \
-        git ci \"$0\"; \
-      fi \
-    fi'"
-  what = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-  # show commit info summary (count and name)
-  who = shortlog -s --
-  # show username/email of the specified author
-  whois = log -i -1 --pretty=format:'%an <%ae>' --author
-  # show all commits in the past week done by the specified author
-  standup = log --since 1.week.ago --author
-  # show git log in colorful graph mode
-  lg = log --color --graph --pretty=format:'%C(yellow)%h%Creset -%C(bold blue)%d%Creset %s %C(green) %an, %cr%Creset' --abbrev-commit
-  ll = log --decorate --graph --oneline --abbrev-commit
-  mn = merge --no-commit
-  cn = cherry-pick --no-commit
-  cr = cherry-pick
-  # commit with the following message
-  ci = commit -m
-  co = checkout
-  cl = clone
-  st = status
-  sts = status -sb
-  b = branch
-  d = diff
-  dw = diff --word-diff
-  dc = diff --staged
-  dcw = diff --word-diff --staged
-  # undo the last commit
-  undo = reset --soft HEAD^
-  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT if needed later, can be resurrected using reflog' && git reset HEAD~1 --hard
-  amend = commit --amend
-  # amend last commit keeping the same commit comment
-  amq = commit --amend --no-edit --quiet
-  # unstage all staged changes without losing the changed content
-  unstage = restore --staged
-  # list all large files
-  large = !git ls-tree -r -t -l --full-name HEAD | sort -n -k 4 | tail -n 10
-  # untrack a file
-  untrack = rm -rf --cached --
-  diff = diff --word-diff
-  grep = grep -Ii
-  # As a shortcut for a 'normal' diff to save as a patch for emailing or later application (without diff-so-fancy)
-  patch = !git --no-pager diff --no-color
-  # show tracking upstream string in the format `<remote>/<branch>`
-  track = rev-parse --abbrev-ref --symbolic-full-name @{u}
-  # fetch all branches and tags from remote (without merging into the local copy of remote)
-  fo = fetch --all --tags
-  # print the current branch name
-  br = rev-parse --abbrev-ref HEAD
-  # rebase from corresponding upstream branch
-  upreb = !git branch -u origin/`git br` && git fo && git rebase upstream/`git br` --no-verify && git fetch upstream --tags && git push --no-verify
-  # prune local copy-of-remote to remove deleted branches
-  rpo = remote prune origin
-  # show incoming change commits without per-file content changes
-  in = log --reverse ..@{u} --stat --no-merges
-  # show incoming change commits with per-file content changes
-  inp = log -p --reverse ..@{u} --no-merges
-  # show incoming changes as a single diff (without breakup of commits)
-  inc = !git diff ..@{u}
-  # if you prefer to do "git pull" instead of "git fetch", this can be an equivalent of the "in" alias
-  new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-  # show outgoing change commits
-  out = log --reverse @{u}..
-  # show outgoing change commits with content changes
-  outp = log -p --reverse @{u}..
-  g = grep --break --heading --line-number
-  sf = submodule foreach
-  # compress disk-space-usage by deleting dangling commits
-  # Note: Do not use '--all' switch for reflog expire - since that also destroys stashes
-  cc = "!echo \"Size before: $(du -sh .git | cut -f1)\"; git remote prune origin; git repack; git prune-packed; git reflog expire --all --expire=1.week.ago; git gc --force --aggressive --prune=now; echo \"Size after: $(du -sh .git | cut -f1)\";"
-  # show the biggest files in the disk (this is not technically specific to git-tracked files)
-  big = "!git rev-list --objects --all | grep \"$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -100 | awk '{print $1}')\""
-  # delete all local branches which are not present on remote
-  dlb = "!git branch -vv | GREP_OPTIONS= grep ': gone]' | awk '{print $1}' | xargs -I {} git branch -D {}"
+	what = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
-  # check if the specified branch has had a commit in the past 100 days and if so, report
-  # old = "!sh -c '[[ \"`git log $0/$1 --since 100.days -1 | wc -l`\" -eq 0 ]] && echo \"Will need to delete $0/$1\" && git push $0 --delete $1'"
-  old = "!sh -c '[[ \"`git log $0/$1 --since 100.days -1 | wc -l`\" -eq 0 ]] && echo \"Will need to delete $0/$1\"'"
+	# show all commits in the past week done by the specified author
+	standup = log --since 1.week.ago --author
 
-  # search for specific strings in your commits
-  se = "!git rev-list --all | xargs git grep -F"
-
-  # [siu = submodule init update] Runs submodule-initialisation and update after a fresh checkout RECURSIVE!
-  siu = "!git submodule update --init --recursive; git sf \"git siu\""
-  # push all submodules
-  pushsub = sf "git push"
-  # pull all submodules
-  pullsub = sf "git pull"
-  # show diffs with colored words (red word is deleted, green word is added)
-  dcolor = diff --color-words
-[core]
-	excludesfile = ~/.gitignore.global
-	sshCommand = "ssh -i ~/dev/.ssh/id_rsa-personal"
-[pull]
-	rebase = false
-[diff]
-	colorMoved = zebra
-[fetch]
-	prune = true
-[rebase]
-	autoStash = true
-[pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
-
-[interactive]
-    diffFilter = delta --color-only --features=interactive
-[init]
-	templatedir = /Users/jessebellingham/.git-template
+	# show git log visualised as a branch tree
+	tree = log --graph --decorate --oneline
+	co = checkout
 [filter "lfs"]
+	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-	clean = git-lfs clean -- %f
+[core]
+	excludesfile = /Users/jessebellingham/.gitignore_global
+	editor = vi
+	autocrlf = input
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/jessebellingham/.stCommitMsg
+[init]
+	defaultBranch = main
