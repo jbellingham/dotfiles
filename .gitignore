@@ -1,6 +1,8 @@
 /*
 !.spacemacs
 
+!.github
+
 !.config
 .config/*
 !.config/nvim
@@ -54,6 +56,7 @@
 !nix-darwin-config
 !nixos-config
 !.wezterm.lua
+
 
 **/*.aif
 **/*.aif.asd
