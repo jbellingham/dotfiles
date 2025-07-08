@@ -19,7 +19,7 @@ export ZSH=${HOME}/.oh-my-zsh
 # load_file_if_exists "${ZSH_CUSTOM}/themes/powerlevel10k/powerlevel10k.zsh-theme"  # To be used if installing using 'git clone'
 command_exists oh-my-posh
 if [ $? -eq 0 ]; then
-    eval "$(oh-my-posh --init --shell zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
+    eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
 fi
 
 arch=`uname -m`
