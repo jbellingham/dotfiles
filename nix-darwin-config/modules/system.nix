@@ -167,5 +167,8 @@
     goland = "open -na 'GoLand.app'";
     rebuildmac = "(cd ~/nix-darwin-config && make)";
     editmac = "(cd ~/nix-darwin-config && code .)";
+
+    startyabai = "yabai --start-service";
+    restartyabai = "yabai --restart-service"
   };
 }

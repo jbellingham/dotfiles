@@ -125,17 +125,9 @@ command_exists code
 # alias zshconfig="${EDITOR} ~/.zshrc"
 # alias ohmyzsh="${EDITOR} ${ZSH}"
 
-# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-# if command -v pyenv 1>/dev/null 2>&1; then
-#   eval "$(pyenv init -)"
-# fi
-# export ASDF_DIR=/opt/homebrew/opt/asdf
-. "$HOME/.asdf/asdf.sh"
+command_exists yabai
+[[ $? -eq 0 ]] && yabai --start-service
 
 load_file_if_exists "${HOME}/.zshrc.custom"
 
-# Fig post block. Keep at the bottom of this file.
-#
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
