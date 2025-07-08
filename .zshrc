@@ -90,7 +90,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ${ZSH_CUSTOM}/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(evalcache fzf-tab asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos)
+plugins=(evalcache asdf brew sudo fzf-tab zsh-autosuggestions zsh-syntax-highlighting macos)
 
 source ${ZSH}/oh-my-zsh.sh
 
@@ -131,5 +131,17 @@ command_exists code
 # if command -v pyenv 1>/dev/null 2>&1; then
 #   eval "$(pyenv init -)"
 # fi
+# export ASDF_DIR=/opt/homebrew/opt/asdf
+. "$HOME/.asdf/asdf.sh"
+
 load_file_if_exists "${HOME}/.zshrc.custom"
 
+# Fig post block. Keep at the bottom of this file.
+#
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/jessebellingham/.sdkman"
+[[ -s "/Users/jessebellingham/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/jessebellingham/.sdkman/bin/sdkman-init.sh"

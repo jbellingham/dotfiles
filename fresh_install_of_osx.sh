@@ -37,30 +37,31 @@ sudo chmod -R 600 ${HOME}/.ssh/*
 #####################
 # Install oh-my-zsh #
 #####################
-curl -L http://install.ohmyz.sh | sh
+# curl -L http://install.ohmyz.sh | sh
 
 ##################################
 # Install custom plugins for zsh #
 ##################################
-git clone --depth=1 https://github.com/mroth/evalcache ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/evalcache
+# git clone --depth=1 https://github.com/mroth/evalcache ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/evalcache
 # Note: Do not move these into 'Brewfile' - since that breaks the linking for omz plugins location
 # git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 # git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
 
 ################################
 # Prep for installing homebrew #
 ################################
 source ${HOME}/.zprofile
 
-echo ${HOMEBREW_PREFIX}
-export PATH=${PATH}:${HOMEBREW_PREFIX}/bin
-sudo mkdir -p ${HOMEBREW_PREFIX}/tmp ${HOMEBREW_PREFIX}/repository ${HOMEBREW_PREFIX}/plugins ${HOMEBREW_PREFIX}/bin
-sudo chown -fR "$(whoami)":admin ${HOMEBREW_PREFIX}
+# echo ${HOMEBREW_PREFIX}
+# export PATH=${PATH}:${HOMEBREW_PREFIX}/bin
+# sudo mkdir -p ${HOMEBREW_PREFIX}/tmp ${HOMEBREW_PREFIX}/repository ${HOMEBREW_PREFIX}/plugins ${HOMEBREW_PREFIX}/bin
+# sudo chown -fR "$(whoami)":admin ${HOMEBREW_PREFIX}
 
 #######################################
 # Install homebrew (on empty machine) #
 #######################################
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 # Note: This list is the 'first-set' of installations from brew, followed by the others inside the Brewfile. Done as an extra bootstrap step - so as to avoid installation issues when running the full bundle
 # brew install direnv git gnupg zsh
@@ -68,7 +69,7 @@ sudo chown -fR "$(whoami)":admin ${HOMEBREW_PREFIX}
 brew bundle   # You can run this here - but be prepared to have errors reported due to missing java
 
 # install plugin manager for tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 #######################################
 # Install font for better readability #

@@ -13,9 +13,16 @@ export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr
 # Talisman
 export TALISMAN_HOME=$HOME/.talisman/bin
 
+# Ruby
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/bin:$PATH
+
 # enables batect compatibility with colima
-export DOCKER_HOST="unix:///${HOME}/.colima/docker.sock"
+# export DOCKER_HOST="unix:///${HOME}/.colima/docker.sock"
 export DOTNET_ROOT="${HOME}/.dotnet"
+
+
+
 
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=3
@@ -75,12 +82,16 @@ if [ $? -eq 0 ]; then
 
   # Load asdf path changes at the end (even though this is loaded as part of omz's plugins - since the PATH gets messed up)
   # ASDF_DIR=$HOMEBREW_PREFIX/opt/asdf
-  ASDF_DIR=$HOME/.asdf
-  if [ -d $ASDF_DIR ]; then
+  # ASDF_DIR=$HOME/.asdf
+  # if [ -d $ASDF_DIR ]; then
     # TODO: Not sure if the 'autoload' is needed or not - will need to verify, but the rest of this is already loaded by the zsh-plugin
     # autoload -Uz bashcompinit && bashcompinit
-    load_file_if_exists "$ASDF_DIR/asdf.sh"
-  fi
+    # load_file_if_exists "$ASDF_DIR/asdf.sh"
+
+  # . /opt/homebrew/opt/asdf/libexec/asdf.sh
+  # ASDF_DIR=/opt/homebrew/opt/asdf
+  # fi
+
 
   # zlib - required for installing python via asdf
   ZLIB_DIR=$HOMEBREW_PREFIX/opt/zlib
@@ -90,10 +101,12 @@ if [ $? -eq 0 ]; then
   fi
 fi
 
-# setup named directories
-# hash -d dmno=~/dev/dmno
-# hash -d OneDAT=~/dev/dmno/OneDigital.AdminTools
-
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
 # iTerm2 shell integrations
 load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
+
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
