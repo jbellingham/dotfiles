@@ -2,7 +2,6 @@
 
 # Note: This file depends on the ~/.zshrc that is also shared for some shell functions
 
-load_file_if_exists "$HOME/.aliases"
 load_file_if_exists "${HOME}/.zshrc.functions"
 
 export GEM_HOME=$HOME/.gem
@@ -106,7 +105,3 @@ export RIPGREP_CONFIG_PATH=~/.ripgreprc
 load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
 
 
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

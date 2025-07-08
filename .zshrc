@@ -94,7 +94,7 @@ plugins=(evalcache asdf brew sudo fzf-tab zsh-autosuggestions zsh-syntax-highlig
 
 source ${ZSH}/oh-my-zsh.sh
 
-command_exists direnv && _evalcache direnv hook zsh
+# command_exists direnv && _evalcache direnv hook zsh
 
 # User configuration
 
@@ -139,9 +139,3 @@ load_file_if_exists "${HOME}/.zshrc.custom"
 # Fig post block. Keep at the bottom of this file.
 #
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-
-
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/jessebellingham/.sdkman"
-[[ -s "/Users/jessebellingham/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/jessebellingham/.sdkman/bin/sdkman-init.sh"
