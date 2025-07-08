@@ -13,7 +13,6 @@ environment.systemPackages = with pkgs;
         git
         jump
         jq
-        lua
         oh-my-posh
         shellcheck
         tldr
@@ -29,12 +28,19 @@ environment.systemPackages = with pkgs;
     homebrew = {
         enable = true;
         taps = [
+            "FelixKratz/formulae"
             "homebrew/cask-fonts"
+            "koekeishiya/formulae"
         ];
         brews = [
+            "borders"
             "direnv"
             "nowplaying-cli"
+            "lua"
+            # brew services start sketchybar
+            "sketchybar"
             "switchaudio-osx"
+            "yabai"
         ];
         masApps = {
             "1Password for Safari" = 1569813296;
@@ -55,6 +61,7 @@ environment.systemPackages = with pkgs;
             "firefox"
             "google-chrome"
             "jetbrains-toolbox"
+            "logi-options-plus"
             "notion"
             "raycast"
             "rectangle"
