@@ -26,8 +26,6 @@ $HOME/.config/yabai/create_spaces.sh
 
 # global settings
 yabai -m config                                 \
-    external_bar                 all:40:0       \
-    menubar_opacity              0.0            \ # permanently hides OSX menubar outside of fullscreen \
     mouse_follows_focus          off            \
     focus_follows_mouse          autofocus            \
     display_arrangement_order    default        \
@@ -44,7 +42,7 @@ yabai -m config                                 \
     insert_feedback_color        0xffd75f5f     \
     split_ratio                  0.33           \
     split_type                   auto           \
-    auto_balance                 on            \
+    auto_balance                 off            \
     top_padding                  20             \
     bottom_padding               20             \
     left_padding                 20             \

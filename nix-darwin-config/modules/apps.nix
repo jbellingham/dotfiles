@@ -13,8 +13,10 @@ environment.systemPackages = with pkgs;
         fzf
         gh
         git
+        git-extras
         jump
         jq
+        nodePackages."npm-check-updates"
         oh-my-posh
         shellcheck
         tldr
@@ -36,8 +38,8 @@ environment.systemPackages = with pkgs;
         brews = [
             "borders"
             "direnv"
-            "nowplaying-cli"
             "lua"
+            "nowplaying-cli"
             # brew services start sketchybar
             "sketchybar"
             "switchaudio-osx"
@@ -69,6 +71,7 @@ environment.systemPackages = with pkgs;
             "spotify"
             "stats"
             "visual-studio-code"
+            "wakatime"
             "wezterm"
 
             # ---
