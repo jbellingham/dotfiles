@@ -1,6 +1,6 @@
 [user]
 	name = Jesse Bellingham
-    email = 5078290+jbellingham@users.noreply.github.com
+	email = 5078290+jbellingham@users.noreply.github.com
 [alias]
 	what = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
