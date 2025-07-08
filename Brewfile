@@ -47,52 +47,54 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 brew "localstack/tap/localstack-cli"
-cask "1password"
-cask "1password-cli"
-cask "arc"
-cask "brave-browser"
-cask "catlight"
-cask "cheatsheet"
-cask "dbeaver-community"
-cask "devtoys"
-cask "discord"
-cask "docker"
-cask "eclipse-ide"
-cask "emacs"
-cask "firefox"
-cask "flux"
-cask "flycut"
-cask "font-hack-nerd-font"
-cask "font-jetbrains-mono-nerd-font"
-cask "font-monaspace"
-cask "font-sf-mono"
-cask "font-sf-pro"
-cask "fork"
-cask "ghostty"
-cask "google-chrome"
-cask "jetbrains-toolbox"
-cask "logi-options+"
-cask "meetingbar"
-cask "meld"
-cask "microsoft-onenote"
-cask "notion"
-cask "obsidian"
-cask "raycast"
-cask "rectangle"
-cask "sf-symbols"
-cask "spotify"
-cask "stats"
-cask "sublime-merge"
-cask "visual-studio-code"
-cask "wakatime"
-cask "wezterm"
-cask "zed"
-mas "1Password for Safari", id: 1569813296
-mas "HP Smart", id: 1474276998
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Xcode", id: 497799835
+cask "1password" if OS.mac?
+cask "1password-cli" if OS.mac?
+cask "arc" if OS.mac?
+cask "brave-browser" if OS.mac?
+cask "catlight" if OS.mac?
+cask "cheatsheet" if OS.mac?
+cask "dbeaver-community" if OS.mac?
+cask "devtoys" if OS.mac?
+cask "discord" if OS.mac?
+cask "docker" if OS.mac?
+cask "eclipse-ide" if OS.mac?
+cask "emacs" if OS.mac?
+cask "firefox" if OS.mac?
+cask "flux" if OS.mac?
+cask "flycut" if OS.mac?
+cask "font-hack-nerd-font" if OS.mac?
+cask "font-jetbrains-mono-nerd-font" if OS.mac?
+cask "font-monaspace" if OS.mac?
+cask "font-sf-mono" if OS.mac?
+cask "font-sf-pro" if OS.mac?
+cask "fork" if OS.mac?
+cask "ghostty" if OS.mac?
+cask "google-chrome" if OS.mac?
+cask "jetbrains-toolbox" if OS.mac?
+cask "logi-options+" if OS.mac?
+cask "meetingbar" if OS.mac?
+cask "meld" if OS.mac?
+cask "microsoft-onenote" if OS.mac?
+cask "moom" if OS.mac?
+cask "notion" if OS.mac?
+cask "obsidian" if OS.mac?
+cask "postman" if OS.mac?
+cask "raycast" if OS.mac?
+cask "rectangle" if OS.mac?
+cask "sf-symbols" if OS.mac?
+cask "spotify" if OS.mac?
+cask "stats" if OS.mac?
+cask "sublime-merge" if OS.mac?
+cask "visual-studio-code" if OS.mac?
+cask "wakatime" if OS.mac?
+cask "wezterm" if OS.mac?
+cask "zed" if OS.mac?
+mas "1Password for Safari", id: 1569813296 if OS.mac?
+mas "HP Smart", id: 1474276998 if OS.mac?
+mas "Keynote", id: 409183694 if OS.mac?
+mas "Numbers", id: 409203825 if OS.mac?
+mas "Pages", id: 409201541 if OS.mac?
+mas "Xcode", id: 497799835 if OS.mac?
 vscode "adpyke.vscode-sql-formatter"
 vscode "bbenoist.nix"
 vscode "christian-kohler.npm-intellisense"
