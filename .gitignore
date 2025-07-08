@@ -2,6 +2,7 @@
 !.spacemacs
 
 !.github
+!.vimrc
 
 !.config
 .config/*
@@ -45,6 +46,7 @@
 !.gitconfig
 !.gitconfig-oss.inc
 !Brewfile
+!Brewfile.lock.json
 !packages.config
 !.tool-versions
 !.leptonrc
