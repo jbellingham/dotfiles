@@ -39,7 +39,7 @@ alias bu="brew upgrade"
 alias dockerdebug="docker run -ti --entrypoint sh"
 alias reload='source ~/.zshrc'
 alias hgrep="history 1 | grep"
-alias grep="grep -iF --color=auto"
+alias grep="rg -iF --color=auto"
 alias formatjson="pbpaste | jq . | pbcopy"
 alias aliases="alias | less"
 alias home="code $HOME"

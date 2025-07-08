@@ -11,8 +11,7 @@ local config = wezterm.config_builder()
 
 config.font_size = 16.0
 config.color_scheme = 'Afterglow'
-config.window_background_opacity = 0.9
-config.window_background_image = '/Users/jessebellingham/terminal-background.jpg'
+config.window_background_opacity = 0.95
 config.window_background_image_hsb = {
     brightness = 0.2,
 }
