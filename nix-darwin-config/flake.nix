@@ -2,7 +2,8 @@
   # Install nix with `curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install macos`
   # https://github.com/DeterminateSystems/nix-installer/issues/753
 
-  description = "Example Darwin system flake";
+  description = "Jesse's system flake";
+  # https://zero-to-nix.com/
 
   inputs = {
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
