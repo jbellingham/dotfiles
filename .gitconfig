@@ -16,7 +16,7 @@
 	process = git-lfs filter-process
 	required = true
 [core]
-	excludesfile = /Users/jessebellingham/.gitignore_global
+	excludesfile = /Users/jessebellingham/.gitignore.global
 	editor = vi
 	autocrlf = input
 [difftool "sourcetree"]
