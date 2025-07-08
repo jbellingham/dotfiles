@@ -21,6 +21,9 @@
 .config/coc/*
 !.config/coc/ultisnips
 
+!.config/sketchybar
+!.config/yabai
+
 !.ripgreprc
 
 !.p10k.zsh
