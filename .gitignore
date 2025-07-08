@@ -24,6 +24,8 @@
 !.config/sketchybar
 !.config/yabai
 
+!.config/lazygit
+
 !.ripgreprc
 
 !.p10k.zsh
