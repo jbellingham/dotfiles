@@ -79,6 +79,7 @@ cask "visual-studio-code" if OS.mac?
 cask "wakatime" if OS.mac?
 cask "warp" if OS.mac?
 cask "wezterm" if OS.mac?
+cask "yubico-authenticator" if OS.mac?
 mas "1Password for Safari", id: 1569813296 if OS.mac?
 mas "HP Smart", id: 1474276998 if OS.mac?
 mas "Keynote", id: 409183694 if OS.mac?
