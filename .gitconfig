@@ -1,6 +1,8 @@
 [user]
 	name = Jesse Bellingham
 	email = 5078290+jbellingham@users.noreply.github.com
+[includeIf "gitdir/i:~/dev/work/"]    # Work
+  path = ~/.gitconfig-work.inc
 [alias]
 	what = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 

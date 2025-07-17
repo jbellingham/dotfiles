@@ -47,7 +47,7 @@
 !.gitignore
 !.gitignore.global
 !.gitconfig
-!.gitconfig-oss.inc
+!.gitconfig-work.inc
 !Brewfile
 !Brewfile.lock.json
 !packages.config
