@@ -29,7 +29,6 @@ then
 else
     . /usr/share/autojump/autojump.sh
 fi
-eval "$(mcfly init zsh)"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -82,7 +81,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ${ZSH_CUSTOM}/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(evalcache asdf brew sudo zsh-autosuggestions zsh-syntax-highlighting macos direnv)
+plugins=(evalcache asdf brew sudo zsh-autosuggestions macos direnv zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 command_exists direnv && _evalcache direnv hook zsh
@@ -107,9 +106,9 @@ command_exists code
 # Compilation flags
 [[ $arch =~ "x86" ]] && export ARCHFLAGS="-arch x86_64"
 
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
+# source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
 
 load_file_if_exists "${HOME}/.zshrc.custom"
 
@@ -119,6 +118,8 @@ fi
 
 eval "$(mcfly init zsh)"
 eval "$(direnv hook zsh)"
+
+export PATH="$PATH:/opt/homebrew/Cellar/postgresql@17/17.5/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
