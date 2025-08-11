@@ -2,18 +2,16 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+set fish_greeting
+
 export HOMEBREW_PREFIX="/opt/homebrew"
 export GEM_HOME=$HOME/.gem
 
 # Homebrew
-export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$PATH"
+export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$HOME/bin"
+
 
 source ~/.config/fish/aliases.fish
-
-mcfly init fish | source
-oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json' | source
-# direnv hook fish | source
-
 
 # BEGIN -- ASDF configuration code
 if test -z $ASDF_DATA_DIR
@@ -33,3 +31,10 @@ set --erase _asdf_shims
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+
+### Plugins
+mcfly init fish | source
+mcfly-fzf init fish | source
+jump shell fish | source
+oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json' | source
+direnv hook fish | source
