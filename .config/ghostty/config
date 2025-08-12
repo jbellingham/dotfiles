@@ -3,3 +3,4 @@ font-size = 16
 font-family = "Monaspace Argon"
 font-thicken = true
 copy-on-select = true
+unfocused-split-opacity = 0.15

@@ -10,3 +10,4 @@ customCommands:
     key: "o"
     command: "git checkout --ours {{.SelectedFile.Name}}"
     description: "Takes the changes from the 'ours' version of the file"
+
