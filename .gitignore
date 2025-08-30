@@ -32,6 +32,10 @@
 
 !.config/fish
 
+!.config/emacs
+.config/emacs/*
+!.config/emacs/lisp
+!.config/emacs/init.el
 !.config/lazygit
 
 !.ripgreprc
