@@ -3,6 +3,12 @@ function ...   ; cd ../.. ; end
 function ....  ; cd ../../.. ; end
 function ..... ; cd ../../../.. ; end
 
+
+abbr brwe 'brew'
+abbr bewr 'brew'
+abbr bwer 'brew'
+abbr bwre 'brew'
+
 # mv, rm, cp
 abbr mv 'mv -v'
 abbr rm 'rm -v'
@@ -19,9 +25,12 @@ alias cat="bat"
 alias top="btop"
 alias bu="brew upgrade"
 alias hgrep="history 1 | grep"
+alias hgrep="history | grep"
 alias grep="rg -iF --color=auto"
 alias formatjson="pbpaste | jq . | pbcopy"
 alias aliases="alias | less"
+
+alias assume="source (brew --prefix)/bin/assume.fish"
 
 if type -q trash
     alias rm="trash $argv"
