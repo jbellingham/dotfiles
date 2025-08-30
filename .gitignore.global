@@ -14,3 +14,7 @@ venv/
 .talismanrc
 .direnv
 shell.nix
+Procfile.debug
+
+CLAUDE.md
+.claude
