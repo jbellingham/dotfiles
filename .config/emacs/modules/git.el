@@ -112,7 +112,7 @@
          ("C-c g d" . blamer-show-posframe-commit-info))
   :defer 20
   :custom
-  (blamer-idle-time 0.3)
+  (blamer-idle-time 5)
   (blamer-min-offset 70)
   :custom-face
   (blamer-face ((t :foreground "#7a88cf"

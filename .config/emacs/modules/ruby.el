@@ -32,14 +32,46 @@
         enh-ruby-hanging-brace-indent-level 2
         enh-ruby-hanging-paren-indent-level 2
         enh-ruby-bounce-deep-indent t
-        enh-ruby-hanging-indent-level 2))
+        enh-ruby-hanging-indent-level 2
+        ;; Fix for "Unprintable entity" errors
+        enh-ruby-deep-indent-paren nil
+        enh-ruby-deep-indent-construct nil)
+
+  ;; Configure process communication for large projects
+  (when (fboundp 'enh-ruby-mode)
+    (add-hook 'enh-ruby-mode-hook
+              (lambda ()
+                ;; Set proper encoding for process communication
+                (setq process-connection-type nil)
+                ;; Increase process output buffer for large files
+                (setq-local read-process-output-max (* 4 1024 1024))))) ; 4MB buffer
+
+  ;; Handle process errors gracefully
+  (defadvice enh-ruby-mode (around handle-process-errors activate)
+    "Handle enh-ruby-mode process errors gracefully."
+    (condition-case err
+        ad-do-it
+      (error (progn
+               (message "enh-ruby-mode error (falling back to ruby-mode): %s"
+                       (error-message-string err))
+               (ruby-mode))))))
 
 ;; Ruby testing with RSpec
 (use-package rspec-mode
-  :hook (ruby-mode . rspec-mode)
+  :hook ((ruby-mode enh-ruby-mode) . rspec-mode)
   :config
   (setq rspec-use-rake-when-possible nil
-        rspec-command-options "--format documentation"))
+        rspec-use-spring-when-possible nil
+        rspec-command-options "--format documentation")
+  :bind (:map rspec-mode-map
+              ("C-c t v" . rspec-verify)
+              ("C-c t a" . rspec-verify-all)
+              ("C-c t s" . rspec-verify-single)
+              ("C-c t r" . rspec-rerun)
+              ("C-c t t" . rspec-toggle-spec-and-target)
+              ("C-c t e" . rspec-toggle-example)
+              ("C-c t f" . rspec-verify-matching)
+              ("C-c t c" . rspec-verify-continue)))
 
 ;; Ruby refactoring tools
 (use-package ruby-refactor

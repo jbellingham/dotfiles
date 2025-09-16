@@ -23,19 +23,42 @@
       frame-resize-pixelwise t
       window-resize-pixelwise t)
 
-;; Font configuration
-(set-face-attribute 'default nil
-                    :family "SF Mono"
-                    :height 140
-                    :weight 'normal)
+;; Font configuration optimized for M4 MacBook
+(defun setup-fonts ()
+  "Setup fonts with fallbacks for different systems."
+  (let ((mono-font (cond
+                    ((find-font (font-spec :name "SF Mono")) "SF Mono")
+                    ((find-font (font-spec :name "Monaco")) "Monaco")
+                    ((find-font (font-spec :name "Menlo")) "Menlo")
+                    (t "monospace")))
+        (variable-font (cond
+                        ((find-font (font-spec :name "SF Pro Display")) "SF Pro Display")
+                        ((find-font (font-spec :name "Helvetica Neue")) "Helvetica Neue")
+                        ((find-font (font-spec :name "Arial")) "Arial")
+                        (t "sans-serif")))
+        ;; Adjust height for high-DPI M4 MacBook displays
+        (font-height (if (> (display-pixel-width) 2560) 130 140)))
 
-(set-face-attribute 'fixed-pitch nil
-                    :family "SF Mono"
-                    :height 140)
+    (set-face-attribute 'default nil
+                        :family mono-font
+                        :height font-height
+                        :weight 'normal)
 
-(set-face-attribute 'variable-pitch nil
-                    :family "SF Pro Display"
-                    :height 140)
+    (set-face-attribute 'fixed-pitch nil
+                        :family mono-font
+                        :height font-height)
+
+    (set-face-attribute 'variable-pitch nil
+                        :family variable-font
+                        :height font-height)))
+
+;; Setup fonts after frame creation
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (select-frame frame)
+                (setup-fonts)))
+  (setup-fonts))
 
 ;; Line numbers
 (use-package display-line-numbers

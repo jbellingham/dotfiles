@@ -41,6 +41,38 @@
       auto-revert-verbose nil        ; Less verbose auto-revert
       global-auto-revert-non-file-buffers t) ; Auto-revert dired and other buffers
 
+;; Fix for process sentinel errors
+(defun filter-process-sentinel-errors (orig-fun &rest args)
+  "Filter out 'Unprintable entity' errors from process sentinels."
+  (let ((inhibit-message t))
+    (condition-case err
+        (apply orig-fun args)
+      (error
+       (unless (string-match-p "Unprintable entity\\|Wrong type argument: hash-table-p"
+                              (error-message-string err))
+         (signal (car err) (cdr err)))))))
+
+(advice-add 'internal-default-process-sentinel :around #'filter-process-sentinel-errors)
+
+;; Global error handler for "Unprintable entity" issues
+(defun suppress-unprintable-entity-errors (orig-fun &rest args)
+  "Suppress unprintable entity errors across all functions."
+  (condition-case err
+      (apply orig-fun args)
+    (error
+     (let ((err-msg (error-message-string err)))
+       (unless (or (string-match-p "Unprintable entity" err-msg)
+                   (string-match-p "Wrong type argument: hash-table-p.*Unprintable entity" err-msg))
+         (signal (car err) (cdr err)))))))
+
+;; Apply to common error-prone functions
+(advice-add 'process-send-string :around #'suppress-unprintable-entity-errors)
+(advice-add 'process-send-region :around #'suppress-unprintable-entity-errors)
+
+;; Set safer process defaults
+(setq process-adaptive-read-buffering nil
+      read-process-output-max (* 1024 1024)) ; 1MB for all processes
+
 ;; Enable useful modes
 (global-auto-revert-mode 1)          ; Auto-reload changed files
 (delete-selection-mode 1)            ; Replace selected text when typing
@@ -80,6 +112,28 @@
   :ensure nil
   :config
   (windmove-default-keybindings))
+
+;; Mac keyboard settings
+;;(when (eq system-type 'darwin)
+  ;;(setq mac-command-modifier 'meta)    ; Command key as Meta
+  ;;(setq mac-option-modifier 'super))   ; Option key as Super
+
+;; Config management functions
+(defun reload-config ()
+  "Reload Emacs configuration."
+  (interactive)
+  (load-file user-init-file)
+  (message "Config reloaded!"))
+
+(defun open-config ()
+  "Open Emacs configuration file."
+  (interactive)
+  (find-file user-init-file))
+
+;; Custom keybindings
+(global-set-key (kbd "C-x w") 'delete-window)  ; C-x w to close current window
+(global-set-key (kbd "C-c c r") 'reload-config) ; C-c c r to reload config
+(global-set-key (kbd "C-c c e") 'open-config)   ; C-c c e to edit config
 
 ;; Dired improvements
 (use-package dired
