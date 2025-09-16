@@ -14,6 +14,9 @@
   :mode "Guardfile\\'"
   :mode "\\.rake\\'"
   :mode "\\.gemspec\\'"
+  :hook (ruby-mode . (lambda ()
+                       (font-lock-mode 1)
+                       (font-lock-ensure)))
   :config
   (setq ruby-indent-level 2
         ruby-indent-tabs-mode nil
@@ -27,6 +30,9 @@
   :mode "Guardfile\\'"
   :mode "\\.rake\\'"
   :mode "\\.gemspec\\'"
+  :hook (enh-ruby-mode . (lambda ()
+                          (font-lock-mode 1)
+                          (font-lock-ensure)))
   :config
   (setq enh-ruby-indent-level 2
         enh-ruby-hanging-brace-indent-level 2
@@ -161,6 +167,96 @@
 ;; Ruby end block completion
 (use-package ruby-end
   :hook ((ruby-mode enh-ruby-mode) . ruby-end-mode))
+
+;; Aggressive autocomplete for Ruby
+(use-package company
+  :hook ((ruby-mode enh-ruby-mode) . company-mode)
+  :config
+  (setq company-idle-delay 0.2              ; Reasonable delay
+        company-minimum-prefix-length 2     ; Show after 2 characters
+        company-show-numbers t               ; Number completions
+        company-tooltip-align-annotations t
+        company-require-match nil
+        company-tooltip-limit 15             ; More items but still fast
+        company-tooltip-maximum-width 60     ; Reasonable width
+        company-selection-wrap-around t      ; Wrap around selection
+        company-async-timeout 10             ; 10 second timeout (more generous)
+        company-async-redisplay-delay 0.3    ; Less aggressive updates
+        company-transformers '(company-sort-by-occurrence)
+        company-dabbrev-downcase nil         ; Keep original case
+        company-dabbrev-ignore-case nil)     ; Case sensitive matching
+  :bind (:map company-active-map
+              ("C-n" . company-select-next-or-abort)
+              ("C-p" . company-select-previous-or-abort)
+              ("C-d" . company-show-doc-buffer)
+              ("M-." . company-show-location)
+              ("<escape>" . company-abort)
+              ("TAB" . company-complete-selection)
+              ("<tab>" . company-complete-selection)))
+
+;; Ruby-specific completion backend
+(use-package robe
+  :hook ((ruby-mode enh-ruby-mode) . robe-mode)
+  :config
+  (push 'company-robe company-backends)
+  ;; Start robe server automatically
+  (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+    (rvm-activate-corresponding-ruby)))
+
+;; Better Ruby method/class completion
+(use-package ac-inf-ruby
+  :after inf-ruby
+  :hook ((ruby-mode enh-ruby-mode) . ac-inf-ruby-enable))
+
+;; Snippet support for LSP
+(use-package yasnippet
+  :hook ((ruby-mode enh-ruby-mode) . yas-minor-mode)
+  :config
+  (yas-reload-all))
+
+;; Ensure global font-lock is enabled
+(global-font-lock-mode 1)
+
+;; LSP for Ruby (requires solargraph gem)
+(use-package lsp-mode
+  :hook ((ruby-mode enh-ruby-mode) . lsp-deferred)
+  :config
+  (setq lsp-solargraph-use-bundler nil      ; Use global gem, not bundle
+        lsp-completion-provider :capf
+        lsp-enable-snippet t
+        lsp-solargraph-server-command '("solargraph" "stdio")
+        lsp-semantic-tokens-enable nil      ; Disable semantic tokens to preserve syntax highlighting
+        lsp-enable-symbol-highlighting nil  ; Disable symbol highlighting
+        ;; Speed optimizations without disabling features
+        lsp-idle-delay 0.3                  ; Faster response time
+        lsp-completion-show-detail t         ; Keep detailed info but make it faster
+        lsp-completion-show-kind t           ; Keep kind icons
+        lsp-eldoc-render-all t               ; Show full docs on hover
+        lsp-signature-render-documentation t ; Show signature documentation
+        lsp-completion-filter-on-incomplete t ; Filter as you type
+        lsp-enable-completion-at-point t     ; Better integration with company
+        lsp-response-timeout 10              ; 10 second timeout for requests
+        lsp-modeline-code-actions-enable t   ; Show code actions in modeline
+        lsp-modeline-diagnostics-enable t    ; Show diagnostics in modeline
+        lsp-enable-file-watchers nil         ; Disable file watching for speed
+        lsp-enable-folding nil               ; Disable folding for speed
+        lsp-enable-links nil)                ; Disable links for speed
+
+  ;; Fix for font-lock being disabled after LSP starts
+  (add-hook 'lsp-after-open-hook
+            (lambda ()
+              (when (derived-mode-p 'ruby-mode 'enh-ruby-mode)
+                (font-lock-mode 1)
+                (font-lock-ensure))))
+  :commands (lsp lsp-deferred))
+
+;; LSP UI improvements
+(use-package lsp-ui
+  :after lsp-mode
+  :config
+  (setq lsp-ui-doc-enable nil          ; Disable popup docs (can be slow)
+        lsp-ui-sideline-enable t       ; Show hints in sideline
+        lsp-ui-flycheck-enable t))
 
 ;; Additional Ruby tools
 (use-package seeing-is-believing

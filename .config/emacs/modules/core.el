@@ -130,10 +130,26 @@
   (interactive)
   (find-file user-init-file))
 
+;; Claude Code integration
+(defun claude-code ()
+  "Launch Claude Code in current directory."
+  (interactive)
+  (let ((default-directory (or (projectile-project-root) default-directory)))
+    (shell-command "claude" "*Claude Code*")))
+
+(defun claude-code-terminal ()
+  "Open terminal with Claude Code."
+  (interactive)
+  (let ((default-directory (or (projectile-project-root) default-directory)))
+    (term "/bin/zsh")
+    (term-send-string (get-buffer-process (current-buffer)) "claude\n")))
+
 ;; Custom keybindings
 (global-set-key (kbd "C-x w") 'delete-window)  ; C-x w to close current window
 (global-set-key (kbd "C-c c r") 'reload-config) ; C-c c r to reload config
 (global-set-key (kbd "C-c c e") 'open-config)   ; C-c c e to edit config
+(global-set-key (kbd "C-c c c") 'claude-code)   ; C-c c c to launch Claude Code
+(global-set-key (kbd "C-c c t") 'claude-code-terminal) ; C-c c t for Claude terminal
 
 ;; Dired improvements
 (use-package dired
