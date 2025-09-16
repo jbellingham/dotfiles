@@ -143,10 +143,24 @@
          ("C-x C-b" . persp-list-buffers))
   :custom
   (persp-mode-prefix-key (kbd "C-c M-p"))
+  :config
+  ;; Fix for "Unprintable entity" errors in perspective
+  (setq persp-auto-save-opt 0) ; Disable auto-save that can cause issues
+
+  ;; Patch persp-maybe-kill-buffer to handle errors gracefully
+  (defadvice persp-maybe-kill-buffer (around handle-persp-errors activate)
+    "Handle perspective buffer errors gracefully."
+    (condition-case err
+        ad-do-it
+      (error
+       (unless (string-match-p "Wrong type argument: hash-table-p\\|Unprintable entity"
+                              (error-message-string err))
+         (signal (car err) (cdr err))))))
+
   :init
   (persp-mode))
 
-;; Session management
+;; Session management (disabled auto-save to prevent errors)
 (use-package desktop
   :ensure nil
   :config
@@ -157,8 +171,11 @@
         desktop-save t
         desktop-files-not-to-save "^$"
         desktop-load-locked-desktop nil
-        desktop-auto-save-timeout 30)
-  (desktop-save-mode 1))
+        desktop-auto-save-timeout nil) ; Disable auto-save
+  ;; Don't start desktop-save-mode automatically to prevent issues
+  ;; Uncomment the line below once errors are resolved:
+  ;; (desktop-save-mode 1)
+  )
 
 (provide 'project)
 ;;; project.el ends here

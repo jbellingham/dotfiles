@@ -10,17 +10,22 @@
 
 ;;; Code:
 
-;; Performance optimizations for startup
+;; Performance optimizations for startup (M4 MacBook optimized)
 (defvar file-name-handler-alist-original file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 0.6)
 
+;; M4 MacBook specific performance settings
+(setq read-process-output-max (* 1024 1024)) ; 1MB for faster LSP
+(setq process-adaptive-read-buffering nil)
+
 ;; Restore after startup
 (defun restore-post-init-settings ()
   "Restore settings after initialization."
   (setq file-name-handler-alist file-name-handler-alist-original)
-  (setq gc-cons-threshold (* 2 1000 1000))
+  ;; Higher GC threshold for M4 MacBook's ample memory
+  (setq gc-cons-threshold (* 16 1000 1000))
   (setq gc-cons-percentage 0.1))
 
 (add-hook 'emacs-startup-hook #'restore-post-init-settings)
@@ -72,3 +77,18 @@
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ruby-constant-face ((t (:foreground "#F4D03F"))))
+ '(ruby-heredoc-delimiter-face ((t (:foreground "#5DADE2"))))
+ '(ruby-op-face ((t (:foreground "#EC7063"))))
+ '(ruby-string-delimiter-face ((t (:foreground "#58D68D")))))
