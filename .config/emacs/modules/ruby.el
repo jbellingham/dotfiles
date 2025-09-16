@@ -172,25 +172,14 @@
 (use-package company
   :hook ((ruby-mode enh-ruby-mode) . company-mode)
   :config
-  (setq company-idle-delay 0.2              ; Reasonable delay
-        company-minimum-prefix-length 2     ; Show after 2 characters
+  (setq company-idle-delay 0.1              ; Show completions quickly
+        company-minimum-prefix-length 1     ; Show after 1 character
         company-show-numbers t               ; Number completions
         company-tooltip-align-annotations t
-        company-require-match nil
-        company-tooltip-limit 15             ; More items but still fast
-        company-tooltip-maximum-width 60     ; Reasonable width
-        company-selection-wrap-around t      ; Wrap around selection
-        company-async-timeout 10             ; 10 second timeout (more generous)
-        company-async-redisplay-delay 0.3    ; Less aggressive updates
-        company-transformers '(company-sort-by-occurrence)
-        company-dabbrev-downcase nil         ; Keep original case
-        company-dabbrev-ignore-case nil)     ; Case sensitive matching
+        company-require-match nil)
   :bind (:map company-active-map
-              ("C-n" . company-select-next-or-abort)
-              ("C-p" . company-select-previous-or-abort)
-              ("C-d" . company-show-doc-buffer)
-              ("M-." . company-show-location)
-              ("<escape>" . company-abort)
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)
               ("TAB" . company-complete-selection)
               ("<tab>" . company-complete-selection)))
 
@@ -248,7 +237,19 @@
               (when (derived-mode-p 'ruby-mode 'enh-ruby-mode)
                 (font-lock-mode 1)
                 (font-lock-ensure))))
-  :commands (lsp lsp-deferred))
+  :commands (lsp lsp-deferred)
+  :bind (:map lsp-mode-map
+              ("M-." . lsp-find-definition)        ; Go to definition
+              ("M-?" . lsp-find-references)        ; Find references
+              ("M-," . pop-tag-mark)               ; Go back
+              ("C-c l r" . lsp-rename)             ; Rename symbol
+              ("C-c l a" . lsp-execute-code-action) ; Code actions
+              ("C-c l f" . lsp-format-buffer)      ; Format buffer
+              ("C-c l d" . lsp-describe-thing-at-point) ; Show docs
+              ("C-c l i" . lsp-find-implementation) ; Find implementation
+              ("C-c l t" . lsp-find-type-definition) ; Find type definition
+              ("C-c l s" . lsp-workspace-symbol)   ; Search workspace symbols
+              ("C-c l h" . lsp-symbol-highlight))) ; Highlight symbol
 
 ;; LSP UI improvements
 (use-package lsp-ui
