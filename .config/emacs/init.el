@@ -1,33 +1,74 @@
-; list the repositories containing them
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+;;; init.el --- Modern Emacs Configuration for Ruby on Rails Development -*- lexical-binding: t; -*-
 
-; activate all the packages (in particular autoloads)
+;; Author: Generated Configuration
+;; Version: 1.0
+;; Package-Requires: ((emacs "29.1"))
+
+;;; Commentary:
+;; A modern, modular Emacs configuration optimized for Ruby on Rails development.
+;; Features organized modules, use-package for clean configuration, and Rails-specific tooling.
+
+;;; Code:
+
+;; Performance optimizations for startup
+(defvar file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 0.6)
+
+;; Restore after startup
+(defun restore-post-init-settings ()
+  "Restore settings after initialization."
+  (setq file-name-handler-alist file-name-handler-alist-original)
+  (setq gc-cons-threshold (* 2 1000 1000))
+  (setq gc-cons-percentage 0.1))
+
+(add-hook 'emacs-startup-hook #'restore-post-init-settings)
+
+;; Package management setup
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+
 (package-initialize)
 
-; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
+;; Bootstrap use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-; list the packages you want
-(setq package-list '(better-defaults solarized-theme))
+(require 'use-package)
+(setq use-package-always-ensure t
+      use-package-expand-minimally t
+      use-package-compute-statistics t)
 
-; install the missing packages
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+;; Configuration modules directory
+(defconst config-modules-dir (expand-file-name "modules/" user-emacs-directory)
+  "Directory containing configuration modules.")
 
-(require 'better-defaults)
+;; Helper function to load modules
+(defun load-config-module (module)
+  "Load configuration MODULE from modules directory."
+  (load (expand-file-name (format "%s.el" module) config-modules-dir)))
 
-(setq inhibit-splash-screen t
-      initial-scratch-message nil
-      initial-major-mode 'ruby-mode)
+;; Core settings
+(load-config-module "core")
 
-(load-theme 'solarized-dark t)
-(global-display-line-numbers-mode 1)
+;; Development tools
+(load-config-module "completion")
+(load-config-module "project")
+(load-config-module "git")
 
-(set-face-attribute 'default nil
-                    :family "Hack Nerd Font Mono"
-                    :height 150
-                    :weight 'normal
-                    :width 'normal)
+;; Language support
+(load-config-module "ruby")
+
+;; UI and themes
+(load-config-module "ui")
+
+;; Optional modules (uncomment as needed)
+;; (load-config-module "org")
+;; (load-config-module "markdown")
+
+(provide 'init)
+;;; init.el ends here

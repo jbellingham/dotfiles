@@ -34,7 +34,7 @@
 
 !.config/emacs
 .config/emacs/*
-!.config/emacs/lisp
+!.config/emacs/modules
 !.config/emacs/init.el
 !.config/lazygit
 
