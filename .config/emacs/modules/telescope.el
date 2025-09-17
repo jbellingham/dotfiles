@@ -135,11 +135,16 @@
 
 ;; Enhanced project-wide search functions
 (defun find-files ()
-  "Find files in current project or directory."
+  "VS Code-like fuzzy file finder with true filename matching."
   (interactive)
   (if (projectile-project-p)
-      (consult-find (projectile-project-root))
-    (consult-find default-directory)))
+      ;; In project: use projectile for true fuzzy filename matching
+      (projectile-find-file)
+    ;; Not in project: use consult-find but with better message
+    (let ((default-directory (read-directory-name "Find files in: " default-directory)))
+      (if (executable-find "fd")
+          (consult-fd default-directory)
+        (consult-find default-directory)))))
 
 (defun live-grep ()
   "Live grep in current project or directory."
@@ -167,6 +172,9 @@
 (global-set-key (kbd "C-c s p") 'live-grep)       ; Search in Project
 (global-set-key (kbd "C-c b p") 'project-buffers) ; Buffers in Project
 (global-set-key (kbd "C-c f g") 'git-files)       ; Git files
+
+;; VS Code-like Command+P fuzzy file finder
+(global-set-key (kbd "s-p") 'find-files)          ; Command+P fuzzy find
 
 ;; Configure completion for better telescope feel
 (setq completion-cycle-threshold 3

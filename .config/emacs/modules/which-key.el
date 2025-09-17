@@ -198,7 +198,12 @@
     "C-c j b" "Jump Bookmark"
 
     ;; Special key sequences
-    "C-c SPC" "Telescope Menu"))
+    "C-c SPC" "Telescope Menu"
+
+    ;; Global Command (Super) key bindings
+    "s-0" "Select Treemacs"
+    "s-o" "Switch Window"
+    "s-p" "Find Files"))
 
 (provide 'which-key-fixed)
 ;;; which-key-fixed.el ends here
