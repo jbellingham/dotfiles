@@ -190,17 +190,29 @@ Works with various language conventions."
                        "\\(\\.test\\|\\.spec\\|_test\\|_spec\\|Test\\|Spec\\)" ""
                        current-base)))
         (setq implementation-candidates
-              (list
-               ;; Same directory
-               (concat current-dir impl-base "." current-ext)
-               ;; Common source directories
-               (concat project-root "src/" impl-base "." current-ext)
-               (concat project-root "lib/" impl-base "." current-ext)
-               (concat project-root "app/" impl-base "." current-ext)
-               (concat project-root impl-base "." current-ext)
-               ;; Language-specific patterns
-               (concat project-root "src/main/" impl-base "." current-ext)
-               (concat project-root "src/components/" impl-base "." current-ext)))))
+              (cond
+               ;; Ruby: spec/path/to/file_spec.rb -> app/path/to/file.rb or lib/path/to/file.rb
+               ((string= current-ext "rb")
+                (let* ((spec-relative-path (file-relative-name current-file (concat project-root "spec/")))
+                       (spec-dir (file-name-directory spec-relative-path))
+                       (clean-dir (if spec-dir spec-dir "")))
+                  (list
+                   (concat project-root "app/" clean-dir impl-base ".rb")
+                   (concat project-root "lib/" clean-dir impl-base ".rb")
+                   (concat project-root clean-dir impl-base ".rb"))))
+               ;; Other languages
+               (t
+                (list
+                 ;; Same directory
+                 (concat current-dir impl-base "." current-ext)
+                 ;; Common source directories
+                 (concat project-root "src/" impl-base "." current-ext)
+                 (concat project-root "lib/" impl-base "." current-ext)
+                 (concat project-root "app/" impl-base "." current-ext)
+                 (concat project-root impl-base "." current-ext)
+                 ;; Language-specific patterns
+                 (concat project-root "src/main/" impl-base "." current-ext)
+                 (concat project-root "src/components/" impl-base "." current-ext))))))))
 
      ;; From implementation to test (default behavior)
      (t
@@ -228,7 +240,7 @@ Works with various language conventions."
       (if existing-file
           (find-file existing-file)
         (message "No implementation/test file found. Searched: %s"
-                (mapconcat 'identity implementation-candidates ", "))))))
+                (mapconcat 'identity implementation-candidates ", ")))))
 
 (defun my/goto-test ()
   "Go to test file for current implementation."
@@ -246,27 +258,40 @@ Works with various language conventions."
         (message "Already in a test file")
 
       (setq test-candidates
-            (list
-             ;; Test files in same directory
-             (concat current-dir current-base ".test." current-ext)
-             (concat current-dir current-base ".spec." current-ext)
-             (concat current-dir current-base "_test." current-ext)
-             (concat current-dir current-base "_spec." current-ext)
-             (concat current-dir current-base "Test." current-ext)
-             (concat current-dir current-base "Spec." current-ext)
-             ;; Test directories
-             (concat project-root "test/" current-base ".test." current-ext)
-             (concat project-root "tests/" current-base ".test." current-ext)
-             (concat project-root "spec/" current-base ".spec." current-ext)
-             (concat project-root "__tests__/" current-base ".test." current-ext)
-             (concat project-root "src/test/" current-base ".test." current-ext)
-             (concat project-root "src/tests/" current-base ".test." current-ext)
-             ;; Ruby/Rails specific
-             (concat project-root "spec/" current-base "_spec.rb")
-             (concat project-root "test/" current-base "_test.rb")
-             ;; JavaScript/TypeScript specific
-             (concat current-dir "__tests__/" current-base ".test." current-ext)
-             (concat current-dir "__tests__/" current-base ".spec." current-ext)))
+            (cond
+             ;; Ruby: app/path/to/file.rb -> spec/path/to/file_spec.rb
+             ((string= current-ext "rb")
+              (let* ((app-relative-path (cond
+                                        ((string-match "^\\(.*/\\)?app/\\(.*\\)" current-file)
+                                         (match-string 2 current-file))
+                                        ((string-match "^\\(.*/\\)?lib/\\(.*\\)" current-file)
+                                         (match-string 2 current-file))
+                                        (t (file-relative-name current-file project-root))))
+                     (spec-dir (file-name-directory app-relative-path))
+                     (clean-dir (if spec-dir spec-dir "")))
+                (list
+                 (concat project-root "spec/" clean-dir current-base "_spec.rb")
+                 (concat project-root "test/" clean-dir current-base "_test.rb"))))
+             ;; Other languages
+             (t
+              (list
+               ;; Test files in same directory
+               (concat current-dir current-base ".test." current-ext)
+               (concat current-dir current-base ".spec." current-ext)
+               (concat current-dir current-base "_test." current-ext)
+               (concat current-dir current-base "_spec." current-ext)
+               (concat current-dir current-base "Test." current-ext)
+               (concat current-dir current-base "Spec." current-ext)
+               ;; Test directories
+               (concat project-root "test/" current-base ".test." current-ext)
+               (concat project-root "tests/" current-base ".test." current-ext)
+               (concat project-root "spec/" current-base ".spec." current-ext)
+               (concat project-root "__tests__/" current-base ".test." current-ext)
+               (concat project-root "src/test/" current-base ".test." current-ext)
+               (concat project-root "src/tests/" current-base ".test." current-ext)
+               ;; JavaScript/TypeScript specific
+               (concat current-dir "__tests__/" current-base ".test." current-ext)
+               (concat current-dir "__tests__/" current-base ".spec." current-ext)))))
 
       ;; Find first existing candidate
       (let ((existing-file (seq-find #'file-exists-p test-candidates)))
