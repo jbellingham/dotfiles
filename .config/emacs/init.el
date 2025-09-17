@@ -71,6 +71,9 @@
 ;; UI and themes
 (load-config-module "ui")
 
+;; Which-key descriptions
+(load-config-module "which-key-config")
+
 ;; Optional modules (uncomment as needed)
 ;; (load-config-module "org")
 ;; (load-config-module "markdown")
