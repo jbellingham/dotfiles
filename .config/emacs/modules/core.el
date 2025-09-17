@@ -170,7 +170,6 @@
     (princ "Tip: These bindings also appear in which-key when you press them.\n")))
 
 ;; Custom keybindings
-(global-set-key (kbd "C-c w d") 'delete-window)  ; Window delete
 (global-set-key (kbd "C-c c r") 'reload-config) ; C-c c r to reload config
 (global-set-key (kbd "C-c c e") 'open-config)   ; C-c c e to edit config
 (global-set-key (kbd "C-c c c") 'claude-code)   ; C-c c c to launch Claude Code
@@ -215,6 +214,7 @@
     "s-9" "Select Window 9"
     "s-{" "Previous Workspace"
     "s-}" "Next Workspace"
+    "s-t" "Toggle Impl/Test"
     "C-c c" "Claude Config"
     "C-c c k" "Show Command Keys"))
 

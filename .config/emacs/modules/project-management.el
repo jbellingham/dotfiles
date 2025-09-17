@@ -69,7 +69,9 @@
 ;; Project-specific keybindings
 (with-eval-after-load 'projectile
   (define-key projectile-command-map (kbd "s") #'my/project-switch-with-treemacs)
-  (define-key projectile-command-map (kbd "F") #'my/project-find-file-dwim))
+  ;; Note: Removed F binding to avoid conflict with F12 global key
+  ;; (define-key projectile-command-map (kbd "F") #'my/project-find-file-dwim)
+  )
 
 ;; Global project bindings
 (global-set-key (kbd "s-p") #'my/project-find-file-dwim)  ; Command+P like VS Code
