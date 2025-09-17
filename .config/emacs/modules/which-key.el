@@ -161,6 +161,7 @@
     ;; Explorer - e prefix (Explorer)
     "C-c e" "Explorer"
     "C-c e t" "Explorer Toggle"
+    "C-c e T" "Explorer Add Project"
     "C-c e 1" "Explorer Delete Others"
     "C-c e b" "Explorer Bookmark"
     "C-c e f" "Explorer Find File"

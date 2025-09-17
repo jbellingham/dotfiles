@@ -77,7 +77,26 @@
           treemacs-space-between-root-nodes t
           treemacs-tag-follow-cleanup t
           treemacs-tag-follow-delay 1.5
-          treemacs-width 35)
+          treemacs-width 35
+          treemacs-width-increment 1
+          treemacs-wide-toggle-width-threshold 70
+          treemacs-show-hidden-files t)
+
+    ;; Ensure proper side window behavior
+    (setq treemacs-display-in-side-window t
+          treemacs-position 'left
+          treemacs-is-never-other-window nil
+          treemacs-no-delete-other-windows t)
+
+    ;; Configure display buffer for treemacs
+    (add-to-list 'display-buffer-alist
+                 '("\\*Treemacs-.*\\*"
+                   (display-buffer-in-side-window)
+                   (side . left)
+                   (slot . 0)
+                   (window-width . 35)
+                   (dedicated . t)
+                   (preserve-size . (t . nil))))
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
@@ -88,18 +107,42 @@
        (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple))))
+
+  ;; Custom toggle function to ensure proper initialization
+  (defun my/treemacs-toggle ()
+    "Toggle treemacs with proper project initialization."
+    (interactive)
+    (if (treemacs-current-visibility)
+        (treemacs-quit)
+      (progn
+        ;; First, ensure treemacs is open
+        (treemacs)
+        ;; Then add current project or default directory
+        (cond
+         ((and (projectile-project-p) (projectile-project-root))
+          (treemacs-add-and-display-current-project))
+         (default-directory
+          (treemacs-add-project-to-workspace default-directory))
+         (t
+          (treemacs-add-project-to-workspace "~/")))
+        ;; Refresh to show content
+        (treemacs-refresh))))
+
   :bind
   (:map global-map
         ("M-0" . treemacs-select-window)
-        ("C-c e t" . treemacs)                       ; Explorer toggle
-        ("C-c e 1" . treemacs-delete-other-windows)  ; Explorer delete others
-        ("C-c e b" . treemacs-bookmark)              ; Explorer bookmark
-        ("C-c e f" . treemacs-find-file)             ; Explorer find file
-        ("C-c e g" . treemacs-find-tag)))            ; Project Tree find taG
+        ("C-c e t" . my/treemacs-toggle)                          ; Explorer toggle
+        ("C-c e T" . treemacs-add-and-display-current-project)    ; Explorer add project
+        ("C-c e 1" . treemacs-delete-other-windows)              ; Explorer delete others
+        ("C-c e b" . treemacs-bookmark)                          ; Explorer bookmark
+        ("C-c e f" . treemacs-find-file)                         ; Explorer find file
+        ("C-c e g" . treemacs-find-tag)))                        ; Explorer find tag
 
 ;; Treemacs-Projectile integration
 (use-package treemacs-projectile
-  :after (treemacs projectile))
+  :after (treemacs projectile)
+  :config
+  (setq treemacs-project-follow-cleanup t))
 
 ;; Treemacs magit integration
 (use-package treemacs-magit
