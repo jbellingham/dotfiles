@@ -251,6 +251,7 @@
               ("C-c l s" . lsp-workspace-symbol)   ; Search workspace symbols
               ("C-c l h" . lsp-symbol-highlight))) ; Highlight symbol
 
+
 ;; LSP UI improvements
 (use-package lsp-ui
   :after lsp-mode
