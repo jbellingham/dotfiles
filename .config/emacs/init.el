@@ -67,6 +67,7 @@
 
 ;; Language support
 (load-config-module "ruby")
+(load-config-module "react-native")
 
 ;; UI and themes
 (load-config-module "ui")

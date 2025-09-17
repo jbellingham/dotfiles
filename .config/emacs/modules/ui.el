@@ -153,13 +153,22 @@
   :ensure nil
   :hook (after-init . global-hl-line-mode))
 
-;; Show trailing whitespace
+;; Whitespace visualization with dots
 (use-package whitespace
   :ensure nil
-  :hook (prog-mode . whitespace-mode)
+  :hook ((prog-mode text-mode) . whitespace-mode)
   :config
-  (setq whitespace-style '(face trailing tabs empty)
-        whitespace-line-column 120))
+  (setq whitespace-style '(face spaces trailing space-mark)
+        whitespace-display-mappings
+        '((space-mark ?\s [?\·] [?.])    ; spaces as middle dot
+          (tab-mark ?\t [?\▷ ?\t] [?\\ ?\t]))) ; tabs as triangle
+  ;; Make whitespace marks subtle
+  (set-face-attribute 'whitespace-space nil
+                      :background nil
+                      :foreground "#555555")
+  (set-face-attribute 'whitespace-trailing nil
+                      :background "#444444"
+                      :foreground nil))
 
 ;; Indent guides
 (use-package indent-guide
@@ -260,6 +269,7 @@
  '(ruby-string-delimiter-face ((t (:foreground "#58D68D"))))
  '(ruby-constant-face ((t (:foreground "#F4D03F"))))
  '(ruby-op-face ((t (:foreground "#EC7063")))))
+
 
 (provide 'ui)
 ;;; ui.el ends here
