@@ -193,13 +193,33 @@ Works with various language conventions."
               (cond
                ;; Ruby: spec/path/to/file_spec.rb -> app/path/to/file.rb or lib/path/to/file.rb
                ((string= current-ext "rb")
-                (let* ((spec-relative-path (file-relative-name current-file (concat project-root "spec/")))
-                       (spec-dir (file-name-directory spec-relative-path))
-                       (clean-dir (if spec-dir spec-dir "")))
-                  (list
-                   (concat project-root "app/" clean-dir impl-base ".rb")
-                   (concat project-root "lib/" clean-dir impl-base ".rb")
-                   (concat project-root clean-dir impl-base ".rb"))))
+                (let* ((relative-path (file-relative-name current-file project-root)))
+                  (cond
+                   ;; Case 1: Main app spec file - spec/models/model_spec.rb -> app/models/model.rb
+                   ((string-match "^spec/\\(.*\\)" relative-path)
+                    (let* ((spec-subpath (match-string 1 relative-path))
+                           (spec-dir (file-name-directory spec-subpath))
+                           (clean-dir (if (and spec-dir (not (string= spec-dir "./"))) spec-dir "")))
+                      (list
+                       (concat project-root "app/" clean-dir impl-base ".rb")
+                       (concat project-root "lib/" clean-dir impl-base ".rb"))))
+
+                   ;; Case 2: Engine spec file - engines/$engine/spec/models/model_spec.rb -> engines/$engine/app/models/model.rb
+                   ((string-match "^engines/\\([^/]+\\)/spec/\\(.*\\)" relative-path)
+                    (let* ((engine-name (match-string 1 relative-path))
+                           (spec-subpath (match-string 2 relative-path))
+                           (spec-dir (file-name-directory spec-subpath))
+                           (clean-dir (if (and spec-dir (not (string= spec-dir "./"))) spec-dir "")))
+                      (list
+                       (concat project-root "engines/" engine-name "/app/" clean-dir impl-base ".rb")
+                       (concat project-root "engines/" engine-name "/lib/" clean-dir impl-base ".rb"))))
+
+                   ;; Case 3: Not in a spec file, fallback to generic search
+                   (t
+                    (list
+                     (concat project-root "app/" impl-base ".rb")
+                     (concat project-root "lib/" impl-base ".rb")
+                     (concat project-root impl-base ".rb"))))))
                ;; Other languages
                (t
                 (list
@@ -212,7 +232,7 @@ Works with various language conventions."
                  (concat project-root impl-base "." current-ext)
                  ;; Language-specific patterns
                  (concat project-root "src/main/" impl-base "." current-ext)
-                 (concat project-root "src/components/" impl-base "." current-ext))))))))
+                 (concat project-root "src/components/" impl-base "." current-ext)))))))
 
      ;; From implementation to test (default behavior)
      (t
@@ -240,7 +260,7 @@ Works with various language conventions."
       (if existing-file
           (find-file existing-file)
         (message "No implementation/test file found. Searched: %s"
-                (mapconcat 'identity implementation-candidates ", ")))))
+                (mapconcat 'identity implementation-candidates ", "))))))
 
 (defun my/goto-test ()
   "Go to test file for current implementation."
@@ -261,17 +281,47 @@ Works with various language conventions."
             (cond
              ;; Ruby: app/path/to/file.rb -> spec/path/to/file_spec.rb
              ((string= current-ext "rb")
-              (let* ((app-relative-path (cond
-                                        ((string-match "^\\(.*/\\)?app/\\(.*\\)" current-file)
-                                         (match-string 2 current-file))
-                                        ((string-match "^\\(.*/\\)?lib/\\(.*\\)" current-file)
-                                         (match-string 2 current-file))
-                                        (t (file-relative-name current-file project-root))))
-                     (spec-dir (file-name-directory app-relative-path))
-                     (clean-dir (if spec-dir spec-dir "")))
-                (list
-                 (concat project-root "spec/" clean-dir current-base "_spec.rb")
-                 (concat project-root "test/" clean-dir current-base "_test.rb"))))
+              (let* ((relative-path (file-relative-name current-file project-root)))
+                (cond
+                 ;; Case 1: Main app file - app/models/model.rb -> spec/models/model_spec.rb
+                 ((string-match "^app/\\(.*\\)" relative-path)
+                  (let* ((app-subpath (match-string 1 relative-path))
+                         (app-dir (file-name-directory app-subpath))
+                         (clean-dir (if (and app-dir (not (string= app-dir "./"))) app-dir "")))
+                    (list
+                     (concat project-root "spec/" clean-dir current-base "_spec.rb"))))
+
+                 ;; Case 2: Main lib file - lib/models/model.rb -> spec/models/model_spec.rb
+                 ((string-match "^lib/\\(.*\\)" relative-path)
+                  (let* ((lib-subpath (match-string 1 relative-path))
+                         (lib-dir (file-name-directory lib-subpath))
+                         (clean-dir (if (and lib-dir (not (string= lib-dir "./"))) lib-dir "")))
+                    (list
+                     (concat project-root "spec/" clean-dir current-base "_spec.rb"))))
+
+                 ;; Case 3: Engine file - engines/$engine/app/models/model.rb -> engines/$engine/spec/models/model_spec.rb
+                 ((string-match "^engines/\\([^/]+\\)/app/\\(.*\\)" relative-path)
+                  (let* ((engine-name (match-string 1 relative-path))
+                         (app-subpath (match-string 2 relative-path))
+                         (app-dir (file-name-directory app-subpath))
+                         (clean-dir (if (and app-dir (not (string= app-dir "./"))) app-dir "")))
+                    (list
+                     (concat project-root "engines/" engine-name "/spec/" clean-dir current-base "_spec.rb"))))
+
+                 ;; Case 4: Engine lib file - engines/$engine/lib/models/model.rb -> engines/$engine/spec/models/model_spec.rb
+                 ((string-match "^engines/\\([^/]+\\)/lib/\\(.*\\)" relative-path)
+                  (let* ((engine-name (match-string 1 relative-path))
+                         (lib-subpath (match-string 2 relative-path))
+                         (lib-dir (file-name-directory lib-subpath))
+                         (clean-dir (if (and lib-dir (not (string= lib-dir "./"))) lib-dir "")))
+                    (list
+                     (concat project-root "engines/" engine-name "/spec/" clean-dir current-base "_spec.rb"))))
+
+                 ;; Case 5: Fallback for other Ruby files
+                 (t
+                  (list
+                   (concat project-root "spec/" current-base "_spec.rb")
+                   (concat project-root "test/" current-base "_test.rb"))))))
              ;; Other languages
              (t
               (list
