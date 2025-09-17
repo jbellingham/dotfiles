@@ -7,8 +7,8 @@
 
 ;; Magit - Git interface
 (use-package magit
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch)
+  :bind (("C-c g m" . magit-status)      ; Git magit
+         ("C-c g M" . magit-dispatch)    ; Git Magit dispatch
          ("C-c g c" . magit-clone)
          ("C-c g s" . magit-status)
          ("C-c g b" . magit-blame)
@@ -32,11 +32,11 @@
         git-gutter:modified-sign "~"
         git-gutter:added-sign "+"
         git-gutter:deleted-sign "-")
-  :bind (("C-x v =" . git-gutter:popup-hunk)
-         ("C-x v p" . git-gutter:previous-hunk)
-         ("C-x v n" . git-gutter:next-hunk)
-         ("C-x v s" . git-gutter:stage-hunk)
-         ("C-x v r" . git-gutter:revert-hunk)))
+  :bind (("C-c g v =" . git-gutter:popup-hunk)     ; Git View hunk
+         ("C-c g v p" . git-gutter:previous-hunk)  ; Git View previous
+         ("C-c g v n" . git-gutter:next-hunk)      ; Git View next
+         ("C-c g v s" . git-gutter:stage-hunk)     ; Git View stage
+         ("C-c g v r" . git-gutter:revert-hunk)))  ; Git View revert
 
 ;; Git gutter fringe - Use fringe instead of margin
 (use-package git-gutter-fringe
@@ -48,7 +48,7 @@
 
 ;; Git timemachine - Browse file history
 (use-package git-timemachine
-  :bind ("C-x v t" . git-timemachine-toggle))
+  :bind ("C-c g t" . git-timemachine-toggle))  ; Git timemachine
 
 ;; Magit forge - GitHub/GitLab integration
 (use-package forge
@@ -59,7 +59,7 @@
 
 ;; Git messenger - Show last commit message
 (use-package git-messenger
-  :bind ("C-x v m" . git-messenger:popup-message)
+  :bind ("C-c g o" . git-messenger:popup-message)  ; Git shOw message
   :config
   (setq git-messenger:show-detail t
         git-messenger:use-magit-popup t))
@@ -72,9 +72,9 @@
   :config
   (setq diff-hl-draw-borders nil
         diff-hl-side 'left)
-  :bind (("C-x v [" . diff-hl-previous-hunk)
-         ("C-x v ]" . diff-hl-next-hunk)
-         ("C-x v =" . diff-hl-show-hunk))
+  :bind (("C-c g h p" . diff-hl-previous-hunk)  ; Git Hunk previous
+         ("C-c g h n" . diff-hl-next-hunk)     ; Git Hunk next
+         ("C-c g h =" . diff-hl-show-hunk))    ; Git Hunk show
   :hook (magit-pre-refresh . diff-hl-magit-pre-refresh)
   :hook (magit-post-refresh . diff-hl-magit-post-refresh))
 

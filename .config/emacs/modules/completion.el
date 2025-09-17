@@ -30,17 +30,17 @@
 
 ;; Consult - Enhanced search and navigation
 (use-package consult
-  :bind (;; C-c bindings (mode-specific-map)
-         ("C-c h" . consult-history)
-         ("C-c m" . consult-mode-command)
-         ("C-c k" . consult-kmacro)
-         ;; C-x bindings (ctl-x-map)
-         ("C-x M-:" . consult-complex-command)
-         ("C-x b" . consult-buffer)
-         ("C-x 4 b" . consult-buffer-other-window)
-         ("C-x 5 b" . consult-buffer-other-frame)
-         ("C-x r b" . consult-bookmark)
-         ("C-x p b" . consult-project-buffer)
+  :bind (;; History and commands - using different prefixes to avoid C-c h conflicts
+         ("C-c c h" . consult-history)        ; Config History
+         ("C-c c m" . consult-mode-command)   ; Config Mode commands
+         ("C-c c k" . consult-kmacro)         ; Config Kmacro
+         ;; Buffer commands moved to better mnemonic prefixes
+         ("C-c c x" . consult-complex-command)        ; Config compleX command
+         ("C-c b c" . consult-buffer)                 ; Buffer consult
+         ("C-c w v" . consult-buffer-other-window)    ; Window Vertical split
+         ("C-c w h" . consult-buffer-other-frame)     ; Window Horizontal (frame)
+         ("C-c j b" . consult-bookmark)               ; Jump Bookmark
+         ("C-c p b" . consult-project-buffer)         ; Project Buffer
          ;; Custom M-# bindings for fast register access
          ("M-#" . consult-register-load)
          ("M-'" . consult-register-store)
