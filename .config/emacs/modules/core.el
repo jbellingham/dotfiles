@@ -144,12 +144,38 @@
     (term "/bin/zsh")
     (term-send-string (get-buffer-process (current-buffer)) "claude\n")))
 
+;; Helper function to show all Command key bindings
+(defun show-command-keybindings ()
+  "Show all Command (Super) key bindings in a help buffer."
+  (interactive)
+  (with-output-to-temp-buffer "*Command Key Bindings*"
+    (princ "Command Key Bindings (macOS Style)\n")
+    (princ "====================================\n\n")
+    (princ "File Operations:\n")
+    (princ "  Cmd+P     Find Files (Fuzzy)\n")
+    (princ "  Cmd+Shift+F  Search Project\n\n")
+    (princ "Buffer Management:\n")
+    (princ "  Cmd+B     Switch Buffer\n")
+    (princ "  Cmd+W     Kill Buffer\n")
+    (princ "  Cmd+N     New Buffer\n")
+    (princ "  Cmd+[     Previous Buffer\n")
+    (princ "  Cmd+]     Next Buffer\n\n")
+    (princ "Window/File Explorer:\n")
+    (princ "  Cmd+0     Toggle File Explorer\n")
+    (princ "  Cmd+O     Switch Window\n")
+    (princ "  Cmd+1-9   Select Window by Number\n\n")
+    (princ "Workspace Management:\n")
+    (princ "  Cmd+{     Previous Workspace\n")
+    (princ "  Cmd+}     Next Workspace\n\n")
+    (princ "Tip: These bindings also appear in which-key when you press them.\n")))
+
 ;; Custom keybindings
 (global-set-key (kbd "C-c w d") 'delete-window)  ; Window delete
 (global-set-key (kbd "C-c c r") 'reload-config) ; C-c c r to reload config
 (global-set-key (kbd "C-c c e") 'open-config)   ; C-c c e to edit config
 (global-set-key (kbd "C-c c c") 'claude-code)   ; C-c c c to launch Claude Code
 (global-set-key (kbd "C-c c t") 'claude-code-terminal) ; C-c c t for Claude terminal
+(global-set-key (kbd "C-c c k") 'show-command-keybindings) ; C-c c k to show Command key bindings
 
 ;; Which-key for discoverability
 (use-package which-key
@@ -165,7 +191,32 @@
         which-key-allow-imprecise-window-fit t
         which-key-separator " → "
         which-key-sort-order 'which-key-prefix-then-key-order
-        which-key-sort-uppercase-first nil))
+        which-key-sort-uppercase-first nil)
+
+  ;; Add descriptions for Command key bindings to make them discoverable
+  (which-key-add-key-based-replacements
+    "s-p" "Find Files (Fuzzy)"
+    "s-P" "Search Project"
+    "s-b" "Switch Buffer"
+    "s-0" "Toggle File Explorer"
+    "s-o" "Switch Window"
+    "s-w" "Kill Buffer"
+    "s-n" "New Buffer"
+    "s-[" "Previous Buffer"
+    "s-]" "Next Buffer"
+    "s-1" "Select Window 1"
+    "s-2" "Select Window 2"
+    "s-3" "Select Window 3"
+    "s-4" "Select Window 4"
+    "s-5" "Select Window 5"
+    "s-6" "Select Window 6"
+    "s-7" "Select Window 7"
+    "s-8" "Select Window 8"
+    "s-9" "Select Window 9"
+    "s-{" "Previous Workspace"
+    "s-}" "Next Workspace"
+    "C-c c" "Claude Config"
+    "C-c c k" "Show Command Keys"))
 
 ;; Dired improvements
 (use-package dired
