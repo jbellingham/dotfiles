@@ -151,6 +151,22 @@
 (global-set-key (kbd "C-c c c") 'claude-code)   ; C-c c c to launch Claude Code
 (global-set-key (kbd "C-c c t") 'claude-code-terminal) ; C-c c t for Claude terminal
 
+;; Which-key for discoverability
+(use-package which-key
+  :init
+  (which-key-mode 1)
+  :config
+  (setq which-key-idle-delay 0.5
+        which-key-idle-secondary-delay 0.05
+        which-key-popup-type 'side-window
+        which-key-side-window-location 'bottom
+        which-key-side-window-max-height 0.25
+        which-key-max-description-length 30
+        which-key-allow-imprecise-window-fit t
+        which-key-separator " → "
+        which-key-sort-order 'which-key-prefix-then-key-order
+        which-key-sort-uppercase-first nil))
+
 ;; Dired improvements
 (use-package dired
   :ensure nil
