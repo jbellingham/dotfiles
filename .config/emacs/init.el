@@ -64,6 +64,7 @@
 (load-config-module "completion")
 (load-config-module "project")
 (load-config-module "git")
+(load-config-module "buffer-navigation")
 
 ;; Language support
 (load-config-module "ruby")
