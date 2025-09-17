@@ -168,6 +168,174 @@
         (consult-buffer)
       (switch-to-buffer (other-buffer)))))
 
+;; Code navigation - find implementation and tests
+;; ==============================================
+
+(defun my/find-implementation ()
+  "Find implementation file for current buffer.
+Works with various language conventions."
+  (interactive)
+  (let* ((current-file (buffer-file-name))
+         (current-name (file-name-nondirectory current-file))
+         (current-base (file-name-sans-extension current-name))
+         (current-ext (file-name-extension current-file))
+         (current-dir (file-name-directory current-file))
+         (project-root (or (projectile-project-root) default-directory))
+         implementation-candidates)
+
+    (cond
+     ;; From test file to implementation
+     ((string-match-p "\\(test\\|spec\\)" current-name)
+      (let ((impl-base (replace-regexp-in-string
+                       "\\(\\.test\\|\\.spec\\|_test\\|_spec\\|Test\\|Spec\\)" ""
+                       current-base)))
+        (setq implementation-candidates
+              (list
+               ;; Same directory
+               (concat current-dir impl-base "." current-ext)
+               ;; Common source directories
+               (concat project-root "src/" impl-base "." current-ext)
+               (concat project-root "lib/" impl-base "." current-ext)
+               (concat project-root "app/" impl-base "." current-ext)
+               (concat project-root impl-base "." current-ext)
+               ;; Language-specific patterns
+               (concat project-root "src/main/" impl-base "." current-ext)
+               (concat project-root "src/components/" impl-base "." current-ext)))))
+
+     ;; From implementation to test (default behavior)
+     (t
+      (setq implementation-candidates
+            (list
+             ;; Test files in same directory
+             (concat current-dir current-base ".test." current-ext)
+             (concat current-dir current-base ".spec." current-ext)
+             (concat current-dir current-base "_test." current-ext)
+             (concat current-dir current-base "_spec." current-ext)
+             ;; Test directories
+             (concat project-root "test/" current-base ".test." current-ext)
+             (concat project-root "tests/" current-base ".test." current-ext)
+             (concat project-root "spec/" current-base ".spec." current-ext)
+             (concat project-root "__tests__/" current-base ".test." current-ext)
+             (concat project-root "src/test/" current-base ".test." current-ext)
+             (concat project-root "src/tests/" current-base ".test." current-ext)
+             ;; Ruby/Rails specific
+             (concat project-root "spec/" current-base "_spec.rb")
+             ;; JavaScript/TypeScript specific
+             (concat current-dir "__tests__/" current-base ".test." current-ext)))))
+
+    ;; Find first existing candidate
+    (let ((existing-file (seq-find #'file-exists-p implementation-candidates)))
+      (if existing-file
+          (find-file existing-file)
+        (message "No implementation/test file found. Searched: %s"
+                (mapconcat 'identity implementation-candidates ", "))))))
+
+(defun my/goto-test ()
+  "Go to test file for current implementation."
+  (interactive)
+  (let* ((current-file (buffer-file-name))
+         (current-name (file-name-nondirectory current-file))
+         (current-base (file-name-sans-extension current-name))
+         (current-ext (file-name-extension current-file))
+         (current-dir (file-name-directory current-file))
+         (project-root (or (projectile-project-root) default-directory))
+         test-candidates)
+
+    ;; Don't search if already in a test file
+    (if (string-match-p "\\(test\\|spec\\)" current-name)
+        (message "Already in a test file")
+
+      (setq test-candidates
+            (list
+             ;; Test files in same directory
+             (concat current-dir current-base ".test." current-ext)
+             (concat current-dir current-base ".spec." current-ext)
+             (concat current-dir current-base "_test." current-ext)
+             (concat current-dir current-base "_spec." current-ext)
+             (concat current-dir current-base "Test." current-ext)
+             (concat current-dir current-base "Spec." current-ext)
+             ;; Test directories
+             (concat project-root "test/" current-base ".test." current-ext)
+             (concat project-root "tests/" current-base ".test." current-ext)
+             (concat project-root "spec/" current-base ".spec." current-ext)
+             (concat project-root "__tests__/" current-base ".test." current-ext)
+             (concat project-root "src/test/" current-base ".test." current-ext)
+             (concat project-root "src/tests/" current-base ".test." current-ext)
+             ;; Ruby/Rails specific
+             (concat project-root "spec/" current-base "_spec.rb")
+             (concat project-root "test/" current-base "_test.rb")
+             ;; JavaScript/TypeScript specific
+             (concat current-dir "__tests__/" current-base ".test." current-ext)
+             (concat current-dir "__tests__/" current-base ".spec." current-ext)))
+
+      ;; Find first existing candidate
+      (let ((existing-file (seq-find #'file-exists-p test-candidates)))
+        (if existing-file
+            (find-file existing-file)
+          (if (y-or-n-p (format "No test file found. Create %s.test.%s? " current-base current-ext))
+              (my/create-test-file current-file)
+            (message "No test file found. Searched: %s"
+                    (mapconcat 'identity test-candidates ", "))))))))
+
+(defun my/create-test-file (implementation-file)
+  "Create a basic test file for IMPLEMENTATION-FILE."
+  (let* ((current-name (file-name-nondirectory implementation-file))
+         (current-base (file-name-sans-extension current-name))
+         (current-ext (file-name-extension implementation-file))
+         (current-dir (file-name-directory implementation-file))
+         (project-root (or (projectile-project-root) current-dir))
+         (test-dir (cond
+                   ((file-exists-p (concat project-root "__tests__/")) "__tests__/")
+                   ((file-exists-p (concat project-root "test/")) "test/")
+                   ((file-exists-p (concat project-root "tests/")) "tests/")
+                   ((file-exists-p (concat project-root "spec/")) "spec/")
+                   (t "test/")))
+         (test-filename (cond
+                        ((string= current-ext "rb") (concat current-base "_spec.rb"))
+                        (t (concat current-base ".test." current-ext))))
+         (test-path (concat project-root test-dir test-filename)))
+
+    ;; Create test directory if it doesn't exist
+    (unless (file-exists-p (concat project-root test-dir))
+      (make-directory (concat project-root test-dir) t))
+
+    ;; Create and open test file with basic template
+    (find-file test-path)
+    (when (= (buffer-size) 0) ; Only add template if file is empty
+      (insert (my/get-test-template current-ext current-base implementation-file))
+      (goto-char (point-min)))))
+
+(defun my/get-test-template (file-ext base-name implementation-file)
+  "Get appropriate test template based on FILE-EXT."
+  (cond
+   ((string= file-ext "js")
+    (format "const %s = require('./%s');\n\ndescribe('%s', () => {\n  test('should ', () => {\n    // TODO: Add test implementation\n    expect(true).toBe(true);\n  });\n});\n"
+            base-name base-name base-name))
+
+   ((string= file-ext "ts")
+    (format "import { %s } from './%s';\n\ndescribe('%s', () => {\n  test('should ', () => {\n    // TODO: Add test implementation\n    expect(true).toBe(true);\n  });\n});\n"
+            base-name base-name base-name))
+
+   ((string= file-ext "rb")
+    (format "require 'spec_helper'\nrequire_relative '../%s'\n\nRSpec.describe %s do\n  it 'should ' do\n    # TODO: Add test implementation\n    expect(true).to be_truthy\n  end\nend\n"
+            base-name (capitalize base-name)))
+
+   ((string= file-ext "py")
+    (format "import unittest\nfrom %s import *\n\nclass Test%s(unittest.TestCase):\n    def test_should(self):\n        # TODO: Add test implementation\n        self.assertTrue(True)\n\nif __name__ == '__main__':\n    unittest.main()\n"
+            base-name (capitalize base-name)))
+
+   (t
+    (format "// Test file for %s\n// TODO: Add test implementation\n" base-name))))
+
+(defun my/toggle-between-implementation-and-test ()
+  "Smart toggle between implementation and test files."
+  (interactive)
+  (let* ((current-file (buffer-file-name))
+         (current-name (file-name-nondirectory current-file)))
+    (if (string-match-p "\\(test\\|spec\\)" current-name)
+        (my/find-implementation)
+      (my/goto-test))))
+
 ;; Bookmarks enhancement
 ;; ====================
 
@@ -216,6 +384,15 @@
 ;; Navigation keybindings
 ;; =====================
 
+;; Code navigation
+(global-set-key (kbd "C-c g i") #'my/find-implementation)
+(global-set-key (kbd "C-c g t") #'my/goto-test)
+(global-set-key (kbd "C-c g T") #'my/toggle-between-implementation-and-test)
+;; Note: F12 disabled due to key conflict - use C-c g i or Cmd+T instead
+;; (global-set-key (kbd "F12") #'my/find-implementation)          ; F12 like VS Code
+;; (global-set-key (kbd "s-F12") #'my/goto-test)                 ; Cmd+F12 for tests
+(global-set-key (kbd "s-t") #'my/toggle-between-implementation-and-test) ; Cmd+T toggle
+
 ;; Buffer operations
 (global-set-key (kbd "C-c b b") #'my/smart-switch-buffer)
 (global-set-key (kbd "C-c b r") #'recentf-open-files)
@@ -228,14 +405,6 @@
 (global-set-key (kbd "C-c b R") #'my/rename-current-buffer)
 (global-set-key (kbd "C-c b l") #'ibuffer)
 
-;; Window operations
-(global-set-key (kbd "C-c w d") #'delete-window)
-(global-set-key (kbd "C-c w o") #'delete-other-windows)
-(global-set-key (kbd "C-c w v") #'split-window-right)
-(global-set-key (kbd "C-c w h") #'split-window-below)
-(global-set-key (kbd "C-c w 2") #'my/split-window-sensibly)
-(global-set-key (kbd "C-c w t") #'my/toggle-window-split)
-(global-set-key (kbd "C-c w =") #'balance-windows)
 
 ;; Navigation shortcuts
 (global-set-key (kbd "s-[") #'my/switch-to-previous-buffer)  ; Command+[
@@ -269,6 +438,12 @@
 
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
+    ;; Code navigation
+    "C-c g" "Go to"
+    "C-c g i" "Find Implementation"
+    "C-c g t" "Go to Test"
+    "C-c g T" "Toggle Impl/Test"
+
     ;; Buffer operations
     "C-c b" "Buffer"
     "C-c b b" "Switch Buffer"
@@ -281,16 +456,6 @@
     "C-c b A" "Kill All Buffers"
     "C-c b R" "Rename Buffer"
     "C-c b l" "List Buffers (IBuffer)"
-
-    ;; Window operations
-    "C-c w" "Window"
-    "C-c w d" "Delete Window"
-    "C-c w o" "Delete Other Windows"
-    "C-c w v" "Split Vertical"
-    "C-c w h" "Split Horizontal"
-    "C-c w 2" "Smart Split"
-    "C-c w t" "Toggle Split"
-    "C-c w =" "Balance Windows"
 
     ;; Jump/Bookmark operations
     "C-c j" "Jump"
@@ -305,6 +470,7 @@
     "s-w" "Kill Buffer"
     "s-n" "New Buffer"
     "s-o" "Switch Window"
+    "s-t" "Toggle Impl/Test"
     "s-1" "Window 1"
     "s-2" "Window 2"
     "s-3" "Window 3"
