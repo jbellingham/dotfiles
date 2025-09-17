@@ -1,39 +1,10 @@
-;;; project.el --- Project management configuration -*- lexical-binding: t; -*-
+;;; file-explorer.el --- File tree and project dashboard -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; Project management with Projectile and related tools.
+;; File tree management with treemacs and startup dashboard.
+;; Provides VS Code-like file explorer experience.
 
 ;;; Code:
-
-;; Projectile - Project management
-(use-package projectile
-  :init
-  (projectile-mode +1)
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :config
-  (setq projectile-completion-system 'default
-        projectile-enable-caching t
-        projectile-cache-file (expand-file-name ".projectile-cache" user-emacs-directory)
-        projectile-known-projects-file (expand-file-name ".projectile-bookmarks" user-emacs-directory)
-        projectile-project-search-path '("~/dev/" "~/projects/")
-        projectile-switch-project-action #'projectile-dired
-        projectile-require-project-root nil
-        projectile-auto-discover t)
-
-  ;; Ruby/Rails specific settings
-  (add-to-list 'projectile-project-root-files "Gemfile")
-  (add-to-list 'projectile-project-root-files "config.ru")
-  (add-to-list 'projectile-project-root-files-bottom-up "Gemfile")
-
-  ;; Ignore patterns for Rails projects
-  (setq projectile-globally-ignored-directories
-        (append projectile-globally-ignored-directories
-                '("log" "tmp" "coverage" ".bundle" "vendor/bundle" "node_modules")))
-
-  (setq projectile-globally-ignored-files
-        (append projectile-globally-ignored-files
-                '("*.log" "*.tmp" "*.pid" "*.lock"))))
 
 ;; Treemacs - File tree sidebar
 (use-package treemacs
@@ -129,14 +100,14 @@
         (treemacs-refresh))))
 
   :bind
-  (:map global-map
-        ("s-0" . treemacs-select-window)
-        ("C-c e t" . my/treemacs-toggle)                          ; Explorer toggle
-        ("C-c e T" . treemacs-add-and-display-current-project)    ; Explorer add project
-        ("C-c e 1" . treemacs-delete-other-windows)              ; Explorer delete others
-        ("C-c e b" . treemacs-bookmark)                          ; Explorer bookmark
-        ("C-c e f" . treemacs-find-file)                         ; Explorer find file
-        ("C-c e g" . treemacs-find-tag)))                        ; Explorer find tag
+  ;; Explorer keybindings with which-key descriptions
+  (("s-0" . treemacs-select-window)
+   ("C-c e t" . my/treemacs-toggle)
+   ("C-c e T" . treemacs-add-and-display-current-project)
+   ("C-c e 1" . treemacs-delete-other-windows)
+   ("C-c e b" . treemacs-bookmark)
+   ("C-c e f" . treemacs-find-file)
+   ("C-c e g" . treemacs-find-tag)))
 
 ;; Treemacs-Projectile integration
 (use-package treemacs-projectile
@@ -153,16 +124,6 @@
   :after (treemacs all-the-icons)
   :config (treemacs-load-theme "all-the-icons"))
 
-;; Neotree alternative (lighter option)
-;; (use-package neotree
-;;   :bind (("C-x t n" . neotree-toggle))
-;;   :config
-;;   (setq neo-theme 'icons
-;;         neo-smart-open t
-;;         neo-show-hidden-files t
-;;         neo-window-width 32
-;;         neo-window-fixed-size nil))
-
 ;; Dashboard for startup
 (use-package dashboard
   :config
@@ -176,49 +137,23 @@
                          (registers . 5))
         dashboard-set-heading-icons t
         dashboard-set-file-icons t
-        dashboard-banner-logo-title "Welcome to Emacs - Ruby on Rails Development")
+        dashboard-banner-logo-title "Welcome to Emacs - Development Environment")
   (dashboard-setup-startup-hook))
 
-;; Workspace management
-(use-package perspective
-  :bind (("C-c w k" . persp-kill-buffer*)      ; Workspace kill buffer
-         ("C-c w b" . persp-switch-to-buffer*)   ; Workspace buffer switch
-         ("C-c w l" . persp-list-buffers))       ; Workspace list buffers
-  :custom
-  (persp-mode-prefix-key (kbd "C-c M-p"))
-  :config
-  ;; Fix for "Unprintable entity" errors in perspective
-  (setq persp-auto-save-opt 0) ; Disable auto-save that can cause issues
+;; Which-key descriptions for file explorer
+(with-eval-after-load 'which-key
+  (which-key-add-key-based-replacements
+    ;; Explorer commands
+    "C-c e" "File Explorer"
+    "C-c e t" "Toggle Explorer"
+    "C-c e T" "Add Project"
+    "C-c e 1" "Delete Other Windows"
+    "C-c e b" "Bookmark"
+    "C-c e f" "Find File"
+    "C-c e g" "Find Tag"
 
-  ;; Patch persp-maybe-kill-buffer to handle errors gracefully
-  (defadvice persp-maybe-kill-buffer (around handle-persp-errors activate)
-    "Handle perspective buffer errors gracefully."
-    (condition-case err
-        ad-do-it
-      (error
-       (unless (string-match-p "Wrong type argument: hash-table-p\\|Unprintable entity"
-                              (error-message-string err))
-         (signal (car err) (cdr err))))))
+    ;; Global Command key bindings
+    "s-0" "Select Explorer"))
 
-  :init
-  (persp-mode))
-
-;; Session management (disabled auto-save to prevent errors)
-(use-package desktop
-  :ensure nil
-  :config
-  (setq desktop-dirname user-emacs-directory
-        desktop-base-file-name "desktop"
-        desktop-base-lock-name "desktop.lock"
-        desktop-path (list desktop-dirname)
-        desktop-save t
-        desktop-files-not-to-save "^$"
-        desktop-load-locked-desktop nil
-        desktop-auto-save-timeout nil) ; Disable auto-save
-  ;; Don't start desktop-save-mode automatically to prevent issues
-  ;; Uncomment the line below once errors are resolved:
-  ;; (desktop-save-mode 1)
-  )
-
-(provide 'project)
-;;; project.el ends here
+(provide 'file-explorer)
+;;; file-explorer.el ends here
