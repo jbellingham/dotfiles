@@ -40,7 +40,7 @@
   :defer t
   :init
   (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    (define-key winum-keymap (kbd "s-0") #'treemacs-select-window))
   :config
   (progn
     (setq treemacs-collapse-dirs 3
@@ -130,7 +130,7 @@
 
   :bind
   (:map global-map
-        ("M-0" . treemacs-select-window)
+        ("s-0" . treemacs-select-window)
         ("C-c e t" . my/treemacs-toggle)                          ; Explorer toggle
         ("C-c e T" . treemacs-add-and-display-current-project)    ; Explorer add project
         ("C-c e 1" . treemacs-delete-other-windows)              ; Explorer delete others

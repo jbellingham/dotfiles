@@ -192,7 +192,7 @@
 
 ;; Window management
 (use-package ace-window
-  :bind ("M-o" . ace-window)
+  :bind ("s-o" . ace-window)
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
         aw-dispatch-always t
