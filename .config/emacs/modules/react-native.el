@@ -217,10 +217,10 @@
 ;; Jest testing integration
 (use-package jest
   :bind (:map typescript-mode-map
-              ("C-c t t" . jest-file)
-              ("C-c t a" . jest)
-              ("C-c t s" . jest-single)
-              ("C-c t p" . jest-popup))
+              ("C-c T t" . jest-file)          ; Test file
+              ("C-c T a" . jest)               ; Test all
+              ("C-c T s" . jest-single)        ; Test single
+              ("C-c T p" . jest-popup))        ; Test popup
   :config
   (setq jest-executable "npm test --"))
 
@@ -446,13 +446,13 @@
 ;; React Native key bindings (using different prefix to avoid Rails conflict)
 (defvar react-native-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c n i") 'rn-run-ios)
-    (define-key map (kbd "C-c n a") 'rn-run-android)
-    (define-key map (kbd "C-c n s") 'rn-start-metro)
-    (define-key map (kbd "C-c n c") 'rn-clean)
-    (define-key map (kbd "C-c n p") 'rn-install-pods)
-    (define-key map (kbd "C-c n r") 'rn-reload-app)
-    (define-key map (kbd "C-c n d") 'rn-open-dev-menu)
+    (define-key map (kbd "C-c R i") 'rn-run-ios)        ; React Native iOS
+    (define-key map (kbd "C-c R a") 'rn-run-android)   ; React Native Android
+    (define-key map (kbd "C-c R s") 'rn-start-metro)   ; React Native Start metro
+    (define-key map (kbd "C-c R c") 'rn-clean)         ; React Native Clean
+    (define-key map (kbd "C-c R p") 'rn-install-pods)  ; React Native Pods
+    (define-key map (kbd "C-c R r") 'rn-reload-app)    ; React Native Reload
+    (define-key map (kbd "C-c R d") 'rn-open-dev-menu) ; React Native Dev menu
     map)
   "Keymap for React Native commands.")
 
@@ -479,7 +479,7 @@
             (when (bound-and-true-p projectile-rails-mode)
               (projectile-rails-mode -1))
             (react-native-mode 1)
-            (message "React Native mode enabled (C-c n prefix for commands)")))))))
+            (message "React Native mode enabled (C-c R prefix for commands)")))))))
 
 ;; Force syntax highlighting refresh
 (defun force-typescript-highlighting ()

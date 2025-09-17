@@ -64,6 +64,7 @@
 (load-config-module "completion")
 (load-config-module "project")
 (load-config-module "git")
+(load-config-module "telescope")
 (load-config-module "buffer-navigation")
 
 ;; Language support
@@ -74,7 +75,7 @@
 (load-config-module "ui")
 
 ;; Which-key descriptions
-(load-config-module "which-key-config")
+(load-config-module "which-key")
 
 ;; Optional modules (uncomment as needed)
 ;; (load-config-module "org")

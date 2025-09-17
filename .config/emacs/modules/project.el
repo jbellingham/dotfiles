@@ -90,12 +90,12 @@
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+        ("M-0" . treemacs-select-window)
+        ("C-c e t" . treemacs)                       ; Explorer toggle
+        ("C-c e 1" . treemacs-delete-other-windows)  ; Explorer delete others
+        ("C-c e b" . treemacs-bookmark)              ; Explorer bookmark
+        ("C-c e f" . treemacs-find-file)             ; Explorer find file
+        ("C-c e g" . treemacs-find-tag)))            ; Project Tree find taG
 
 ;; Treemacs-Projectile integration
 (use-package treemacs-projectile
@@ -138,9 +138,9 @@
 
 ;; Workspace management
 (use-package perspective
-  :bind (("C-x k" . persp-kill-buffer*)
-         ("C-x b" . persp-switch-to-buffer*)
-         ("C-x C-b" . persp-list-buffers))
+  :bind (("C-c w k" . persp-kill-buffer*)      ; Workspace kill buffer
+         ("C-c w b" . persp-switch-to-buffer*)   ; Workspace buffer switch
+         ("C-c w l" . persp-list-buffers))       ; Workspace list buffers
   :custom
   (persp-mode-prefix-key (kbd "C-c M-p"))
   :config

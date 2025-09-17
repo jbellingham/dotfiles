@@ -8,7 +8,7 @@
 ;; IBuffer - Enhanced buffer list with grouping and filtering
 (use-package ibuffer
   :ensure nil
-  :bind ("C-x C-b" . ibuffer)
+  :bind ("C-c b l" . ibuffer)  ; Buffer list
   :config
   (setq ibuffer-saved-filter-groups
         '(("default"
@@ -73,8 +73,8 @@
 
 (use-package counsel
   :after ivy
-  :bind (("C-x b" . counsel-switch-buffer)
-         ("C-c b" . counsel-buffer-or-recentf))
+  :bind (("C-c b b" . counsel-switch-buffer)      ; Buffer switch
+         ("C-c f b" . counsel-buffer-or-recentf))  ; Find buffers
   :config
   (setq counsel-switch-buffer-preview-virtual-buffers nil))
 
@@ -129,9 +129,10 @@
 
   :bind (("C-<prior>" . centaur-tabs-backward)
          ("C-<next>" . centaur-tabs-forward)
-         ("C-c t k" . centaur-tabs-kill-other-buffers-in-current-group)
-         ("C-c t p" . centaur-tabs-group-by-projectile-project)
-         ("C-c t g" . centaur-tabs-group-buffer-groups)))
+         ("C-c w k" . centaur-tabs-kill-other-buffers-in-current-group) ; Window kill others
+         ("C-c w p" . centaur-tabs-group-by-projectile-project)      ; Window project group
+         ("C-c w g" . centaur-tabs-group-buffer-groups))             ; Window group buffers
+  )
 
 ;; Buffer Move - Move buffers between windows
 (use-package buffer-move
@@ -142,7 +143,7 @@
 
 ;; Ace Window - Quick window switching
 (use-package ace-window
-  :bind ("C-x o" . ace-window)
+  :bind ("C-c w o" . ace-window)  ; Window switch
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
         aw-scope 'frame
@@ -171,7 +172,7 @@
 
 ;; Perspective - Workspace management like IDE tabs
 (use-package perspective
-  :bind (("C-x C-b" . persp-list-buffers)
+  :bind (("C-c w l" . persp-list-buffers)  ; Workspace list buffers
          ("C-c w s" . persp-switch)
          ("C-c w k" . persp-kill)
          ("C-c w r" . persp-rename)
@@ -212,11 +213,11 @@
   (mapc 'kill-buffer (buffer-list))
   (message "Killed all buffers"))
 
-;; Key bindings for buffer management
-(global-set-key (kbd "C-c k") 'kill-other-buffers)
-(global-set-key (kbd "C-c K") 'kill-all-buffers)
-(global-set-key (kbd "C-c s") 'switch-to-scratch-buffer)
-(global-set-key (kbd "C-c r") 'counsel-recentf)
+;; Key bindings for buffer management - B prefix (Buffer)
+(global-set-key (kbd "C-c b k") 'kill-other-buffers)      ; Buffer kill others
+(global-set-key (kbd "C-c b K") 'kill-all-buffers)        ; Buffer Kill all
+(global-set-key (kbd "C-c b s") 'switch-to-scratch-buffer) ; Buffer scratch
+(global-set-key (kbd "C-c b r") 'counsel-recentf)         ; Buffer recent
 
 (provide 'buffer-navigation)
 ;;; buffer-navigation.el ends here

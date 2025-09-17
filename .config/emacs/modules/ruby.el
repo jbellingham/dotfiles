@@ -70,14 +70,15 @@
         rspec-use-spring-when-possible nil
         rspec-command-options "--format documentation")
   :bind (:map rspec-mode-map
-              ("C-c t v" . rspec-verify)
-              ("C-c t a" . rspec-verify-all)
-              ("C-c t s" . rspec-verify-single)
-              ("C-c t r" . rspec-rerun)
-              ("C-c t t" . rspec-toggle-spec-and-target)
-              ("C-c t e" . rspec-toggle-example)
-              ("C-c t f" . rspec-verify-matching)
-              ("C-c t c" . rspec-verify-continue)))
+              ("C-c T v" . rspec-verify)                ; Test verify (current)
+              ("C-c T a" . rspec-verify-all)            ; Test all
+              ("C-c T s" . rspec-verify-single)         ; Test single
+              ("C-c T r" . rspec-rerun)                 ; Test rerun
+              ("C-c T t" . rspec-toggle-spec-and-target) ; Test toggle
+              ("C-c T e" . rspec-toggle-example)        ; Test example
+              ("C-c T f" . rspec-verify-matching)       ; Test find/matching
+              ("C-c T c" . rspec-verify-continue))      ; Test continue
+  )
 
 ;; Ruby refactoring tools
 (use-package ruby-refactor
@@ -143,10 +144,11 @@
 ;; Bundler integration
 (use-package bundler
   :bind (:map ruby-mode-map
-              ("C-c b i" . bundle-install)
-              ("C-c b u" . bundle-update)
-              ("C-c b c" . bundle-check)
-              ("C-c b e" . bundle-exec)))
+              ("C-c r b i" . bundle-install)    ; Rails Bundle install
+              ("C-c r b u" . bundle-update)     ; Rails Bundle update
+              ("C-c r b c" . bundle-check)      ; Rails Bundle check
+              ("C-c r b e" . bundle-exec))      ; Rails Bundle exec
+  )
 
 ;; Ruby hash syntax conversion
 (use-package ruby-hash-syntax
