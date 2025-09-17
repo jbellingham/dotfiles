@@ -1,0 +1,202 @@
+;;; workspace.el --- Workspace and session management -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; Workspace management with perspective and session persistence.
+;; Provides VS Code-like workspace isolation and session restoration.
+
+;;; Code:
+
+;; Perspective - Workspace management
+(use-package perspective
+  :bind (("C-c w k" . persp-kill-buffer*)         ; Workspace kill buffer
+         ("C-c w b" . persp-switch-to-buffer*)    ; Workspace buffer switch
+         ("C-c w l" . persp-list-buffers)         ; Workspace list buffers
+         ("C-c w s" . persp-switch)               ; Workspace switch
+         ("C-c w n" . persp-next)                 ; Workspace next
+         ("C-c w p" . persp-prev)                 ; Workspace previous
+         ("C-c w r" . persp-rename)               ; Workspace rename
+         ("C-c w x" . persp-kill)                 ; Workspace kill
+         ("C-c w a" . persp-add-buffer)           ; Workspace add buffer
+         ("C-c w A" . persp-set-buffer)           ; Workspace set buffer
+         ("C-c w i" . persp-import)               ; Workspace import
+         ("s-{" . persp-prev)                     ; Command+{ previous workspace
+         ("s-}" . persp-next))                    ; Command+} next workspace
+  :custom
+  (persp-mode-prefix-key (kbd "C-c w"))
+  :config
+  ;; Fix for "Unprintable entity" errors in perspective
+  (setq persp-auto-save-opt 0  ; Disable auto-save that can cause issues
+        persp-sort 'name
+        persp-interactive-completion-function #'completing-read)
+
+  ;; Create default workspaces
+  (defun my/setup-default-workspaces ()
+    "Set up default workspaces for common tasks."
+    (persp-switch "*scratch*")
+    (persp-switch "config")
+    (persp-switch "main"))
+
+  ;; Patch persp-maybe-kill-buffer to handle errors gracefully
+  (defadvice persp-maybe-kill-buffer (around handle-persp-errors activate)
+    "Handle perspective buffer errors gracefully."
+    (condition-case err
+        ad-do-it
+      (error
+       (unless (string-match-p "Wrong type argument: hash-table-p\\|Unprintable entity"
+                              (error-message-string err))
+         (signal (car err) (cdr err))))))
+
+  ;; Project-aware workspace switching
+  (defun my/workspace-for-project ()
+    "Create or switch to workspace for current project."
+    (interactive)
+    (when (projectile-project-p)
+      (let ((project-name (projectile-project-name)))
+        (persp-switch project-name))))
+
+  ;; Enhanced workspace creation
+  (defun my/create-workspace (name)
+    "Create a new workspace with NAME and switch to it."
+    (interactive "sWorkspace name: ")
+    (persp-switch name)
+    (when (and (projectile-project-p)
+               (y-or-n-p "Add current project to workspace? "))
+      (my/workspace-for-project)))
+
+  ;; Bind custom functions
+  (global-set-key (kbd "C-c w c") #'my/create-workspace)
+  (global-set-key (kbd "C-c w P") #'my/workspace-for-project)
+
+  :init
+  (persp-mode))
+
+;; Session management (desktop)
+(use-package desktop
+  :ensure nil
+  :config
+  (setq desktop-dirname user-emacs-directory
+        desktop-base-file-name "desktop"
+        desktop-base-lock-name "desktop.lock"
+        desktop-path (list desktop-dirname)
+        desktop-save t
+        desktop-files-not-to-save "^$"
+        desktop-load-locked-desktop nil
+        desktop-auto-save-timeout 30        ; Auto-save every 30 seconds
+        desktop-restore-forces-onscreen t)  ; Ensure windows are visible
+
+  ;; Save additional variables
+  (setq desktop-globals-to-save
+        (append '((extended-command-history . 30)
+                  (file-name-history        . 100)
+                  (grep-history             . 30)
+                  (compile-history          . 30)
+                  (minibuffer-history       . 50)
+                  (query-replace-history    . 60)
+                  (read-expression-history  . 60)
+                  (regexp-history           . 60)
+                  (regexp-search-ring       . 20)
+                  (search-ring              . 20)
+                  (shell-command-history    . 50)
+                  tags-file-name
+                  register-alist)
+                desktop-globals-to-save))
+
+  ;; Custom session functions
+  (defun my/save-session ()
+    "Save current session with confirmation."
+    (interactive)
+    (when (y-or-n-p "Save current session? ")
+      (desktop-save-in-desktop-dir)
+      (message "Session saved!")))
+
+  (defun my/restore-session ()
+    "Restore previous session with confirmation."
+    (interactive)
+    (when (and (file-exists-p (desktop-full-file-name))
+               (y-or-n-p "Restore previous session? "))
+      (desktop-read)
+      (message "Session restored!")))
+
+  ;; Auto-save session on exit
+  (add-hook 'kill-emacs-hook #'desktop-save-in-desktop-dir)
+
+  ;; Session keybindings
+  (global-set-key (kbd "C-c s s") #'my/save-session)
+  (global-set-key (kbd "C-c s r") #'my/restore-session)
+
+  ;; Enable desktop save mode
+  (desktop-save-mode 1))
+
+;; Window management enhancements
+(defun my/split-window-sensibly ()
+  "Split window based on available space."
+  (interactive)
+  (if (> (window-width) 120)
+      (split-window-right)
+    (split-window-below)))
+
+(defun my/kill-other-buffers ()
+  "Kill all buffers except current one."
+  (interactive)
+  (when (y-or-n-p "Kill all other buffers? ")
+    (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))
+    (message "Killed all other buffers")))
+
+;; Window management keybindings
+(global-set-key (kbd "C-c w d") #'delete-window)
+(global-set-key (kbd "C-c w v") #'split-window-right)
+(global-set-key (kbd "C-c w h") #'split-window-below)
+(global-set-key (kbd "C-c w m") #'delete-other-windows)
+(global-set-key (kbd "C-c w o") #'other-window)
+(global-set-key (kbd "C-c w u") #'winner-undo)
+(global-set-key (kbd "C-c w U") #'winner-redo)
+(global-set-key (kbd "C-c w 2") #'my/split-window-sensibly)
+(global-set-key (kbd "C-c w K") #'my/kill-other-buffers)
+
+;; Winner mode for undo/redo window configurations
+(use-package winner
+  :ensure nil
+  :config
+  (winner-mode 1))
+
+;; Which-key descriptions for workspace management
+(with-eval-after-load 'which-key
+  (which-key-add-key-based-replacements
+    ;; Workspace commands
+    "C-c w" "Workspace"
+    "C-c w s" "Switch Workspace"
+    "C-c w k" "Kill Buffer"
+    "C-c w r" "Rename Workspace"
+    "C-c w a" "Add Buffer"
+    "C-c w A" "Set Buffer"
+    "C-c w b" "Switch Buffer"
+    "C-c w i" "Import Workspace"
+    "C-c w n" "Next Workspace"
+    "C-c w p" "Previous Workspace"
+    "C-c w l" "List Buffers"
+    "C-c w c" "Create Workspace"
+    "C-c w P" "Project Workspace"
+    "C-c w x" "Kill Workspace"
+
+    ;; Window management
+    "C-c w d" "Delete Window"
+    "C-c w v" "Split Vertical"
+    "C-c w h" "Split Horizontal"
+    "C-c w m" "Maximize Window"
+    "C-c w o" "Other Window"
+    "C-c w u" "Winner Undo"
+    "C-c w U" "Winner Redo"
+    "C-c w 2" "Smart Split"
+    "C-c w K" "Kill Other Buffers"
+
+    ;; Session management
+    "C-c s" "Session"
+    "C-c s s" "Save Session"
+    "C-c s r" "Restore Session"
+
+    ;; Global workspace shortcuts
+    "s-{" "Previous Workspace"
+    "s-}" "Next Workspace"))
+
+(provide 'workspace)
+;;; workspace.el ends here
