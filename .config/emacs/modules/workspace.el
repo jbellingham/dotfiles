@@ -120,9 +120,9 @@
   ;; Auto-save session on exit
   (add-hook 'kill-emacs-hook #'desktop-save-in-desktop-dir)
 
-  ;; Session keybindings
-  (global-set-key (kbd "C-c s s") #'my/save-session)
-  (global-set-key (kbd "C-c s r") #'my/restore-session)
+  ;; Session keybindings (Changed from C-c s to C-c S to avoid conflict with search)
+  (global-set-key (kbd "C-c S s") #'my/save-session)
+  (global-set-key (kbd "C-c S r") #'my/restore-session)
 
   ;; Enable desktop save mode
   (desktop-save-mode 1))
@@ -189,10 +189,10 @@
     "C-c w 2" "Smart Split"
     "C-c w K" "Kill Other Buffers"
 
-    ;; Session management
-    "C-c s" "Session"
-    "C-c s s" "Save Session"
-    "C-c s r" "Restore Session"
+    ;; Session management (Changed to C-c S to avoid conflict with search)
+    "C-c S" "Session"
+    "C-c S s" "Save Session"
+    "C-c S r" "Restore Session"
 
     ;; Global workspace shortcuts
     "s-{" "Previous Workspace"

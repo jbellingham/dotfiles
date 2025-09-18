@@ -73,6 +73,23 @@
 (setq process-adaptive-read-buffering nil
       read-process-output-max (* 1024 1024)) ; 1MB for all processes
 
+;; Ensure proper PATH setup for shell commands (fixes mcfly/jump errors)
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+  ;; Copy additional environment variables from shell
+  (when (daemonp)
+    (exec-path-from-shell-copy-envs '("SHELL" "PATH"))))
+
+;; Fallback: Ensure Homebrew paths are available to Emacs (for mcfly, jump, etc.)
+(when (eq system-type 'darwin)
+  (let ((homebrew-bin "/opt/homebrew/bin")
+        (homebrew-sbin "/opt/homebrew/sbin"))
+    (when (file-directory-p homebrew-bin)
+      (setenv "PATH" (concat homebrew-bin ":" homebrew-sbin ":" (getenv "PATH")))
+      (setq exec-path (append (list homebrew-bin homebrew-sbin) exec-path)))))
+
 ;; Enable useful modes
 (global-auto-revert-mode 1)          ; Auto-reload changed files
 (delete-selection-mode 1)            ; Replace selected text when typing
