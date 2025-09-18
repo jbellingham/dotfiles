@@ -65,6 +65,31 @@
       (error (message "enh-ruby-mode error: %s (continuing anyway)"
                      (error-message-string err))))))
 
+;; Helper function to find Rails application root from engine
+(defun my/find-rails-root-from-engine ()
+  "Find the Rails application root when inside an engine."
+  (let ((current-dir (or (buffer-file-name) default-directory)))
+    (when current-dir
+      (let ((dir (file-name-directory current-dir))
+            (found-root nil))
+        ;; Look for engines/ directory and go up to find the Rails root
+        (while (and dir (not (string= dir "/")) (not found-root))
+          (cond
+           ;; If we're in an engines/ subdirectory, go up to find the Rails root
+           ((string-match "/engines/[^/]+/" dir)
+            (let ((potential-root (replace-regexp-in-string "/engines/[^/]+/.*" "" dir)))
+              (when (and (file-exists-p (concat potential-root "/Gemfile"))
+                         (file-exists-p (concat potential-root "/config/application.rb")))
+                (setq found-root potential-root))))
+           ;; Standard Rails root detection
+           ((and (file-exists-p (concat dir "Gemfile"))
+                 (file-exists-p (concat dir "config/application.rb")))
+            (setq found-root dir))
+           ;; Go up one directory
+           (t (setq dir (file-name-directory (directory-file-name dir))))))
+        ;; Return found root or original directory
+        (or found-root (file-name-directory current-dir))))))
+
 ;; Ruby testing with RSpec
 (use-package rspec-mode
   :hook ((ruby-mode enh-ruby-mode) . rspec-mode)
@@ -72,6 +97,24 @@
   (setq rspec-use-rake-when-possible nil
         rspec-use-spring-when-possible nil
         rspec-command-options "--format documentation")
+
+  ;; Override rspec-project-root to handle Rails engines
+  (defun rspec-project-root (&optional directory)
+    "Find the root directory of the project, handling Rails engines.
+For Rails engines, find the parent Rails application root."
+    (let ((directory (file-name-as-directory (or directory default-directory))))
+      (or (my/find-rails-root-from-engine)
+          ;; Fall back to original logic
+          (let ((dir directory)
+                (found-root nil))
+            (while (and dir (not (string= dir "/")) (not found-root))
+              (cond ((or (file-regular-p (expand-file-name "Rakefile" dir))
+                         (file-regular-p (expand-file-name "Gemfile" dir))
+                         (file-regular-p (expand-file-name "Berksfile" dir)))
+                     (setq found-root (expand-file-name dir)))
+                    (t (setq dir (file-name-directory (directory-file-name dir))))))
+            (or found-root (error "Could not determine the project root."))))))
+
   :bind (:map rspec-mode-map
               ("C-c T v" . rspec-verify)                ; Test verify (current)
               ("C-c T a" . rspec-verify-all)            ; Test all
@@ -342,6 +385,18 @@
 ;; Ruby utilities keybinding
 (global-set-key (kbd "C-c h t") 'ruby-hash-syntax-toggle)
 
+;; Debug function to test Rails engine detection
+(defun my/debug-rspec-root ()
+  "Debug function to show what directory RSpec will use."
+  (interactive)
+  (if (fboundp 'rspec-project-root)
+      (let ((root (rspec-project-root)))
+        (message "RSpec will run from: %s" root)
+        root)
+    (message "rspec-project-root function not available")))
+
+(global-set-key (kbd "C-c T d") 'my/debug-rspec-root)
+
 ;; Which-key descriptions for Ruby development
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
@@ -376,6 +431,7 @@
     "C-c T e" "Toggle Example"
     "C-c T f" "Verify Matching"
     "C-c T c" "Continue from Failure"
+    "C-c T d" "Debug RSpec Root"
 
     ;; Ruby utilities
     "C-c C-h" "Ruby Documentation"
