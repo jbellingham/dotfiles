@@ -244,7 +244,7 @@ For Rails engines, find the parent Rails application root."
   :hook (projectile-mode . projectile-rails-global-mode)
   :config
   (setq projectile-rails-expand-snippet nil)
-  :bind-keymap ("C-c r" . projectile-rails-command-map))
+  :bind-keymap ("C-c R" . projectile-rails-command-map))
 
 ;; Ruby REPL integration
 (use-package inf-ruby
@@ -252,18 +252,18 @@ For Rails engines, find the parent Rails application root."
   :config
   (setq inf-ruby-default-implementation "pry")
   :bind (:map ruby-mode-map
-              ("C-c C-s" . inf-ruby)
-              ("C-c C-c" . ruby-send-region-and-go)
-              ("C-c C-x" . ruby-send-definition)
-              ("C-c C-r" . ruby-send-region)))
+              ("C-c R s" . inf-ruby)
+              ("C-c R c" . ruby-send-region-and-go)
+              ("C-c R x" . ruby-send-definition)
+              ("C-c R r" . ruby-send-region)))
 
 ;; Bundler integration
 (use-package bundler
   :bind (:map ruby-mode-map
-              ("C-c r b i" . bundle-install)    ; Rails Bundle install
-              ("C-c r b u" . bundle-update)     ; Rails Bundle update
-              ("C-c r b c" . bundle-check)      ; Rails Bundle check
-              ("C-c r b e" . bundle-exec))      ; Rails Bundle exec
+              ("C-c R b i" . bundle-install)    ; Rails Bundle install
+              ("C-c R b u" . bundle-update)     ; Rails Bundle update
+              ("C-c R b c" . bundle-check)      ; Rails Bundle check
+              ("C-c R b e" . bundle-exec))      ; Rails Bundle exec
   )
 
 ;; Ruby hash syntax conversion
@@ -410,18 +410,18 @@ For Rails engines, find the parent Rails application root."
               ("C-c R F" . rubocop-autocorrect-current-file)
               ("C-c R P" . rubocop-autocorrect-project)))
 
-;; Bundler integration
+;; Bundler integration (using C-c R B prefix to avoid conflict with rails jobs)
 (use-package bundler
   :bind (:map ruby-mode-map
-              ("C-c r b i" . bundle-install)
-              ("C-c r b u" . bundle-update)
-              ("C-c r b c" . bundle-check)
-              ("C-c r b e" . bundle-exec)))
+              ("C-c R B i" . bundle-install)
+              ("C-c R B u" . bundle-update)
+              ("C-c R B c" . bundle-check)
+              ("C-c R B e" . bundle-exec)))
 
 ;; YARI - Ruby documentation lookup
 (use-package yari
   :bind (:map ruby-mode-map
-              ("C-c C-h" . yari)))
+              ("C-c R h" . yari)))
 
 ;; Ruby hash syntax toggle function
 (defun ruby-hash-syntax-toggle ()
@@ -447,10 +447,10 @@ For Rails engines, find the parent Rails application root."
 (use-package inf-ruby
   :hook ((ruby-mode enh-ruby-mode) . inf-ruby-minor-mode)
   :bind (:map ruby-mode-map
-              ("C-c C-s" . inf-ruby)
-              ("C-c C-c" . ruby-send-region-and-go)
-              ("C-c C-x" . ruby-send-definition)
-              ("C-c C-r" . ruby-send-region)))
+              ("C-c R s" . inf-ruby)
+              ("C-c R c" . ruby-send-region-and-go)
+              ("C-c R x" . ruby-send-definition)
+              ("C-c R r" . ruby-send-region)))
 
 ;; Ruby utilities keybinding
 (global-set-key (kbd "C-c h t") 'ruby-hash-syntax-toggle)
@@ -471,10 +471,10 @@ For Rails engines, find the parent Rails application root."
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
     ;; Ruby REPL operations
-    "C-c C-s" "Start Ruby REPL"
-    "C-c C-c" "Send Region & Go"
-    "C-c C-x" "Send Definition"
-    "C-c C-r" "Send Region"
+    "C-c R s" "Start Ruby REPL"
+    "C-c R c" "Send Region & Go"
+    "C-c R x" "Send Definition"
+    "C-c R r" "Send Region"
 
     ;; Rubocop code quality
     "C-c R" "Rubocop"
@@ -484,12 +484,60 @@ For Rails engines, find the parent Rails application root."
     "C-c R F" "Auto-correct File"
     "C-c R P" "Auto-correct Project"
 
-    ;; Bundler operations
-    "C-c r b" "Bundler"
-    "C-c r b i" "Bundle Install"
-    "C-c r b u" "Bundle Update"
-    "C-c r b c" "Bundle Check"
-    "C-c r b e" "Bundle Exec"
+    ;; Rails file navigation
+    "C-c R" "Rails"
+    "C-c R m" "Find Model"
+    "C-c R c" "Find Controller"
+    "C-c R v" "Find View"
+    "C-c R j" "Find JavaScript"
+    "C-c R s" "Find Stylesheet"
+    "C-c R h" "Find Helper"
+    "C-c R p" "Find Spec"
+    "C-c R t" "Find Test"
+    "C-c R n" "Find Migration"
+    "C-c R u" "Find Fixture"
+    "C-c R w" "Find Component"
+    "C-c R l" "Find Lib"
+    "C-c R f" "Find Feature"
+    "C-c R i" "Find Initializer"
+    "C-c R o" "Find Log"
+    "C-c R e" "Find Environment"
+    "C-c R a" "Find Locale"
+    "C-c R @" "Find Mailer"
+    "C-c R !" "Find Validator"
+    "C-c R y" "Find Layout"
+    "C-c R k" "Find Rake Task"
+    "C-c R b" "Find Job"
+    "C-c R z" "Find Serializer"
+    "C-c R x" "Extract Region"
+    "C-c R g" "Goto Map"
+    "C-c R !" "Run Map"
+
+    ;; Rails goto operations (C-c R g)
+    "C-c R g" "Rails Goto"
+    "C-c R g f" "Goto File at Point"
+    "C-c R g g" "Goto Gemfile"
+    "C-c R g r" "Goto Routes"
+    "C-c R g d" "Goto Schema"
+    "C-c R g s" "Goto Seeds"
+    "C-c R g h" "Goto Spec Helper"
+    "C-c R g p" "Goto Package"
+
+    ;; Rails run operations (C-c R !)
+    "C-c R !" "Rails Run"
+    "C-c R ! c" "Rails Console"
+    "C-c R ! s" "Rails Server"
+    "C-c R ! r" "Rails Rake"
+    "C-c R ! g" "Rails Generate"
+    "C-c R ! d" "Rails Destroy"
+    "C-c R ! b" "Rails DB Console"
+
+    ;; Bundler operations (C-c R B)
+    "C-c R B" "Bundler"
+    "C-c R B i" "Bundle Install"
+    "C-c R B u" "Bundle Update"
+    "C-c R B c" "Bundle Check"
+    "C-c R B e" "Bundle Exec"
 
     ;; RSpec testing
     "C-c T" "RSpec"
@@ -506,7 +554,7 @@ For Rails engines, find the parent Rails application root."
     "C-c T F" "Toggle Auto-Focus"
 
     ;; Ruby utilities
-    "C-c C-h" "Ruby Documentation"
+    "C-c R h" "Ruby Documentation"
     "C-c h t" "Toggle Hash Syntax"
     "C-c ? ?" "Execute with Annotations"
     "C-c ? c" "Clear Annotations"

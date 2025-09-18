@@ -106,6 +106,7 @@
 
 ;; 4. UI and visual enhancements
 (load-config-module "ui")
+(load-config-module "focus-mode")          ; Distraction-free focus mode
 
 ;; 5. Optional modules (automatically loaded if they exist)
 (defvar optional-modules '("lsp"              ; Language Server Protocol
