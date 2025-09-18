@@ -178,7 +178,7 @@
 
 ;; Open Emacs keybinding reference
 (defun open-emacs-reference ()
-  "Open the Emacs keybinding reference document in a new window split."
+  "Open the Emacs keybinding reference document in a read-only buffer in a new window split."
   (interactive)
   (let ((reference-file (expand-file-name "emacs-keybinding-reference.md" user-emacs-directory)))
     (if (file-exists-p reference-file)
@@ -186,7 +186,8 @@
           (split-window-right)
           (other-window 1)
           (find-file reference-file)
-          (message "Opened Emacs keybinding reference"))
+          (read-only-mode 1)
+          (message "Opened Emacs keybinding reference (read-only)"))
       (message "Reference file not found: %s" reference-file))))
 
 (global-set-key (kbd "C-c c h") 'open-emacs-reference) ; C-c c h for help/reference

@@ -7,18 +7,9 @@
 
 (require 'cl-lib)
 
-;; Completely disable ruby-mode loading for Ruby files
-(setq features (delq 'ruby-mode features))
-(when (featurep 'ruby-mode)
-  (unload-feature 'ruby-mode t))
-
-;; Ruby mode configuration (disabled to avoid conflict with enh-ruby-mode)
+;; Ruby mode configuration (minimal - using enh-ruby-mode as primary)
 (use-package ruby-mode
   :ensure nil
-  ;; Remove all mode associations - using enh-ruby-mode instead
-  :hook (ruby-mode . (lambda ()
-                       (font-lock-mode 1)
-                       (font-lock-ensure)))
   :config
   (setq ruby-indent-level 2
         ruby-indent-tabs-mode nil
@@ -46,47 +37,7 @@
                                         (lambda ()
                                           (when (eq major-mode 'enh-ruby-mode)
                                             (font-lock-fontify-buffer))))))
-  :init
-  ;; Force removal of built-in ruby-mode associations
-  (setq auto-mode-alist
-        (cl-remove-if (lambda (entry)
-                        (eq (cdr entry) 'ruby-mode))
-                      auto-mode-alist))
-  ;; Also remove any existing enh-ruby-mode entries to avoid duplicates
-  (setq auto-mode-alist
-        (cl-remove-if (lambda (entry)
-                        (eq (cdr entry) 'enh-ruby-mode))
-                      auto-mode-alist))
-
-  ;; Force enh-ruby-mode for Ruby files even if ruby-mode gets loaded
-  (add-hook 'ruby-mode-hook
-            (lambda ()
-              (enh-ruby-mode)))
-
-  ;; Nuclear option: Override ruby-mode function to redirect to enh-ruby-mode
-  (defadvice ruby-mode (around force-enh-ruby-mode activate)
-    "Force enh-ruby-mode instead of ruby-mode for Ruby files."
-    (if (and buffer-file-name
-             (string-match "\\.rb\\|\\.rake\\|Rakefile\\|Gemfile\\|Guardfile\\|\\.gemspec" buffer-file-name))
-        (enh-ruby-mode)
-      ad-do-it))
-
-  ;; Modern advice system as backup
-  (advice-add 'ruby-mode :around
-              (lambda (orig-fun &rest args)
-                "Force enh-ruby-mode for Ruby files."
-                (if (and buffer-file-name
-                         (string-match "\\.rb\\|\\.rake\\|Rakefile\\|Gemfile\\|Guardfile\\|\\.gemspec" buffer-file-name))
-                    (enh-ruby-mode)
-                  (apply orig-fun args))))
   :config
-  ;; Ensure enh-ruby-mode takes precedence - add associations at the front
-  (add-to-list 'auto-mode-alist '("\\.rb\\'" . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("Rakefile\\'" . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("Gemfile\\'" . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("Guardfile\\'" . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.rake\\'" . enh-ruby-mode))
-  (add-to-list 'auto-mode-alist '("\\.gemspec\\'" . enh-ruby-mode))
 
   (setq enh-ruby-indent-level 2
         enh-ruby-hanging-brace-indent-level 2

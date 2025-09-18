@@ -191,13 +191,91 @@
   :config
   (setq yaml-indent-offset 2))
 
-;; Prettier for code formatting
+;; Biome for code formatting and linting
+(defun my/find-biome-executable ()
+  "Find Biome executable in project node_modules or via yarn."
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "package.json"))
+         (biome-local (and root
+                          (expand-file-name "node_modules/.bin/biome" root)))
+         (biome-yarn (and root "yarn biome")))
+    (cond
+     ((and biome-local (file-executable-p biome-local)) biome-local)
+     (root biome-yarn)
+     (t "biome"))))
+
+(defun my/biome-format-buffer ()
+  "Format current buffer with Biome."
+  (interactive)
+  (let ((biome-cmd (my/find-biome-executable)))
+    (if (string-prefix-p "yarn" biome-cmd)
+        (shell-command-on-region
+         (point-min) (point-max)
+         (format "cd %s && %s format --stdin-file-path=%s"
+                 (locate-dominating-file (buffer-file-name) "package.json")
+                 biome-cmd
+                 (buffer-file-name))
+         t t)
+      (shell-command-on-region
+       (point-min) (point-max)
+       (format "%s format --stdin-file-path=%s" biome-cmd (buffer-file-name))
+       t t))))
+
+(defun my/biome-format-on-save ()
+  "Format with Biome on save if available."
+  (when (and (derived-mode-p 'typescript-mode 'typescript-ts-mode 'tsx-ts-mode
+                            'js2-mode 'js-ts-mode 'jsx-ts-mode)
+             (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json"))
+    (my/biome-format-buffer)))
+
+;; Biome formatting mode
+(define-minor-mode biome-format-mode
+  "Minor mode for Biome formatting."
+  :lighter " Biome"
+  :global nil
+  (if biome-format-mode
+      (add-hook 'before-save-hook #'my/biome-format-on-save nil t)
+    (remove-hook 'before-save-hook #'my/biome-format-on-save t)))
+
+;; Auto-enable Biome in projects that have biome.json
+(defun my/maybe-enable-biome ()
+  "Enable Biome mode if biome.json exists in project."
+  (when (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json")
+    (biome-format-mode 1)))
+
+;; Fallback to Prettier if Biome not available
 (use-package prettier-js
-  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . prettier-js-mode)
+  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) .
+         (lambda ()
+           (unless (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json")
+             (prettier-js-mode 1))))
   :config
   (setq prettier-js-args '("--single-quote" "--trailing-comma" "es5")))
 
-;; ESLint integration
+;; Simple Biome checker using executable lookup
+(defun my/setup-biome-flycheck ()
+  "Setup Biome flycheck if available in project."
+  (when (locate-dominating-file (buffer-file-name) "biome.json")
+    (let* ((root (locate-dominating-file (buffer-file-name) "package.json"))
+           (biome-local (and root (expand-file-name "node_modules/.bin/biome" root))))
+      (if (and biome-local (file-executable-p biome-local))
+          (progn
+            (setq-local flycheck-javascript-standard-executable biome-local)
+            (setq-local flycheck-checkers '(javascript-standard)))
+        ;; Use a custom script approach for yarn biome
+        (let ((script-path (expand-file-name "biome-check.sh" temporary-file-directory)))
+          (with-temp-file script-path
+            (insert "#!/bin/bash\n")
+            (insert (format "cd %s\n" root))
+            (insert "yarn biome lint --reporter=json \"$1\"\n"))
+          (set-file-modes script-path #o755)
+          (setq-local flycheck-javascript-standard-executable script-path)
+          (setq-local flycheck-checkers '(javascript-standard)))))))
+
+;; Remove the problematic flycheck checker definition and use the setup function instead
+
+;; ESLint integration (fallback when Biome not available)
 (use-package flycheck
   :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . flycheck-mode)
   :config
@@ -212,7 +290,18 @@
       (when (and eslint (file-executable-p eslint))
         (setq-local flycheck-javascript-eslint-executable eslint))))
 
-  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules))
+  ;; Configure checker priority: Biome first, then ESLint
+  (defun my/setup-js-linting ()
+    "Setup JavaScript/TypeScript linting with Biome or ESLint."
+    (if (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json")
+        (progn
+          (my/setup-biome-flycheck)
+          (message "Using Biome for linting"))
+      (progn
+        (my/use-eslint-from-node-modules)
+        (message "Using ESLint for linting"))))
+
+  (add-hook 'flycheck-mode-hook #'my/setup-js-linting))
 
 ;; Jest testing integration
 (use-package jest
@@ -287,9 +376,19 @@
 (use-package yasnippet-snippets
   :after yasnippet)
 
+;; Smart format function that chooses Biome or LSP (defined outside use-package)
+(defun my/smart-format-buffer ()
+  "Format buffer with Biome if available, otherwise use LSP formatter."
+  (interactive)
+  (if (and (bound-and-true-p biome-format-mode)
+           (locate-dominating-file (buffer-file-name) "biome.json"))
+      (my/biome-format-buffer)
+    (lsp-format-buffer)))
+
 ;; LSP mode for TypeScript/JavaScript
 (use-package lsp-mode
   :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . lsp-deferred)
+  :commands (lsp lsp-deferred)
   :config
   (setq lsp-completion-provider :capf
         lsp-enable-snippet t
@@ -336,20 +435,40 @@
                                       :includeInlayFunctionLikeReturnTypeHints t
                                       :includeInlayEnumMemberValueHints t)))))
 
-  :commands (lsp lsp-deferred)
   :bind (:map lsp-mode-map
               ("M-." . lsp-find-definition)
               ("M-?" . lsp-find-references)
               ("M-," . pop-tag-mark)
               ("C-c l r" . lsp-rename)
               ("C-c l a" . lsp-execute-code-action)
-              ("C-c l f" . lsp-format-buffer)
+              ("C-c l f" . my/smart-format-buffer)
               ("C-c l d" . lsp-describe-thing-at-point)
               ("C-c l i" . lsp-find-implementation)
               ("C-c l t" . lsp-find-type-definition)
               ("C-c l s" . lsp-workspace-symbol)
               ("C-c l h" . lsp-symbol-highlight)
               ("C-c l o" . lsp-organize-imports)))
+
+;; Biome keybindings
+(defvar biome-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c b f") 'my/biome-format-buffer)   ; Biome format
+    (define-key map (kbd "C-c b t") 'biome-format-mode)       ; Toggle Biome mode
+    map)
+  "Keymap for Biome commands.")
+
+;; Global Biome keybindings for TypeScript/JavaScript modes
+(defun my/setup-biome-keybindings ()
+  "Setup Biome keybindings for current buffer."
+  (local-set-key (kbd "C-c b f") 'my/biome-format-buffer)
+  (local-set-key (kbd "C-c b t") 'biome-format-mode))
+
+(add-hook 'typescript-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'typescript-ts-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'tsx-ts-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'js2-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'js-ts-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'jsx-ts-mode-hook #'my/setup-biome-keybindings)
 
 ;; LSP UI improvements
 (use-package lsp-ui
@@ -493,13 +612,21 @@
                (not (and (treesit-available-p) (version<= "29" emacs-version))))
       (ignore-errors (tree-sitter-hl-mode 1)))))
 
-;; Hook to enable React Native mode
+;; Hook to enable React Native mode and Biome
 (add-hook 'typescript-mode-hook #'enable-react-native-mode)
 (add-hook 'typescript-ts-mode-hook #'enable-react-native-mode)
 (add-hook 'tsx-ts-mode-hook #'enable-react-native-mode)
 (add-hook 'js2-mode-hook #'enable-react-native-mode)
 (add-hook 'js-ts-mode-hook #'enable-react-native-mode)
 (add-hook 'jsx-ts-mode-hook #'enable-react-native-mode)
+
+;; Auto-enable Biome mode
+(add-hook 'typescript-mode-hook #'my/maybe-enable-biome)
+(add-hook 'typescript-ts-mode-hook #'my/maybe-enable-biome)
+(add-hook 'tsx-ts-mode-hook #'my/maybe-enable-biome)
+(add-hook 'js2-mode-hook #'my/maybe-enable-biome)
+(add-hook 'js-ts-mode-hook #'my/maybe-enable-biome)
+(add-hook 'jsx-ts-mode-hook #'my/maybe-enable-biome)
 
 ;; Force highlighting refresh after mode initialization
 (add-hook 'typescript-mode-hook #'force-typescript-highlighting)
