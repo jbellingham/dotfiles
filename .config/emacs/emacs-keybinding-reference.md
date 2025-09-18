@@ -266,22 +266,42 @@ Your configuration includes Magit for Git operations:
 
 ## Ruby/Rails Development
 
-### Ruby-specific Operations
+### Rails File Navigation
 | Key | Command | Description |
 |-----|---------|-------------|
-| `C-c r` | `projectile-rails-command-map` | Rails command map |
-| `C-c r f f` | `projectile-rails-find-file` | Find Rails file |
-| `C-c r f m` | `projectile-rails-find-model` | Find model |
-| `C-c r f c` | `projectile-rails-find-controller` | Find controller |
-| `C-c r f v` | `projectile-rails-find-view` | Find view |
+| `C-c R` | `projectile-rails-command-map` | Rails command map |
+| `C-c R m` | `projectile-rails-find-model` | Find model |
+| `C-c R c` | `projectile-rails-find-controller` | Find controller |
+| `C-c R v` | `projectile-rails-find-view` | Find view |
+| `C-c R j` | `projectile-rails-find-javascript` | Find JavaScript |
+| `C-c R s` | `projectile-rails-find-stylesheet` | Find stylesheet |
+| `C-c R h` | `projectile-rails-find-helper` | Find helper |
+| `C-c R p` | `projectile-rails-find-spec` | Find spec |
+| `C-c R t` | `projectile-rails-find-test` | Find test |
+| `C-c R n` | `projectile-rails-find-migration` | Find migration |
+| `C-c R u` | `projectile-rails-find-fixture` | Find fixture |
+| `C-c R w` | `projectile-rails-find-component` | Find component |
+| `C-c R l` | `projectile-rails-find-lib` | Find lib |
+| `C-c R f` | `projectile-rails-find-feature` | Find feature |
+| `C-c R i` | `projectile-rails-find-initializer` | Find initializer |
+| `C-c R o` | `projectile-rails-find-log` | Find log |
+| `C-c R e` | `projectile-rails-find-environment` | Find environment |
+| `C-c R a` | `projectile-rails-find-locale` | Find locale |
+| `C-c R @` | `projectile-rails-find-mailer` | Find mailer |
+| `C-c R !` | `projectile-rails-find-validator` | Find validator |
+| `C-c R y` | `projectile-rails-find-layout` | Find layout |
+| `C-c R k` | `projectile-rails-find-rake-task` | Find rake task |
+| `C-c R b` | `projectile-rails-find-job` | Find job (background) |
+| `C-c R z` | `projectile-rails-find-serializer` | Find serializer |
+| `C-c R x` | `projectile-rails-extract-region` | Extract region |
 
 ### Ruby REPL & Execution
 | Key | Command | Description |
 |-----|---------|-------------|
-| `C-c C-s` | `inf-ruby` | Start Ruby REPL |
-| `C-c C-c` | `ruby-send-region-and-go` | Send region to REPL |
-| `C-c C-x` | `ruby-send-definition` | Send definition to REPL |
-| `C-c C-r` | `ruby-send-region` | Send region to REPL |
+| `C-c R s` | `inf-ruby` | Start Ruby REPL |
+| `C-c R c` | `ruby-send-region-and-go` | Send region to REPL |
+| `C-c R x` | `ruby-send-definition` | Send definition to REPL |
+| `C-c R r` | `ruby-send-region` | Send region to REPL |
 
 ### Ruby Code Quality
 | Key | Command | Description |
@@ -292,19 +312,42 @@ Your configuration includes Magit for Git operations:
 | `C-c R F` | `rubocop-autocorrect-current-file` | Auto-correct file |
 | `C-c R P` | `rubocop-autocorrect-project` | Auto-correct project |
 
+### Rails Navigation & Actions
+| Key | Command | Description |
+|-----|---------|-------------|
+| `C-c R g` | `projectile-rails-mode-goto-map` | Rails goto operations |
+| `C-c R g f` | `projectile-rails-goto-file-at-point` | Goto file at point |
+| `C-c R g g` | `projectile-rails-goto-gemfile` | Goto Gemfile |
+| `C-c R g r` | `projectile-rails-goto-routes` | Goto routes |
+| `C-c R g d` | `projectile-rails-goto-schema` | Goto schema |
+| `C-c R g s` | `projectile-rails-goto-seeds` | Goto seeds |
+| `C-c R g h` | `projectile-rails-goto-spec-helper` | Goto spec helper |
+| `C-c R g p` | `projectile-rails-goto-package` | Goto package |
+
+### Rails Run Commands
+| Key | Command | Description |
+|-----|---------|-------------|
+| `C-c R !` | `projectile-rails-mode-run-map` | Rails run operations |
+| `C-c R ! c` | `projectile-rails-console` | Rails console |
+| `C-c R ! s` | `projectile-rails-server` | Rails server |
+| `C-c R ! r` | `projectile-rails-rake` | Rails rake |
+| `C-c R ! g` | `projectile-rails-generate` | Rails generate |
+| `C-c R ! d` | `projectile-rails-destroy` | Rails destroy |
+| `C-c R ! b` | `projectile-rails-dbconsole` | Rails DB console |
+
 ### Ruby Bundler
 | Key | Command | Description |
 |-----|---------|-------------|
-| `C-c r b i` | `bundle-install` | Bundle install |
-| `C-c r b u` | `bundle-update` | Bundle update |
-| `C-c r b c` | `bundle-check` | Bundle check |
-| `C-c r b e` | `bundle-exec` | Bundle exec |
+| `C-c R B i` | `bundle-install` | Bundle install |
+| `C-c R B u` | `bundle-update` | Bundle update |
+| `C-c R B c` | `bundle-check` | Bundle check |
+| `C-c R B e` | `bundle-exec` | Bundle exec |
 
 ### Ruby Utilities
 | Key | Command | Description |
 |-----|---------|-------------|
 | `C-c h t` | `ruby-hash-syntax-toggle` | Toggle hash syntax |
-| `C-c C-h` | `yari` | Ruby documentation lookup |
+| `C-c R h` | `yari` | Ruby documentation lookup |
 | `C-c ? ?` | `seeing-is-believing-run` | Execute with annotations |
 | `C-c ? c` | `seeing-is-believing-clear` | Clear annotations |
 
@@ -337,6 +380,25 @@ Your configuration includes Magit for Git operations:
 | `TAB` | `company-complete-common` | Complete common |
 | `C-n` | `company-select-next` | Next completion |
 | `C-p` | `company-select-previous` | Previous completion |
+
+---
+
+## Focus Mode
+
+### Distraction-Free Editing
+| Key | Command | Description |
+|-----|---------|-------------|
+| `C-c f f` | `my/focus-mode-toggle` | Toggle focus mode on/off |
+| `C-c f s` | `my/focus-mode-status` | Show focus mode status |
+
+### Focus Mode Width Control
+| Key | Command | Description |
+|-----|---------|-------------|
+| `C-c f +` | `my/focus-mode-increase-width` | Increase focus width |
+| `C-c f -` | `my/focus-mode-decrease-width` | Decrease focus width |
+| `C-c f 1` | `my/focus-mode-narrow` | Narrow width (80 columns) |
+| `C-c f 2` | `my/focus-mode-medium` | Medium width (100 columns) |
+| `C-c f 3` | `my/focus-mode-wide` | Wide width (120 columns) |
 
 ---
 
@@ -403,6 +465,11 @@ Your configuration includes `which-key` mode, which provides contextual help for
 - Use `C-c b b` for intelligent buffer switching
 - Use `Cmd+1-9` to jump to specific windows by number
 - Use `C-c S s` and `C-c S r` for session save/restore (note: capital S to avoid conflict with search)
+- Use `C-c f f` for distraction-free focus mode toggle
+- Use `C-c R` prefix for all Ruby/Rails operations (capital R to avoid conflicts)
+- Use `C-c R g` for Rails navigation (Gemfile, routes, schema, etc.)
+- Use `C-c R !` for Rails actions (console, server, generate, etc.)
+- Use `C-c R B` for Bundler operations (capital B to avoid conflict with Rails jobs)
 
 ### File Explorer (Treemacs)
 - `Cmd+0` (`s-0`) toggles the file explorer
