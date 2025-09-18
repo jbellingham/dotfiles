@@ -287,5 +287,112 @@
               ("C-c ? ?" . seeing-is-believing-run)
               ("C-c ? c" . seeing-is-believing-clear)))
 
+;; Rubocop integration
+(use-package rubocop
+  :hook ((ruby-mode enh-ruby-mode) . rubocop-mode)
+  :bind (:map ruby-mode-map
+              ("C-c R a" . rubocop-check-project)
+              ("C-c R d" . rubocop-check-directory)
+              ("C-c R f" . rubocop-check-current-file)
+              ("C-c R F" . rubocop-autocorrect-current-file)
+              ("C-c R P" . rubocop-autocorrect-project)))
+
+;; Bundler integration
+(use-package bundler
+  :bind (:map ruby-mode-map
+              ("C-c r b i" . bundle-install)
+              ("C-c r b u" . bundle-update)
+              ("C-c r b c" . bundle-check)
+              ("C-c r b e" . bundle-exec)))
+
+;; YARI - Ruby documentation lookup
+(use-package yari
+  :bind (:map ruby-mode-map
+              ("C-c C-h" . yari)))
+
+;; Ruby hash syntax toggle function
+(defun ruby-hash-syntax-toggle ()
+  "Toggle between old-style and new-style Ruby hash syntax."
+  (interactive)
+  (save-excursion
+    (let ((start (if (region-active-p) (region-beginning) (point-min)))
+          (end (if (region-active-p) (region-end) (point-max))))
+      (goto-char start)
+      (if (search-forward "=>" end t)
+          ;; Convert old style to new style
+          (progn
+            (goto-char start)
+            (while (re-search-forward ":\\([a-zA-Z_][a-zA-Z0-9_]*\\)\\s-*=>" end t)
+              (replace-match "\\1:" nil nil)))
+        ;; Convert new style to old style
+        (goto-char start)
+        (while (re-search-forward "\\([a-zA-Z_][a-zA-Z0-9_]*\\):" end t)
+          (replace-match ":\\1 =>" nil nil)))))
+  (message "Hash syntax toggled"))
+
+;; Ruby REPL integration
+(use-package inf-ruby
+  :hook ((ruby-mode enh-ruby-mode) . inf-ruby-minor-mode)
+  :bind (:map ruby-mode-map
+              ("C-c C-s" . inf-ruby)
+              ("C-c C-c" . ruby-send-region-and-go)
+              ("C-c C-x" . ruby-send-definition)
+              ("C-c C-r" . ruby-send-region)))
+
+;; Ruby utilities keybinding
+(global-set-key (kbd "C-c h t") 'ruby-hash-syntax-toggle)
+
+;; Which-key descriptions for Ruby development
+(with-eval-after-load 'which-key
+  (which-key-add-key-based-replacements
+    ;; Ruby REPL operations
+    "C-c C-s" "Start Ruby REPL"
+    "C-c C-c" "Send Region & Go"
+    "C-c C-x" "Send Definition"
+    "C-c C-r" "Send Region"
+
+    ;; Rubocop code quality
+    "C-c R" "Rubocop"
+    "C-c R a" "Check Project"
+    "C-c R d" "Check Directory"
+    "C-c R f" "Check File"
+    "C-c R F" "Auto-correct File"
+    "C-c R P" "Auto-correct Project"
+
+    ;; Bundler operations
+    "C-c r b" "Bundler"
+    "C-c r b i" "Bundle Install"
+    "C-c r b u" "Bundle Update"
+    "C-c r b c" "Bundle Check"
+    "C-c r b e" "Bundle Exec"
+
+    ;; RSpec testing
+    "C-c T" "RSpec"
+    "C-c T v" "Verify Test"
+    "C-c T s" "Verify Single"
+    "C-c T a" "Verify All"
+    "C-c T r" "Rerun Test"
+    "C-c T t" "Toggle Spec/Impl"
+    "C-c T e" "Toggle Example"
+    "C-c T f" "Verify Matching"
+    "C-c T c" "Continue from Failure"
+
+    ;; Ruby utilities
+    "C-c C-h" "Ruby Documentation"
+    "C-c h t" "Toggle Hash Syntax"
+    "C-c ? ?" "Execute with Annotations"
+    "C-c ? c" "Clear Annotations"
+
+    ;; LSP Ruby operations
+    "C-c l" "LSP"
+    "C-c l r" "Rename Symbol"
+    "C-c l a" "Code Actions"
+    "C-c l f" "Format Buffer"
+    "C-c l d" "Show Documentation"
+    "C-c l i" "Find Implementation"
+    "C-c l t" "Find Type Definition"
+    "C-c l s" "Search Symbols"
+    "C-c l h" "Highlight Symbol"))
+
 (provide 'ruby)
 ;;; ruby.el ends here

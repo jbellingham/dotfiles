@@ -76,7 +76,7 @@ Your configuration includes VS Code-like Command key bindings for familiar navig
 ### File & Project Operations
 | Key | Command | Description |
 |-----|---------|-------------|
-| `Cmd+P` (`s-p`) | `my/project-find-file-dwim` | **Find Files** (Fuzzy search) |
+| `Cmd+P` (`s-p`) | `my/find-project-files` | **Find Files** (Fuzzy search) |
 | `Cmd+Shift+P` (`s-P`) | `my/project-switch-with-treemacs` | **Search Project** |
 | `Cmd+B` (`s-b`) | `my/project-buffers` | **Switch Buffer** |
 | `Cmd+Shift+F` (`s-F`) | `my/search-project` | **Search in Project** |
@@ -244,8 +244,8 @@ Your configuration includes VS Code-like Command key bindings for familiar navig
 ### Session Management
 | Key | Command | Description |
 |-----|---------|-------------|
-| `C-c s s` | `my/save-session` | Save session |
-| `C-c s r` | `my/restore-session` | Restore session |
+| `C-c S s` | `my/save-session` | Save session |
+| `C-c S r` | `my/restore-session` | Restore session |
 
 ---
 
@@ -286,11 +286,11 @@ Your configuration includes Magit for Git operations:
 ### Ruby Code Quality
 | Key | Command | Description |
 |-----|---------|-------------|
-| `C-c C-r a` | `rubocop-check-project` | Check entire project |
-| `C-c C-r d` | `rubocop-check-directory` | Check directory |
-| `C-c C-r f` | `rubocop-check-current-file` | Check current file |
-| `C-c C-r F` | `rubocop-autocorrect-current-file` | Auto-correct file |
-| `C-c C-r P` | `rubocop-autocorrect-project` | Auto-correct project |
+| `C-c R a` | `rubocop-check-project` | Check entire project |
+| `C-c R d` | `rubocop-check-directory` | Check directory |
+| `C-c R f` | `rubocop-check-current-file` | Check current file |
+| `C-c R F` | `rubocop-autocorrect-current-file` | Auto-correct file |
+| `C-c R P` | `rubocop-autocorrect-project` | Auto-correct project |
 
 ### Ruby Bundler
 | Key | Command | Description |
@@ -400,6 +400,7 @@ Your configuration includes `which-key` mode, which provides contextual help for
 - Use `Cmd+T` to quickly toggle between implementation and test files
 - Use `C-c b b` for intelligent buffer switching
 - Use `Cmd+1-9` to jump to specific windows by number
+- Use `C-c S s` and `C-c S r` for session save/restore (note: capital S to avoid conflict with search)
 
 ### File Explorer (Treemacs)
 - `Cmd+0` (`s-0`) toggles the file explorer
