@@ -206,28 +206,34 @@
      (t "biome"))))
 
 (defun my/biome-format-buffer ()
-  "Format current buffer with Biome."
+  "Format current buffer with yarn format command."
   (interactive)
-  (let ((biome-cmd (my/find-biome-executable)))
-    (if (string-prefix-p "yarn" biome-cmd)
-        (shell-command-on-region
-         (point-min) (point-max)
-         (format "cd %s && %s format --stdin-file-path=%s"
-                 (locate-dominating-file (buffer-file-name) "package.json")
-                 biome-cmd
-                 (buffer-file-name))
-         t t)
-      (shell-command-on-region
-       (point-min) (point-max)
-       (format "%s format --stdin-file-path=%s" biome-cmd (buffer-file-name))
-       t t))))
+  (let* ((root (locate-dominating-file (buffer-file-name) "package.json"))
+         (file-path (buffer-file-name)))
+    (if root
+        (progn
+          (save-buffer)  ; Save first since yarn format works on files
+          (let ((default-directory root))
+            (shell-command (format "yarn format %s" (shell-quote-argument file-path))))
+          (revert-buffer t t t)  ; Reload the formatted file
+          (message "Formatted with yarn format"))
+      (message "No package.json found - cannot run yarn format"))))
 
 (defun my/biome-format-on-save ()
-  "Format with Biome on save if available."
+  "Format with yarn format on save if available."
   (when (and (derived-mode-p 'typescript-mode 'typescript-ts-mode 'tsx-ts-mode
                             'js2-mode 'js-ts-mode 'jsx-ts-mode)
-             (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json"))
-    (my/biome-format-buffer)))
+             (locate-dominating-file (or (buffer-file-name) default-directory) "package.json"))
+    ;; Save first, then format, then the file will be auto-reverted
+    (let* ((root (locate-dominating-file (buffer-file-name) "package.json"))
+           (file-path (buffer-file-name)))
+      (when root
+        (let ((default-directory root))
+          (shell-command (format "yarn format %s" (shell-quote-argument file-path))))
+        (run-with-timer 0.1 nil
+                        (lambda ()
+                          (when (buffer-live-p (current-buffer))
+                            (revert-buffer t t t))))))))
 
 ;; Biome formatting mode
 (define-minor-mode biome-format-mode
@@ -238,17 +244,17 @@
       (add-hook 'before-save-hook #'my/biome-format-on-save nil t)
     (remove-hook 'before-save-hook #'my/biome-format-on-save t)))
 
-;; Auto-enable Biome in projects that have biome.json
+;; Auto-enable Biome in projects that have package.json
 (defun my/maybe-enable-biome ()
-  "Enable Biome mode if biome.json exists in project."
-  (when (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json")
+  "Enable Biome mode if package.json exists in project."
+  (when (locate-dominating-file (or (buffer-file-name) default-directory) "package.json")
     (biome-format-mode 1)))
 
-;; Fallback to Prettier if Biome not available
+;; Fallback to Prettier if yarn format not available
 (use-package prettier-js
   :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) .
          (lambda ()
-           (unless (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json")
+           (unless (locate-dominating-file (or (buffer-file-name) default-directory) "package.json")
              (prettier-js-mode 1))))
   :config
   (setq prettier-js-args '("--single-quote" "--trailing-comma" "es5")))
@@ -376,12 +382,12 @@
 (use-package yasnippet-snippets
   :after yasnippet)
 
-;; Smart format function that chooses Biome or LSP (defined outside use-package)
+;; Smart format function that chooses yarn format or LSP (defined outside use-package)
 (defun my/smart-format-buffer ()
-  "Format buffer with Biome if available, otherwise use LSP formatter."
+  "Format buffer with yarn format if available, otherwise use LSP formatter."
   (interactive)
   (if (and (bound-and-true-p biome-format-mode)
-           (locate-dominating-file (buffer-file-name) "biome.json"))
+           (locate-dominating-file (buffer-file-name) "package.json"))
       (my/biome-format-buffer)
     (lsp-format-buffer)))
 
