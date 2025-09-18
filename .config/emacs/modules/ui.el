@@ -11,8 +11,9 @@
       inhibit-splash-screen t
       initial-scratch-message nil)
 
-;; Clean UI
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;; Clean UI - but keep menu bar on macOS for window controls
+(when (and (fboundp 'menu-bar-mode) (not (eq system-type 'darwin)))
+  (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -78,7 +79,13 @@
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   (doom-themes-treemacs-config)
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+
+  ;; Ensure window controls remain visible after theme load
+  (when (eq system-type 'darwin)
+    (set-frame-parameter nil 'ns-transparent-titlebar nil)
+    (set-frame-parameter nil 'undecorated-round nil)
+    (menu-bar-mode 1)))
 
 ;; Modeline
 (use-package doom-modeline

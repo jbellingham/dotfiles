@@ -176,6 +176,21 @@
 (global-set-key (kbd "C-c c t") 'claude-code-terminal) ; C-c c t for Claude terminal
 (global-set-key (kbd "C-c c k") 'show-command-keybindings) ; C-c c k to show Command key bindings
 
+;; Open Emacs keybinding reference
+(defun open-emacs-reference ()
+  "Open the Emacs keybinding reference document in a new window split."
+  (interactive)
+  (let ((reference-file (expand-file-name "emacs-keybinding-reference.md" user-emacs-directory)))
+    (if (file-exists-p reference-file)
+        (progn
+          (split-window-right)
+          (other-window 1)
+          (find-file reference-file)
+          (message "Opened Emacs keybinding reference"))
+      (message "Reference file not found: %s" reference-file))))
+
+(global-set-key (kbd "C-c c h") 'open-emacs-reference) ; C-c c h for help/reference
+
 ;; Which-key for discoverability
 (use-package which-key
   :init
@@ -216,7 +231,8 @@
     "s-}" "Next Workspace"
     "s-t" "Toggle Impl/Test"
     "C-c c" "Claude Config"
-    "C-c c k" "Show Command Keys"))
+    "C-c c k" "Show Command Keys"
+    "C-c c h" "Emacs Reference"))
 
 ;; Dired improvements
 (use-package dired

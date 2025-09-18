@@ -151,6 +151,12 @@
   (when (featurep 'dashboard)
     (dashboard-refresh-buffer))
 
+  ;; Ensure macOS window controls are visible (final check)
+  (when (eq system-type 'darwin)
+    (set-frame-parameter nil 'ns-transparent-titlebar nil)
+    (set-frame-parameter nil 'undecorated-round nil)
+    (menu-bar-mode 1))
+
   ;; Final message
   (message "Emacs configuration loaded successfully!"))
 
