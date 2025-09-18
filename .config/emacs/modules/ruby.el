@@ -96,7 +96,15 @@
   :config
   (setq rspec-use-rake-when-possible nil
         rspec-use-spring-when-possible nil
-        rspec-command-options "--format documentation")
+        rspec-command-options "--format documentation"
+        ;; Auto-focus the test output window
+        rspec-compilation-buffer-window-auto-pop nil) ; We'll handle this ourselves
+
+  ;; Custom variable to control auto-focus behavior
+  (defcustom my/rspec-auto-focus-output t
+    "Whether to automatically focus the RSpec output window when running tests."
+    :type 'boolean
+    :group 'rspec-mode)
 
   ;; Override rspec-project-root to handle Rails engines
   (defun rspec-project-root (&optional directory)
@@ -115,6 +123,66 @@ For Rails engines, find the parent Rails application root."
                     (t (setq dir (file-name-directory (directory-file-name dir))))))
             (or found-root (error "Could not determine the project root."))))))
 
+  ;; Configure RSpec compilation buffer display (without auto-select to avoid conflicts)
+  (add-to-list 'display-buffer-alist
+               '("\\*rspec-compilation\\*"
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 (window-height . 0.3)
+                 (reusable-frames . nil)))
+
+  ;; Auto-focus approach: Advice the rspec commands to focus output after running
+  (defun my/rspec-auto-focus-after-run (orig-fun &rest args)
+    "Advice to auto-focus RSpec compilation buffer after running tests."
+    (let ((result (apply orig-fun args)))
+      ;; Only auto-focus if the setting is enabled
+      (when my/rspec-auto-focus-output
+        ;; Give the compilation buffer time to appear, then focus it
+        (run-with-timer 0.2 nil
+                        (lambda ()
+                          (let ((rspec-buffer (get-buffer "*rspec-compilation*")))
+                            (when rspec-buffer
+                              (let ((rspec-window (get-buffer-window rspec-buffer)))
+                                (when rspec-window
+                                  (select-window rspec-window))))))))
+      result))
+
+  ;; Apply advice to main RSpec commands
+  (advice-add 'rspec-verify :around #'my/rspec-auto-focus-after-run)
+  (advice-add 'rspec-verify-all :around #'my/rspec-auto-focus-after-run)
+  (advice-add 'rspec-verify-single :around #'my/rspec-auto-focus-after-run)
+  (advice-add 'rspec-rerun :around #'my/rspec-auto-focus-after-run)
+  (advice-add 'rspec-verify-matching :around #'my/rspec-auto-focus-after-run)
+  (advice-add 'rspec-verify-continue :around #'my/rspec-auto-focus-after-run)
+
+  ;; Function to toggle auto-focus behavior
+  (defun my/rspec-toggle-auto-focus ()
+    "Toggle automatic focusing of RSpec output window."
+    (interactive)
+    (setq my/rspec-auto-focus-output (not my/rspec-auto-focus-output))
+    (message "RSpec auto-focus: %s" (if my/rspec-auto-focus-output "enabled" "disabled")))
+
+  ;; Helper function to toggle between test and output
+  (defun my/rspec-toggle-test-output ()
+    "Toggle between the test file and RSpec output buffer."
+    (interactive)
+    (let ((rspec-buffer (get-buffer "*rspec-compilation*"))
+          (current-buffer (current-buffer)))
+      (cond
+       ;; If we're in the RSpec buffer, go back to the last test file
+       ((and rspec-buffer (eq current-buffer rspec-buffer))
+        (let ((test-window (get-buffer-window (other-buffer rspec-buffer t))))
+          (if test-window
+              (select-window test-window)
+            (switch-to-buffer (other-buffer rspec-buffer t)))))
+       ;; If RSpec buffer exists, switch to it
+       (rspec-buffer
+        (let ((rspec-window (get-buffer-window rspec-buffer)))
+          (if rspec-window
+              (select-window rspec-window)
+            (pop-to-buffer rspec-buffer))))
+       ;; No RSpec buffer, inform user
+       (t (message "No RSpec output buffer found")))))
+
   :bind (:map rspec-mode-map
               ("C-c T v" . rspec-verify)                ; Test verify (current)
               ("C-c T a" . rspec-verify-all)            ; Test all
@@ -123,7 +191,9 @@ For Rails engines, find the parent Rails application root."
               ("C-c T t" . rspec-toggle-spec-and-target) ; Test toggle
               ("C-c T e" . rspec-toggle-example)        ; Test example
               ("C-c T f" . rspec-verify-matching)       ; Test find/matching
-              ("C-c T c" . rspec-verify-continue))      ; Test continue
+              ("C-c T c" . rspec-verify-continue)       ; Test continue
+              ("C-c T o" . my/rspec-toggle-test-output) ; Toggle test/output
+              ("C-c T F" . my/rspec-toggle-auto-focus)) ; Toggle auto-focus
   )
 
 ;; Ruby refactoring tools
@@ -432,6 +502,8 @@ For Rails engines, find the parent Rails application root."
     "C-c T f" "Verify Matching"
     "C-c T c" "Continue from Failure"
     "C-c T d" "Debug RSpec Root"
+    "C-c T o" "Toggle Test/Output"
+    "C-c T F" "Toggle Auto-Focus"
 
     ;; Ruby utilities
     "C-c C-h" "Ruby Documentation"

@@ -319,6 +319,8 @@ Your configuration includes Magit for Git operations:
 | `C-c T e` | `rspec-toggle-example` | Toggle example focus |
 | `C-c T f` | `rspec-verify-matching` | Run matching tests |
 | `C-c T c` | `rspec-verify-continue` | Continue from failure |
+| `C-c T o` | `my/rspec-toggle-test-output` | Toggle between test file and output |
+| `C-c T F` | `my/rspec-toggle-auto-focus` | Toggle auto-focus of test output |
 
 ---
 
