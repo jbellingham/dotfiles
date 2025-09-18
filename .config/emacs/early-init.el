@@ -21,7 +21,7 @@
 (setq comp-deferred-compilation nil)
 
 ;; Remove some UI elements early to prevent flashing
-(push '(menu-bar-lines . 0) default-frame-alist)
+;; Note: Keeping menu-bar for macOS window controls
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
@@ -33,13 +33,13 @@
 
 ;; Set frame parameters for new frames (optimized for M4 MacBook)
 (setq default-frame-alist
-      '((fullscreen . maximized)
+      '((fullscreen . nil)
         (background-color . "#282c34")
         (ns-appearance . dark)
         (ns-transparent-titlebar . nil)
         ;; M4 MacBook specific optimizations
         (inhibit-double-buffering . t)
-        (undecorated-round . t)))
+        (undecorated-round . nil)))
 
 ;; Native compilation settings (for Emacs 28+)
 (when (and (fboundp 'native-comp-available-p)
