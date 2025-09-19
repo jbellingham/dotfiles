@@ -388,7 +388,7 @@ Your configuration includes Magit for Git operations:
 ### Distraction-Free Editing
 | Key | Command | Description |
 |-----|---------|-------------|
-| `C-c f f` | `my/focus-mode-toggle` | Toggle focus mode on/off |
+| `C-c f f` | `my/focus-mode-toggle` | Toggle focus mode (320 columns default) |
 | `C-c f s` | `my/focus-mode-status` | Show focus mode status |
 
 ### Focus Mode Width Control
@@ -396,10 +396,10 @@ Your configuration includes Magit for Git operations:
 |-----|---------|-------------|
 | `C-c f +` | `my/focus-mode-increase-width` | Increase focus width |
 | `C-c f -` | `my/focus-mode-decrease-width` | Decrease focus width |
-| `C-c f 1` | `my/focus-mode-narrow` | Narrow width (80 columns) |
-| `C-c f 2` | `my/focus-mode-medium` | Medium width (100 columns) |
-| `C-c f 3` | `my/focus-mode-wide` | Wide width (120 columns) |
-| `C-c f 4` | `my/focus-mode-ultrawide` | Ultra-wide width (160 columns) |
+| `C-c f 1` | `my/focus-mode-narrow` | Narrow width (160 columns) |
+| `C-c f 2` | `my/focus-mode-medium` | Medium width (240 columns) |
+| `C-c f 3` | `my/focus-mode-wide` | Wide width (320 columns) - **Default** |
+| `C-c f 4` | `my/focus-mode-ultrawide` | Ultra-wide width (400 columns) - **Maximum** |
 
 ### Instant Focus Toggle
 | Key | Command | Description |
@@ -480,7 +480,9 @@ Your configuration includes `which-key` mode, which provides contextual help for
 - Use `Cmd+1-9` to jump to specific windows by number
 - Use `C-c S s` and `C-c S r` for session save/restore (note: capital S to avoid conflict with search)
 - Use **`F12`** for instant focus mode toggle (no delay) or `Ctrl+Z`
-- Use `C-c f 4` for ultra-wide focus (160 columns) on widescreen monitors
+- **Default focus width is 320 columns** (perfect for widescreen monitors)
+- Use `C-c f 4` for maximum width (400 columns)
+- Use `C-c f 1` for narrower focus (160 columns) when needed
 - Use `C-c R` prefix for all Ruby/Rails operations (capital R to avoid conflicts)
 - Use `C-c R g` for Rails navigation (Gemfile, routes, schema, etc.)
 - Use `C-c R !` for Rails actions (console, server, generate, etc.)
