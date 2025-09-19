@@ -22,7 +22,7 @@
   :group 'convenience
   :prefix "my/focus-mode-")
 
-(defcustom my/focus-mode-width 100
+(defcustom my/focus-mode-width 320
   "Target width for the focused buffer in columns."
   :type 'integer
   :group 'focus-mode)
@@ -235,36 +235,36 @@
 
 ;; Quick configuration presets
 (defun my/focus-mode-narrow ()
-  "Set focus mode to narrow width (80 columns)."
-  (interactive)
-  (setq my/focus-mode-width 80)
-  (when my/focus-mode-active
-    (my/focus-mode-adjust-margins))
-  (message "Focus mode: narrow (80 columns)"))
-
-(defun my/focus-mode-medium ()
-  "Set focus mode to medium width (100 columns)."
-  (interactive)
-  (setq my/focus-mode-width 100)
-  (when my/focus-mode-active
-    (my/focus-mode-adjust-margins))
-  (message "Focus mode: medium (100 columns)"))
-
-(defun my/focus-mode-wide ()
-  "Set focus mode to wide width (120 columns)."
-  (interactive)
-  (setq my/focus-mode-width 120)
-  (when my/focus-mode-active
-    (my/focus-mode-adjust-margins))
-  (message "Focus mode: wide (120 columns)"))
-
-(defun my/focus-mode-ultrawide ()
-  "Set focus mode to ultra-wide width (160 columns)."
+  "Set focus mode to narrow width (160 columns)."
   (interactive)
   (setq my/focus-mode-width 160)
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
-  (message "Focus mode: ultra-wide (160 columns)"))
+  (message "Focus mode: narrow (160 columns)"))
+
+(defun my/focus-mode-medium ()
+  "Set focus mode to medium width (240 columns)."
+  (interactive)
+  (setq my/focus-mode-width 240)
+  (when my/focus-mode-active
+    (my/focus-mode-adjust-margins))
+  (message "Focus mode: medium (240 columns)"))
+
+(defun my/focus-mode-wide ()
+  "Set focus mode to wide width (320 columns) - default."
+  (interactive)
+  (setq my/focus-mode-width 320)
+  (when my/focus-mode-active
+    (my/focus-mode-adjust-margins))
+  (message "Focus mode: wide (320 columns) - default"))
+
+(defun my/focus-mode-ultrawide ()
+  "Set focus mode to ultra-wide width (400 columns) - maximum."
+  (interactive)
+  (setq my/focus-mode-width 400)
+  (when my/focus-mode-active
+    (my/focus-mode-adjust-margins))
+  (message "Focus mode: ultra-wide (400 columns) - maximum"))
 
 ;; Integration with other modes
 (defun my/focus-mode-safe-toggle ()
@@ -312,10 +312,10 @@
     "C-c f D" "Debug Enter (Verbose)"
     "C-c f +" "Increase Width"
     "C-c f -" "Decrease Width"
-    "C-c f 1" "Narrow (80 cols)"
-    "C-c f 2" "Medium (100 cols)"
-    "C-c f 3" "Wide (120 cols)"
-    "C-c f 4" "Ultra-wide (160 cols)"
+    "C-c f 1" "Narrow (160 cols)"
+    "C-c f 2" "Medium (240 cols)"
+    "C-c f 3" "Wide (320 cols) - Default"
+    "C-c f 4" "Ultra-wide (400 cols) - Max"
     "<f11>" "Focus Toggle (F11)"
     "<f12>" "Focus Toggle (F12)"
     "<pause>" "Focus Toggle (Pause)"
