@@ -197,7 +197,7 @@
 (defun open-emacs-reference ()
   "Open the Emacs keybinding reference document in a read-only buffer in a new window split."
   (interactive)
-  (let ((reference-file (expand-file-name "emacs-keybinding-reference.md" user-emacs-directory)))
+  (let ((reference-file (expand-file-name "docs/emacs-keybinding-reference.md" user-emacs-directory)))
     (if (file-exists-p reference-file)
         (progn
           (split-window-right)
