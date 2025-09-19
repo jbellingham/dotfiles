@@ -22,8 +22,13 @@
   :group 'convenience
   :prefix "my/focus-mode-")
 
-(defcustom my/focus-mode-width 320
-  "Target width for the focused buffer in columns."
+(defcustom my/focus-mode-width-percentage 60
+  "Target width for the focused buffer as percentage of window width."
+  :type 'integer
+  :group 'focus-mode)
+
+(defcustom my/focus-mode-min-width 80
+  "Minimum width for focus mode in columns."
   :type 'integer
   :group 'focus-mode)
 
@@ -44,13 +49,14 @@
 
 ;; Core focus mode functions
 (defun my/focus-mode-calculate-margins ()
-  "Calculate margin widths to center the buffer."
+  "Calculate margin widths to center the buffer based on percentage of window width."
   (let* ((window-width (window-width))
-         (target-width my/focus-mode-width)
+         (target-width (max my/focus-mode-min-width
+                           (/ (* window-width my/focus-mode-width-percentage) 100)))
          (margin-width (max 0 (/ (- window-width target-width) 2))))
     ;; Debug: uncomment next line for margin calculation debugging
-    ;; (message "Focus: window-width=%d target-width=%d margin-width=%d"
-    ;;          window-width target-width margin-width)
+    ;; (message "Focus: window-width=%d target-width=%d (%.0f%%) margin-width=%d"
+    ;;          window-width target-width my/focus-mode-width-percentage margin-width)
     (when (> window-width target-width)
       margin-width)))
 
@@ -89,6 +95,9 @@
     ;; Update state
     (setq my/focus-mode-active t)
 
+    ;; Initialize window change tracking
+    (setq my/focus-mode-last-window-config (current-window-configuration))
+
     ;; Final window refresh to ensure everything is visible
     (redraw-display)
     (recenter)  ; Recenter view
@@ -119,7 +128,8 @@
     ;; Clear state
     (setq my/focus-mode-active nil
           my/focus-mode-window-config nil
-          my/focus-mode-margins nil)
+          my/focus-mode-margins nil
+          my/focus-mode-last-window-config nil)
 
     ;; Force window refresh to show changes immediately
     (redraw-display)
@@ -148,30 +158,61 @@
         (redraw-display)
         (sit-for 0)))))
 
-;; Hook to adjust margins on window size changes
+;; Smart window change detection for focus mode
+(defvar my/focus-mode-last-window-config nil
+  "Last window configuration to detect meaningful changes.")
+
+(defun my/focus-mode-meaningful-window-change-p ()
+  "Check if this is a meaningful window change worth adjusting margins for."
+  (let ((current-config (current-window-configuration))
+        (current-buffer (current-buffer))
+        (buffer-name (buffer-name)))
+    ;; Don't adjust for temporary/special buffers
+    (and my/focus-mode-active
+         ;; Not in minibuffer
+         (not (minibufferp))
+         ;; Not a temporary buffer (starts with space or *)
+         (not (string-match-p "^[ *]" buffer-name))
+         ;; Not a help/completion buffer
+         (not (string-match-p "\\*\\(Help\\|Completions\\|Messages\\|Backtrace\\)" buffer-name))
+         ;; Not a temporary file
+         (not (string-match-p "/tmp\\|/var/folders" (or (buffer-file-name) "")))
+         ;; Window configuration actually changed meaningfully
+         (not (equal current-config my/focus-mode-last-window-config)))))
+
+(defun my/focus-mode-smart-adjust-margins ()
+  "Adjust margins only for meaningful window changes."
+  (when (my/focus-mode-meaningful-window-change-p)
+    (setq my/focus-mode-last-window-config (current-window-configuration))
+    (my/focus-mode-adjust-margins)))
+
+;; Hook to adjust margins on meaningful window size changes only
 (add-hook 'window-size-change-functions
           (lambda (frame)
             (when (eq frame (selected-frame))
-              (my/focus-mode-adjust-margins))))
+              (my/focus-mode-smart-adjust-margins))))
 
 ;; Additional utility functions
 (defun my/focus-mode-status ()
   "Show current focus mode status."
   (interactive)
-  (message "Focus mode: %s (width: %d, margins: %s)"
+  (message "Focus mode: %s (width: %d%%, margins: %s)"
            (if my/focus-mode-active "ACTIVE" "inactive")
-           my/focus-mode-width
+           my/focus-mode-width-percentage
            (window-margins)))
 
 (defun my/focus-mode-debug ()
   "Debug focus mode settings and window state."
   (interactive)
-  (message "=== Focus Mode Debug ===\nActive: %s\nWidth setting: %d\nWindow width: %d\nMargins: %s\nEnable margins: %s"
+  (message "=== Focus Mode Debug ===\nActive: %s\nWidth setting: %d%% (min %d cols)\nWindow width: %d\nMargins: %s\nEnable margins: %s\nBuffer: %s\nMeaningful change: %s"
            my/focus-mode-active
-           my/focus-mode-width
+           my/focus-mode-width-percentage
+           my/focus-mode-min-width
            (window-width)
            (window-margins)
-           my/focus-mode-enable-margins))
+           my/focus-mode-enable-margins
+           (buffer-name)
+           (my/focus-mode-meaningful-window-change-p)))
 
 (defun my/focus-mode-enter-debug ()
   "Debug version of focus mode enter with verbose output."
@@ -218,53 +259,53 @@
     (message "8. Final refresh complete")))
 
 (defun my/focus-mode-increase-width ()
-  "Increase focus mode width."
+  "Increase focus mode width percentage."
   (interactive)
-  (setq my/focus-mode-width (min 400 (+ my/focus-mode-width 10)))
+  (setq my/focus-mode-width-percentage (min 95 (+ my/focus-mode-width-percentage 5)))
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
-  (message "Focus width: %d columns" my/focus-mode-width))
+  (message "Focus width: %d%% of window" my/focus-mode-width-percentage))
 
 (defun my/focus-mode-decrease-width ()
-  "Decrease focus mode width."
+  "Decrease focus mode width percentage."
   (interactive)
-  (setq my/focus-mode-width (max 60 (- my/focus-mode-width 10)))
+  (setq my/focus-mode-width-percentage (max 30 (- my/focus-mode-width-percentage 5)))
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
-  (message "Focus width: %d columns" my/focus-mode-width))
+  (message "Focus width: %d%% of window" my/focus-mode-width-percentage))
 
 ;; Quick configuration presets
 (defun my/focus-mode-narrow ()
-  "Set focus mode to narrow width (160 columns)."
+  "Set focus mode to narrow width (50% of window)."
   (interactive)
-  (setq my/focus-mode-width 160)
+  (setq my/focus-mode-width-percentage 50)
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
-  (message "Focus mode: narrow (160 columns)"))
+  (message "Focus mode: narrow (50% of window width)"))
 
 (defun my/focus-mode-medium ()
-  "Set focus mode to medium width (240 columns)."
+  "Set focus mode to medium width (60% of window)."
   (interactive)
-  (setq my/focus-mode-width 240)
+  (setq my/focus-mode-width-percentage 60)
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
-  (message "Focus mode: medium (240 columns)"))
+  (message "Focus mode: medium (60% of window width)"))
 
 (defun my/focus-mode-wide ()
-  "Set focus mode to wide width (320 columns) - default."
+  "Set focus mode to wide width (75% of window)."
   (interactive)
-  (setq my/focus-mode-width 320)
+  (setq my/focus-mode-width-percentage 75)
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
-  (message "Focus mode: wide (320 columns) - default"))
+  (message "Focus mode: wide (75% of window width)"))
 
 (defun my/focus-mode-ultrawide ()
-  "Set focus mode to ultra-wide width (400 columns) - maximum."
+  "Set focus mode to ultra-wide width (85% of window) - maximum."
   (interactive)
-  (setq my/focus-mode-width 400)
+  (setq my/focus-mode-width-percentage 85)
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
-  (message "Focus mode: ultra-wide (400 columns) - maximum"))
+  (message "Focus mode: ultra-wide (85% of window width) - maximum"))
 
 ;; Integration with other modes
 (defun my/focus-mode-safe-toggle ()
@@ -310,12 +351,12 @@
     "C-c f s" "Focus Status"
     "C-c f d" "Debug Focus"
     "C-c f D" "Debug Enter (Verbose)"
-    "C-c f +" "Increase Width"
-    "C-c f -" "Decrease Width"
-    "C-c f 1" "Narrow (160 cols)"
-    "C-c f 2" "Medium (240 cols)"
-    "C-c f 3" "Wide (320 cols) - Default"
-    "C-c f 4" "Ultra-wide (400 cols) - Max"
+    "C-c f +" "Increase Width (+5%)"
+    "C-c f -" "Decrease Width (-5%)"
+    "C-c f 1" "Narrow (50%)"
+    "C-c f 2" "Medium (60%)"
+    "C-c f 3" "Wide (75%)"
+    "C-c f 4" "Ultra-wide (85%) - Max"
     "<f11>" "Focus Toggle (F11)"
     "<f12>" "Focus Toggle (F12)"
     "<pause>" "Focus Toggle (Pause)"
