@@ -399,6 +399,20 @@ Your configuration includes Magit for Git operations:
 | `C-c f 1` | `my/focus-mode-narrow` | Narrow width (80 columns) |
 | `C-c f 2` | `my/focus-mode-medium` | Medium width (100 columns) |
 | `C-c f 3` | `my/focus-mode-wide` | Wide width (120 columns) |
+| `C-c f 4` | `my/focus-mode-ultrawide` | Ultra-wide width (160 columns) |
+
+### Instant Focus Toggle
+| Key | Command | Description |
+|-----|---------|-------------|
+| `F11` | `my/focus-mode-toggle` | Focus toggle (may conflict with macOS) |
+| **`F12`** | `my/focus-mode-toggle` | **Recommended instant toggle** |
+| `Ctrl+Z` | `my/focus-mode-toggle` | Instant toggle (overrides suspend) |
+| `Pause` | `my/focus-mode-toggle` | Focus toggle (Pause/Break key) |
+
+### Debug Commands
+| Key | Command | Description |
+|-----|---------|-------------|
+| `C-c f d` | `my/focus-mode-debug` | Show debug info (width, margins) |
 
 ---
 
@@ -465,7 +479,8 @@ Your configuration includes `which-key` mode, which provides contextual help for
 - Use `C-c b b` for intelligent buffer switching
 - Use `Cmd+1-9` to jump to specific windows by number
 - Use `C-c S s` and `C-c S r` for session save/restore (note: capital S to avoid conflict with search)
-- Use `C-c f f` for distraction-free focus mode toggle
+- Use **`F12`** for instant focus mode toggle (no delay) or `Ctrl+Z`
+- Use `C-c f 4` for ultra-wide focus (160 columns) on widescreen monitors
 - Use `C-c R` prefix for all Ruby/Rails operations (capital R to avoid conflicts)
 - Use `C-c R g` for Rails navigation (Gemfile, routes, schema, etc.)
 - Use `C-c R !` for Rails actions (console, server, generate, etc.)
