@@ -48,6 +48,9 @@
   (let* ((window-width (window-width))
          (target-width my/focus-mode-width)
          (margin-width (max 0 (/ (- window-width target-width) 2))))
+    ;; Debug: uncomment next line for margin calculation debugging
+    ;; (message "Focus: window-width=%d target-width=%d margin-width=%d"
+    ;;          window-width target-width margin-width)
     (when (> window-width target-width)
       margin-width)))
 
@@ -64,6 +67,8 @@
 
     ;; Delete other windows to focus on current buffer
     (delete-other-windows)
+    ;; Force refresh after window changes
+    (sit-for 0)
 
     ;; Apply centering margins if enabled
     (when my/focus-mode-enable-margins
@@ -74,10 +79,20 @@
 
           ;; Set margin background color if supported
           (when (display-graphic-p)
-            (set-face-background 'fringe my/focus-mode-margin-color)))))
+            (set-face-background 'fringe my/focus-mode-margin-color))
+
+          ;; Force immediate visual update after margin setting
+          (redraw-display)
+          (force-window-update)
+          (sit-for 0))))
 
     ;; Update state
     (setq my/focus-mode-active t)
+
+    ;; Final window refresh to ensure everything is visible
+    (redraw-display)
+    (recenter)  ; Recenter view
+    (sit-for 0)  ; Force Emacs to process display updates
 
     ;; Visual feedback
     (message "Focus mode enabled - press %s to exit"
@@ -106,6 +121,12 @@
           my/focus-mode-window-config nil
           my/focus-mode-margins nil)
 
+    ;; Force window refresh to show changes immediately
+    (redraw-display)
+    (force-window-update)
+    (recenter)  ; Recenter view
+    (sit-for 0)  ; Force Emacs to process display updates
+
     ;; Visual feedback
     (message "Focus mode disabled")))
 
@@ -122,7 +143,10 @@
   (when (and my/focus-mode-active my/focus-mode-enable-margins)
     (let ((margin-width (my/focus-mode-calculate-margins)))
       (when margin-width
-        (set-window-margins nil margin-width margin-width)))))
+        (set-window-margins nil margin-width margin-width)
+        ;; Force immediate visual update
+        (redraw-display)
+        (sit-for 0)))))
 
 ;; Hook to adjust margins on window size changes
 (add-hook 'window-size-change-functions
@@ -134,13 +158,69 @@
 (defun my/focus-mode-status ()
   "Show current focus mode status."
   (interactive)
-  (message "Focus mode: %s"
-           (if my/focus-mode-active "ACTIVE" "inactive")))
+  (message "Focus mode: %s (width: %d, margins: %s)"
+           (if my/focus-mode-active "ACTIVE" "inactive")
+           my/focus-mode-width
+           (window-margins)))
+
+(defun my/focus-mode-debug ()
+  "Debug focus mode settings and window state."
+  (interactive)
+  (message "=== Focus Mode Debug ===\nActive: %s\nWidth setting: %d\nWindow width: %d\nMargins: %s\nEnable margins: %s"
+           my/focus-mode-active
+           my/focus-mode-width
+           (window-width)
+           (window-margins)
+           my/focus-mode-enable-margins))
+
+(defun my/focus-mode-enter-debug ()
+  "Debug version of focus mode enter with verbose output."
+  (interactive)
+  (unless my/focus-mode-active
+    (message "1. Starting focus mode enter...")
+
+    ;; Store current window configuration
+    (setq my/focus-mode-window-config (current-window-configuration))
+    (message "2. Stored window configuration")
+
+    ;; Store current margins
+    (setq my/focus-mode-margins (list (car (window-margins))
+                                     (cdr (window-margins))))
+    (message "3. Stored margins: %s" my/focus-mode-margins)
+
+    ;; Delete other windows to focus on current buffer
+    (delete-other-windows)
+    (message "4. Deleted other windows, window width now: %d" (window-width))
+    (sit-for 0.1)  ; Longer pause to see intermediate state
+
+    ;; Apply centering margins if enabled
+    (when my/focus-mode-enable-margins
+      (let ((margin-width (my/focus-mode-calculate-margins)))
+        (message "5. Calculated margin width: %s" margin-width)
+        (when margin-width
+          ;; Set margins to center the text
+          (set-window-margins nil margin-width margin-width)
+          (message "6. Set margins to: %s" (window-margins))
+
+          ;; Force immediate visual update after margin setting
+          (redraw-display)
+          (force-window-update)
+          (sit-for 0.1))))
+
+    ;; Update state
+    (setq my/focus-mode-active t)
+    (message "7. Focus mode activated")
+
+    ;; Final window refresh
+    (redraw-display)
+    (recenter)
+    (sit-for 0.1)
+    (message "8. Final refresh complete")))
 
 (defun my/focus-mode-increase-width ()
   "Increase focus mode width."
   (interactive)
-  (setq my/focus-mode-width (min 200 (+ my/focus-mode-width 10)))
+  (setq my/focus-mode-width (min 400 (+ my/focus-mode-width 10)))
   (when my/focus-mode-active
     (my/focus-mode-adjust-margins))
   (message "Focus width: %d columns" my/focus-mode-width))
@@ -178,6 +258,14 @@
     (my/focus-mode-adjust-margins))
   (message "Focus mode: wide (120 columns)"))
 
+(defun my/focus-mode-ultrawide ()
+  "Set focus mode to ultra-wide width (160 columns)."
+  (interactive)
+  (setq my/focus-mode-width 160)
+  (when my/focus-mode-active
+    (my/focus-mode-adjust-margins))
+  (message "Focus mode: ultra-wide (160 columns)"))
+
 ;; Integration with other modes
 (defun my/focus-mode-safe-toggle ()
   "Safely toggle focus mode, avoiding conflicts with special modes."
@@ -195,11 +283,20 @@
 ;; Global keybindings
 (global-set-key (kbd "C-c f f") #'my/focus-mode-toggle)
 (global-set-key (kbd "C-c f s") #'my/focus-mode-status)
+(global-set-key (kbd "C-c f d") #'my/focus-mode-debug)
+(global-set-key (kbd "C-c f D") #'my/focus-mode-enter-debug)
 (global-set-key (kbd "C-c f +") #'my/focus-mode-increase-width)
 (global-set-key (kbd "C-c f -") #'my/focus-mode-decrease-width)
 (global-set-key (kbd "C-c f 1") #'my/focus-mode-narrow)
 (global-set-key (kbd "C-c f 2") #'my/focus-mode-medium)
 (global-set-key (kbd "C-c f 3") #'my/focus-mode-wide)
+(global-set-key (kbd "C-c f 4") #'my/focus-mode-ultrawide)
+
+;; Single-keystroke focus toggle (avoid prefix sequences)
+(global-set-key (kbd "<f11>") #'my/focus-mode-toggle)     ; F11 (if not captured by macOS)
+(global-set-key (kbd "<f12>") #'my/focus-mode-toggle)     ; F12 alternative
+(global-set-key (kbd "<pause>") #'my/focus-mode-toggle)   ; Pause/Break key
+(global-set-key (kbd "C-z") #'my/focus-mode-toggle)       ; Override suspend (immediate)
 
 ;; Removed C-c F to avoid conflicts with projectile-find-file-dwim
 ;; Use C-c f f for focus mode toggle instead
@@ -211,11 +308,18 @@
     "C-c f" "Focus Mode"
     "C-c f f" "Toggle Focus"
     "C-c f s" "Focus Status"
+    "C-c f d" "Debug Focus"
+    "C-c f D" "Debug Enter (Verbose)"
     "C-c f +" "Increase Width"
     "C-c f -" "Decrease Width"
     "C-c f 1" "Narrow (80 cols)"
     "C-c f 2" "Medium (100 cols)"
-    "C-c f 3" "Wide (120 cols)"))
+    "C-c f 3" "Wide (120 cols)"
+    "C-c f 4" "Ultra-wide (160 cols)"
+    "<f11>" "Focus Toggle (F11)"
+    "<f12>" "Focus Toggle (F12)"
+    "<pause>" "Focus Toggle (Pause)"
+    "C-z" "Focus Toggle (Ctrl+Z)"))
 
 ;; Mode line indicator (optional)
 (defun my/focus-mode-modeline-indicator ()
