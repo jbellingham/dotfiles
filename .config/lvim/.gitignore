@@ -1,0 +1,8 @@
+# Ignore LunarVim generated files
+plugin/
+lazy-lock.json
+.lazy/
+
+# But keep our configurations
+!config.lua
+!lua/user/

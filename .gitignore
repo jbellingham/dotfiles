@@ -1,78 +1,52 @@
+# Ignore everything by default
 /*
-!.spacemacs
 
-!.github
-!.vimrc
-
-!.config
-.config/*
-
-!.config/ghostty
-
-!.config/nvim
-.config/nvim/*
-!.config/nvim/coc-settings.json
-
-!.config/lvim
-.config/lvim/*
-!.config/lvim/config.lua
-!.config/lvim/lua
-!.config/lvim/lua/user
-
-!.config/nvim/lua
-.config/nvim/lua/*
-!.config/nvim/lua/custom
-
-!.config/coc
-.config/coc/*
-!.config/coc/ultisnips
-
-!.config/sketchybar
-!.config/yabai
-
-!.config/fish
-
-!.config/emacs
-.config/emacs/*
-!.config/emacs/.claude/CLAUDE.md
-!.config/emacs/config.org
-!.config/emacs/early-init.el
-!.config/emacs/modules
-!.config/emacs/init.el
-!.config/lazygit
-
-!.ripgreprc
-
-!.p10k.zsh
-!.zshrc.custom
-!.zshrc.functions
-!.zshrc
+# Shell configurations
+!.zshrc*
 !.zprofile
 !.aliases
+!.p10k.zsh
 
-!fresh_install_of_osx.sh
-!osx_defaults.sh
+# Editor configurations
+!.vimrc
+!.spacemacs
 
-!.gitignore
-!.gitignore.global
-!.gitconfig
-!.gitconfig-work.inc
-!Brewfile
-!Brewfile.lock.json
-!packages.config
+# Git configurations
+!.gitignore*
+!.gitconfig*
+
+# Config directories (nested .gitignore files handle specifics)
+!.config/
+!.config/ghostty/
+!.config/nvim/
+!.config/lvim/
+!.config/sketchybar/
+!.config/yabai/
+!.config/fish/
+!.config/emacs/
+!.config/coc/
+!.config/lazygit/
+
+# System tools
+!.ripgreprc
+!.tmux.conf
+!.gnupg/
 !.tool-versions
 !.leptonrc
-!.tmux.conf
-!.gnupg
-.gnupg/*
-!.gnupg/gpg-agent.conf
 
-!nix-darwin-config
-!nixos-config
+# Package managers and setup
+!Brewfile*
+!packages.config
+!*.sh
+
+# Nix configurations
+!nix-darwin-config/
+!nixos-config/
 !.wezterm.lua
 
+# GitHub workflows
+!.github/
 
+# Project-specific exclusions
 **/*.aif
 **/*.aif.asd
-*.aif
-*.aif.asd
