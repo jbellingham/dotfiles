@@ -54,4 +54,5 @@
             (setq gc-cons-threshold (* 20 1000 1000))))
 
 (provide 'init)
+
 ;;; init.el ends here

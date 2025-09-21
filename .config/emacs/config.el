@@ -50,11 +50,19 @@
 ;; Auto-tangle config.org on save
 (defun auto-tangle-config-org ()
   "Automatically tangle config.org when saved."
-  (when (and (string= (file-name-nondirectory (buffer-file-name)) "config.org")
-             (string= (file-name-directory (buffer-file-name))
-                      (expand-file-name user-emacs-directory)))
+  (when (and buffer-file-name
+             (string= (file-name-nondirectory buffer-file-name) "config.org")
+             (or
+              ;; Direct path match
+              (string= (file-name-directory buffer-file-name)
+                       (expand-file-name user-emacs-directory))
+              ;; Symlink or dotfiles path - check if it resolves to emacs dir
+              (string= (file-truename (file-name-directory buffer-file-name))
+                       (file-truename (expand-file-name user-emacs-directory)))))
     (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
+      (message "Auto-tangling config.org...")
+      (org-babel-tangle)
+      (message "Auto-tangle complete!"))))
 
 (add-hook 'after-save-hook #'auto-tangle-config-org)
 
