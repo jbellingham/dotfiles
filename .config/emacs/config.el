@@ -364,6 +364,155 @@
 (provide 'core)
 ;;; core.el ends here
 
+;; Evil Mode Configuration
+
+
+;;; evil-mode.el --- Vim emulation configuration -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; Comprehensive Vim emulation using evil-mode with evil-collection for
+;; package integrations. Maintains compatibility with existing keybindings.
+
+;;; Code:
+
+;; Core evil-mode
+(use-package evil
+  :ensure t
+  :init
+  ;; Pre-load configuration
+  (setq evil-want-integration t       ; Load evil-integration
+        evil-want-keybinding nil      ; Disable default keybindings (evil-collection handles this)
+        evil-want-C-u-scroll t        ; Use C-u for scrolling up
+        evil-want-C-i-jump t          ; Use C-i for jump forward
+        evil-want-Y-yank-to-eol t     ; Make Y behave like D and C
+        evil-respect-visual-line-mode t ; Respect visual-line-mode
+        evil-undo-system 'undo-redo)  ; Use built-in undo-redo system
+  :config
+  (evil-mode 1)
+
+  ;; Configure evil states
+  (setq evil-insert-state-cursor '(bar . 2)
+        evil-normal-state-cursor '(box . 2)
+        evil-visual-state-cursor '(hollow . 2)
+        evil-replace-state-cursor '(hbar . 2)
+        evil-operator-state-cursor '(evil-half-cursor . 2))
+
+  ;; Keep some Emacs bindings in insert mode
+  (define-key evil-insert-state-map (kbd "C-a") 'beginning-of-line)
+  (define-key evil-insert-state-map (kbd "C-e") 'end-of-line)
+  (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
+  (define-key evil-insert-state-map (kbd "C-d") 'delete-char)
+  (define-key evil-insert-state-map (kbd "C-n") 'next-line)
+  (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
+
+  ;; Keep our custom C-c bindings in all states
+  (define-key evil-normal-state-map (kbd "C-c") nil)
+  (define-key evil-insert-state-map (kbd "C-c") nil)
+  (define-key evil-visual-state-map (kbd "C-c") nil)
+  (define-key evil-motion-state-map (kbd "C-c") nil)
+
+  ;; Resolve C-z conflict - evil will use C-z for suspend/switch states
+  ;; Our focus-mode-toggle moves to C-c f z to maintain mnemonic pattern
+
+  ;; Use standard evil leader key for additional vim-style bindings
+  (evil-set-leader '(normal visual) (kbd "SPC"))
+
+  ;; Some useful leader bindings that complement our C-c system
+  (evil-define-key '(normal visual) 'global
+    (kbd "<leader>ff") 'my/find-project-files
+    (kbd "<leader>fs") 'my/search-project
+    (kbd "<leader>bb") 'my/smart-switch-buffer
+    (kbd "<leader>bp") 'my/project-buffers
+    (kbd "<leader>gg") 'magit-status
+    (kbd "<leader>pp") 'projectile-switch-project
+    (kbd "<leader>tt") 'my/toggle-between-implementation-and-test))
+
+;; Evil collection for package integrations
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  ;; Only enable safe, well-supported modes to avoid loading errors
+  (setq evil-collection-mode-list
+        '(bookmark
+          buff-menu
+          calc
+          calendar
+          compile
+          consult
+          dired
+          ediff
+          embark
+          git-timemachine
+          help
+          ibuffer
+          info
+          log-edit
+          magit
+          man
+          outline
+          replace
+          simple
+          tab-bar
+          tabulated-list
+          term
+          vertico
+          which-key
+          woman))
+  (evil-collection-init)
+
+  ;; Manual integration for problematic packages
+  ;; Treemacs integration (if available)
+  (with-eval-after-load 'treemacs
+    (when (fboundp 'evil-define-key)
+      (evil-define-key 'normal treemacs-mode-map
+        (kbd "h") 'treemacs-collapse-parent-node
+        (kbd "l") 'treemacs-expand-or-open
+        (kbd "j") 'treemacs-next-line
+        (kbd "k") 'treemacs-previous-line
+        (kbd "r") 'treemacs-refresh
+        (kbd "R") 'treemacs-refresh
+        (kbd "q") 'treemacs-quit)))
+
+  ;; Projectile integration (if needed)
+  (with-eval-after-load 'projectile
+    ;; Projectile works fine with evil without special integration
+    ;; Just ensure SPC bindings work in projectile buffers
+    (evil-define-key '(normal visual) projectile-mode-map
+      (kbd "<leader>pp") 'projectile-switch-project
+      (kbd "<leader>pf") 'projectile-find-file)))
+
+;; Evil commentary for commenting
+(use-package evil-commentary
+  :ensure t
+  :after evil
+  :config
+  (evil-commentary-mode 1))
+
+;; Evil surround for surrounding text objects
+(use-package evil-surround
+  :ensure t
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+;; Evil matchit for enhanced % matching
+(use-package evil-matchit
+  :ensure t
+  :after evil
+  :config
+  (global-evil-matchit-mode 1))
+
+;; Evil indent textobject
+(use-package evil-indent-plus
+  :ensure t
+  :after evil
+  :config
+  (evil-indent-plus-default-bindings))
+
+(provide 'evil-mode)
+;;; evil-mode.el ends here
+
 ;; Vertico - Fast and Minimal Completion UI
 
 ;; Vertico provides the completion interface that feels snappy and responsive:
@@ -3817,7 +3966,7 @@ For Rails engines, find the parent Rails application root."
 (global-set-key (kbd "<f11>") #'my/focus-mode-toggle)     ; F11 (if not captured by macOS)
 (global-set-key (kbd "<f10>") #'my/focus-mode-toggle)     ; F10 alternative
 (global-set-key (kbd "<pause>") #'my/focus-mode-toggle)   ; Pause/Break key
-(global-set-key (kbd "C-z") #'my/focus-mode-toggle)       ; Override suspend (immediate)
+(global-set-key (kbd "C-c f z") #'my/focus-mode-toggle)   ; C-c f z for zen/focus mode (moved from C-z for evil compatibility)
 
 ;; Which-key descriptions
 (with-eval-after-load 'which-key
@@ -3826,6 +3975,7 @@ For Rails engines, find the parent Rails application root."
     "C-c f" "Focus Mode"
     "C-c f f" "Toggle Focus"
     "C-c f s" "Focus Status"
+    "C-c f z" "Zen Mode Toggle"
     "C-c f +" "Increase Width (+5%)"
     "C-c f -" "Decrease Width (-5%)"
     "C-c f 1" "Narrow (50%)"
