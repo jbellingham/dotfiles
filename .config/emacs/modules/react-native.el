@@ -1,3 +1,8 @@
+;; Tree-sitter Setup
+
+;; Modern syntax highlighting for TypeScript and JavaScript:
+
+
 ;;; react-native.el --- React Native with TypeScript development configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -30,6 +35,11 @@
 ;; Enable global font-lock
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t)
+
+;; TypeScript & JavaScript Modes
+
+;; Enhanced TypeScript and JavaScript support with syntax highlighting:
+
 
 ;; TypeScript mode
 (use-package typescript-mode
@@ -191,6 +201,11 @@
   :config
   (setq yaml-indent-offset 2))
 
+;; Code Formatting & Linting
+
+;; Biome and ESLint integration for code quality:
+
+
 ;; Biome for code formatting and linting
 (defun my/find-biome-executable ()
   "Find Biome executable in project node_modules or via yarn."
@@ -259,28 +274,6 @@
   :config
   (setq prettier-js-args '("--single-quote" "--trailing-comma" "es5")))
 
-;; Simple Biome checker using executable lookup
-(defun my/setup-biome-flycheck ()
-  "Setup Biome flycheck if available in project."
-  (when (locate-dominating-file (buffer-file-name) "biome.json")
-    (let* ((root (locate-dominating-file (buffer-file-name) "package.json"))
-           (biome-local (and root (expand-file-name "node_modules/.bin/biome" root))))
-      (if (and biome-local (file-executable-p biome-local))
-          (progn
-            (setq-local flycheck-javascript-standard-executable biome-local)
-            (setq-local flycheck-checkers '(javascript-standard)))
-        ;; Use a custom script approach for yarn biome
-        (let ((script-path (expand-file-name "biome-check.sh" temporary-file-directory)))
-          (with-temp-file script-path
-            (insert "#!/bin/bash\n")
-            (insert (format "cd %s\n" root))
-            (insert "yarn biome lint --reporter=json \"$1\"\n"))
-          (set-file-modes script-path #o755)
-          (setq-local flycheck-javascript-standard-executable script-path)
-          (setq-local flycheck-checkers '(javascript-standard)))))))
-
-;; Remove the problematic flycheck checker definition and use the setup function instead
-
 ;; ESLint integration (fallback when Biome not available)
 (use-package flycheck
   :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . flycheck-mode)
@@ -301,13 +294,17 @@
     "Setup JavaScript/TypeScript linting with Biome or ESLint."
     (if (locate-dominating-file (or (buffer-file-name) default-directory) "biome.json")
         (progn
-          (my/setup-biome-flycheck)
           (message "Using Biome for linting"))
       (progn
         (my/use-eslint-from-node-modules)
         (message "Using ESLint for linting"))))
 
   (add-hook 'flycheck-mode-hook #'my/setup-js-linting))
+
+;; Testing & Debugging
+
+;; Jest testing and Node.js debugging support:
+
 
 ;; Jest testing integration
 (use-package jest
@@ -338,156 +335,6 @@
   :bind (:map indium-interaction-mode-map
               ("C-c C-e" . indium-eval-last-node)
               ("C-c C-r" . indium-eval-region)))
-
-;; Tree-sitter support (fallback for older tree-sitter package)
-(use-package tree-sitter
-  :if (not (and (treesit-available-p) (version<= "29" emacs-version)))
-  :hook ((typescript-mode js2-mode) . tree-sitter-mode)
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
-  :config
-  (setq tree-sitter-hl-use-font-lock-keywords t))
-
-(use-package tree-sitter-langs
-  :if (not (and (treesit-available-p) (version<= "29" emacs-version)))
-  :after tree-sitter
-  :config
-  ;; Only load if available
-  (when (fboundp 'tree-sitter-require)
-    (ignore-errors
-      (tree-sitter-require 'typescript)
-      (tree-sitter-require 'tsx))))
-
-;; Aggressive autocomplete
-(use-package company
-  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . company-mode)
-  :config
-  (setq company-idle-delay 0.1
-        company-minimum-prefix-length 1
-        company-show-numbers t
-        company-tooltip-align-annotations t
-        company-require-match nil)
-  :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)
-              ("TAB" . company-complete-selection)
-              ("<tab>" . company-complete-selection)))
-
-;; Snippet support
-(use-package yasnippet
-  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . yas-minor-mode)
-  :config
-  (yas-reload-all))
-
-;; TypeScript/JavaScript snippets
-(use-package yasnippet-snippets
-  :after yasnippet)
-
-;; Smart format function that chooses yarn format or LSP (defined outside use-package)
-(defun my/smart-format-buffer ()
-  "Format buffer with yarn format if available, otherwise use LSP formatter."
-  (interactive)
-  (if (and (bound-and-true-p biome-format-mode)
-           (locate-dominating-file (buffer-file-name) "package.json"))
-      (my/biome-format-buffer)
-    (lsp-format-buffer)))
-
-;; LSP mode for TypeScript/JavaScript
-(use-package lsp-mode
-  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . lsp-deferred)
-  :commands (lsp lsp-deferred)
-  :config
-  (setq lsp-completion-provider :capf
-        lsp-enable-snippet t
-        lsp-semantic-tokens-enable nil
-        lsp-enable-symbol-highlighting nil
-        lsp-idle-delay 0.3
-        lsp-completion-show-detail t
-        lsp-completion-show-kind t
-        lsp-eldoc-render-all t
-        lsp-signature-render-documentation t
-        lsp-completion-filter-on-incomplete t
-        lsp-enable-completion-at-point t
-        lsp-response-timeout 10
-        lsp-modeline-code-actions-enable t
-        lsp-modeline-diagnostics-enable t
-        lsp-enable-file-watchers t
-        lsp-enable-folding t
-        lsp-enable-links t
-        ;; TypeScript specific settings
-        lsp-typescript-preferences-import-module-specifier "relative"
-        lsp-typescript-suggest-auto-imports t
-        lsp-typescript-format-enable t)
-
-  ;; Preserve syntax highlighting with LSP
-  (add-hook 'lsp-after-open-hook
-            (lambda ()
-              (when (derived-mode-p 'typescript-mode 'typescript-ts-mode 'tsx-ts-mode
-                                   'js2-mode 'js-ts-mode 'jsx-ts-mode)
-                (font-lock-mode 1)
-                (font-lock-ensure))))
-
-  ;; React Native specific LSP configuration
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection "typescript-language-server --stdio")
-                    :major-modes '(typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode)
-                    :server-id 'ts-ls
-                    :initialization-options
-                    (lambda ()
-                      `(:preferences (:includeInlayParameterNameHints "all"
-                                      :includeInlayParameterNameHintsWhenArgumentMatchesName t
-                                      :includeInlayFunctionParameterTypeHints t
-                                      :includeInlayVariableTypeHints t
-                                      :includeInlayPropertyDeclarationTypeHints t
-                                      :includeInlayFunctionLikeReturnTypeHints t
-                                      :includeInlayEnumMemberValueHints t)))))
-
-  :bind (:map lsp-mode-map
-              ("M-." . lsp-find-definition)
-              ("M-?" . lsp-find-references)
-              ("M-," . pop-tag-mark)
-              ("C-c l r" . lsp-rename)
-              ("C-c l a" . lsp-execute-code-action)
-              ("C-c l f" . my/smart-format-buffer)
-              ("C-c l d" . lsp-describe-thing-at-point)
-              ("C-c l i" . lsp-find-implementation)
-              ("C-c l t" . lsp-find-type-definition)
-              ("C-c l s" . lsp-workspace-symbol)
-              ("C-c l h" . lsp-symbol-highlight)
-              ("C-c l o" . lsp-organize-imports)))
-
-;; Biome keybindings
-(defvar biome-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c b f") 'my/biome-format-buffer)   ; Biome format
-    (define-key map (kbd "C-c b t") 'biome-format-mode)       ; Toggle Biome mode
-    map)
-  "Keymap for Biome commands.")
-
-;; Global Biome keybindings for TypeScript/JavaScript modes
-(defun my/setup-biome-keybindings ()
-  "Setup Biome keybindings for current buffer."
-  (local-set-key (kbd "C-c b f") 'my/biome-format-buffer)
-  (local-set-key (kbd "C-c b t") 'biome-format-mode))
-
-(add-hook 'typescript-mode-hook #'my/setup-biome-keybindings)
-(add-hook 'typescript-ts-mode-hook #'my/setup-biome-keybindings)
-(add-hook 'tsx-ts-mode-hook #'my/setup-biome-keybindings)
-(add-hook 'js2-mode-hook #'my/setup-biome-keybindings)
-(add-hook 'js-ts-mode-hook #'my/setup-biome-keybindings)
-(add-hook 'jsx-ts-mode-hook #'my/setup-biome-keybindings)
-
-;; LSP UI improvements
-(use-package lsp-ui
-  :after lsp-mode
-  :config
-  (setq lsp-ui-doc-enable t
-        lsp-ui-doc-position 'bottom
-        lsp-ui-doc-delay 0.5
-        lsp-ui-sideline-enable t
-        lsp-ui-sideline-show-hover t
-        lsp-ui-sideline-show-code-actions t
-        lsp-ui-flycheck-enable t
-        lsp-ui-peek-enable t))
 
 ;; DAP (Debug Adapter Protocol) for debugging
 (use-package dap-mode
@@ -531,6 +378,11 @@
               ("C-c d s" . dap-step-in)
               ("C-c d o" . dap-step-out)
               ("C-c d c" . dap-continue)))
+
+;; React Native Utilities
+
+;; React Native specific commands and utilities:
+
 
 ;; React Native specific utilities
 (defun rn-run-ios ()
@@ -606,17 +458,127 @@
             (react-native-mode 1)
             (message "React Native mode enabled (C-c R prefix for commands)")))))))
 
-;; Force syntax highlighting refresh
-(defun force-typescript-highlighting ()
-  "Force refresh of TypeScript syntax highlighting."
-  (when (derived-mode-p 'typescript-mode 'typescript-ts-mode 'tsx-ts-mode)
-    (font-lock-mode -1)
-    (font-lock-mode 1)
-    (font-lock-ensure)
-    ;; Only enable tree-sitter if available and working
-    (when (and (fboundp 'tree-sitter-hl-mode)
-               (not (and (treesit-available-p) (version<= "29" emacs-version))))
-      (ignore-errors (tree-sitter-hl-mode 1)))))
+;; TypeScript Keybindings
+
+;; LSP integration and comprehensive development environment:
+
+
+;; Aggressive autocomplete
+(use-package company
+  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . company-mode)
+  :config
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 1
+        company-show-numbers t
+        company-tooltip-align-annotations t
+        company-require-match nil)
+  :bind (:map company-active-map
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)
+              ("TAB" . company-complete-selection)
+              ("<tab>" . company-complete-selection)))
+
+;; Snippet support
+(use-package yasnippet
+  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . yas-minor-mode)
+  :config
+  (yas-reload-all))
+
+;; TypeScript/JavaScript snippets
+(use-package yasnippet-snippets
+  :after yasnippet)
+
+;; Smart format function that chooses yarn format or LSP (defined outside use-package)
+(defun my/smart-format-buffer ()
+  "Format buffer with yarn format if available, otherwise use LSP formatter."
+  (interactive)
+  (if (and (bound-and-true-p biome-format-mode)
+           (locate-dominating-file (buffer-file-name) "package.json"))
+      (my/biome-format-buffer)
+    (lsp-format-buffer)))
+
+;; LSP mode for TypeScript/JavaScript
+(use-package lsp-mode
+  :hook ((typescript-mode typescript-ts-mode tsx-ts-mode js2-mode js-ts-mode jsx-ts-mode) . lsp-deferred)
+  :commands (lsp lsp-deferred)
+  :config
+  (setq lsp-completion-provider :capf
+        lsp-enable-snippet t
+        lsp-semantic-tokens-enable nil
+        lsp-enable-symbol-highlighting nil
+        lsp-idle-delay 0.3
+        lsp-completion-show-detail t
+        lsp-completion-show-kind t
+        lsp-eldoc-render-all t
+        lsp-signature-render-documentation t
+        lsp-completion-filter-on-incomplete t
+        lsp-enable-completion-at-point t
+        lsp-response-timeout 10
+        lsp-modeline-code-actions-enable t
+        lsp-modeline-diagnostics-enable t
+        lsp-enable-file-watchers t
+        lsp-enable-folding t
+        lsp-enable-links t
+        ;; TypeScript specific settings
+        lsp-typescript-preferences-import-module-specifier "relative"
+        lsp-typescript-suggest-auto-imports t
+        lsp-typescript-format-enable t)
+
+  ;; Preserve syntax highlighting with LSP
+  (add-hook 'lsp-after-open-hook
+            (lambda ()
+              (when (derived-mode-p 'typescript-mode 'typescript-ts-mode 'tsx-ts-mode
+                                   'js2-mode 'js-ts-mode 'jsx-ts-mode)
+                (font-lock-mode 1)
+                (font-lock-ensure))))
+
+  :bind (:map lsp-mode-map
+              ("M-." . lsp-find-definition)
+              ("M-?" . lsp-find-references)
+              ("M-," . pop-tag-mark)
+              ("C-c l r" . lsp-rename)
+              ("C-c l a" . lsp-execute-code-action)
+              ("C-c l f" . my/smart-format-buffer)
+              ("C-c l d" . lsp-describe-thing-at-point)
+              ("C-c l i" . lsp-find-implementation)
+              ("C-c l t" . lsp-find-type-definition)
+              ("C-c l s" . lsp-workspace-symbol)
+              ("C-c l h" . lsp-symbol-highlight)
+              ("C-c l o" . lsp-organize-imports)))
+
+;; Biome keybindings
+(defvar biome-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c b f") 'my/biome-format-buffer)   ; Biome format
+    (define-key map (kbd "C-c b t") 'biome-format-mode)       ; Toggle Biome mode
+    map)
+  "Keymap for Biome commands.")
+
+;; Global Biome keybindings for TypeScript/JavaScript modes
+(defun my/setup-biome-keybindings ()
+  "Setup Biome keybindings for current buffer."
+  (local-set-key (kbd "C-c b f") 'my/biome-format-buffer)
+  (local-set-key (kbd "C-c b t") 'biome-format-mode))
+
+(add-hook 'typescript-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'typescript-ts-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'tsx-ts-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'js2-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'js-ts-mode-hook #'my/setup-biome-keybindings)
+(add-hook 'jsx-ts-mode-hook #'my/setup-biome-keybindings)
+
+;; LSP UI improvements
+(use-package lsp-ui
+  :after lsp-mode
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-position 'bottom
+        lsp-ui-doc-delay 0.5
+        lsp-ui-sideline-enable t
+        lsp-ui-sideline-show-hover t
+        lsp-ui-sideline-show-code-actions t
+        lsp-ui-flycheck-enable t
+        lsp-ui-peek-enable t))
 
 ;; Hook to enable React Native mode and Biome
 (add-hook 'typescript-mode-hook #'enable-react-native-mode)
@@ -633,11 +595,6 @@
 (add-hook 'js2-mode-hook #'my/maybe-enable-biome)
 (add-hook 'js-ts-mode-hook #'my/maybe-enable-biome)
 (add-hook 'jsx-ts-mode-hook #'my/maybe-enable-biome)
-
-;; Force highlighting refresh after mode initialization
-(add-hook 'typescript-mode-hook #'force-typescript-highlighting)
-(add-hook 'typescript-ts-mode-hook #'force-typescript-highlighting)
-(add-hook 'tsx-ts-mode-hook #'force-typescript-highlighting)
 
 ;; Emmet for JSX
 (use-package emmet-mode

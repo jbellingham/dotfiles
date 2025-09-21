@@ -1,9 +1,82 @@
+;; Garbage Collection Tuning
+
+;; We start by optimizing Emacs' garbage collection and file handling for faster startup, especially important on Apple Silicon Macs with abundant memory.
+
+
 ;;; core.el --- Core Emacs settings -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Essential Emacs settings and behavior modifications.
 
 ;;; Code:
+
+;; Performance optimizations for startup (Apple Silicon optimized)
+;; ===============================================================
+
+(defvar file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 0.6)
+
+;; Apple Silicon Optimizations
+
+;; Apple Silicon Macs have different memory and processing characteristics that we can optimize for:
+
+
+;; Apple Silicon specific performance settings
+(setq read-process-output-max (* 2 1024 1024)) ; 2MB for faster LSP
+(setq process-adaptive-read-buffering nil)
+
+;; Post-initialization Cleanup
+
+;; After startup, we restore reasonable garbage collection settings optimized for Apple Silicon's ample memory:
+
+
+;; Restore after startup
+(defun restore-post-init-settings ()
+  "Restore settings after initialization."
+  (setq file-name-handler-alist file-name-handler-alist-original)
+  ;; Higher GC threshold for Apple Silicon's ample memory
+  (setq gc-cons-threshold (* 20 1000 1000))
+  (setq gc-cons-percentage 0.1))
+
+(add-hook 'emacs-startup-hook #'restore-post-init-settings)
+
+
+
+;; Let me create a proper init.el that tangles from the org file:
+
+
+;; Package management setup
+;; ========================
+
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+
+(package-initialize)
+
+;; Use-package Bootstrap
+
+;; Use-package provides a clean, declarative way to configure packages:
+
+
+;; Bootstrap use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t
+      use-package-expand-minimally t
+      use-package-compute-statistics t
+      use-package-verbose t)
+
+;; Basic Editing Behavior
+
+;; These settings establish sane defaults for modern development:
+
 
 ;; Basic settings
 (setq-default
@@ -15,11 +88,21 @@
  require-final-newline t           ; Always end files with newline
  delete-trailing-lines t)          ; Remove trailing blank lines
 
+;; Encoding Configuration
+
+;; Ensure consistent UTF-8 encoding across all operations:
+
+
 ;; Encoding
 (set-default-coding-systems 'utf-8)
 (prefer-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+
+;; File Management & Backups
+
+;; Configure backup and auto-save files to avoid cluttering project directories:
+
 
 ;; Backup and auto-save files
 (setq backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory)))
@@ -34,12 +117,22 @@
 (make-directory (expand-file-name "backups" user-emacs-directory) t)
 (make-directory (expand-file-name "auto-saves" user-emacs-directory) t)
 
+;; Better Defaults
+
+;; Improve Emacs' default behavior for modern development:
+
+
 ;; Better defaults
 (setq ring-bell-function 'ignore     ; Disable bell
       inhibit-startup-screen t       ; Skip startup screen
       initial-scratch-message nil    ; Empty scratch buffer
       auto-revert-verbose nil        ; Less verbose auto-revert
       global-auto-revert-non-file-buffers t) ; Auto-revert dired and other buffers
+
+;; Error Handling & Process Fixes
+
+;; Handle common process errors that can occur with LSP and other external processes:
+
 
 ;; Fix for process sentinel errors
 (defun filter-process-sentinel-errors (orig-fun &rest args)
@@ -73,6 +166,11 @@
 (setq process-adaptive-read-buffering nil
       read-process-output-max (* 1024 1024)) ; 1MB for all processes
 
+;; PATH Configuration
+
+;; Ensure Emacs can find tools installed via Homebrew and other package managers:
+
+
 ;; Ensure proper PATH setup for shell commands (fixes mcfly/jump errors)
 (use-package exec-path-from-shell
   :config
@@ -90,6 +188,11 @@
       (setenv "PATH" (concat homebrew-bin ":" homebrew-sbin ":" (getenv "PATH")))
       (setq exec-path (append (list homebrew-bin homebrew-sbin) exec-path)))))
 
+;; Essential Modes
+
+;; Enable helpful built-in modes for better editing experience:
+
+
 ;; Enable useful modes
 (global-auto-revert-mode 1)          ; Auto-reload changed files
 (delete-selection-mode 1)            ; Replace selected text when typing
@@ -105,6 +208,11 @@
 
 ;; Yes/no prompts become y/n
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; Utility Packages
+
+;; Configure essential utility packages for better buffer and file management:
+
 
 ;; Better uniquify for buffer names
 (use-package uniquify
@@ -130,10 +238,10 @@
   :config
   (windmove-default-keybindings))
 
-;; Mac keyboard settings
-;;(when (eq system-type 'darwin)
-  ;;(setq mac-command-modifier 'meta)    ; Command key as Meta
-  ;;(setq mac-option-modifier 'super))   ; Option key as Super
+;; Development Helpers
+
+;; Useful functions for configuration management and development workflow:
+
 
 ;; Config management functions
 (defun reload-config ()

@@ -1,3 +1,8 @@
+;; Vertico - Fast and Minimal Completion UI
+
+;; Vertico provides the completion interface that feels snappy and responsive:
+
+
 ;;; completion-unified.el --- Unified completion and search system -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -18,12 +23,22 @@
         vertico-resize t
         vertico-count 20))
 
+;; Orderless - Flexible Fuzzy Matching
+
+;; Orderless enables powerful fuzzy matching that works across word boundaries:
+
+
 ;; Orderless - Flexible completion style for fuzzy matching
 (use-package orderless
   :config
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
+
+;; Marginalia - Rich Annotations
+
+;; Marginalia adds helpful annotations to completion candidates:
+
 
 ;; Marginalia - Rich annotations in minibuffer
 (use-package marginalia
@@ -32,6 +47,11 @@
   (marginalia-mode 1)
   :config
   (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
+
+;; Consult - Enhanced Search with Live Preview
+
+;; Consult provides powerful search commands with live preview, similar to telescope in other editors:
+
 
 ;; Consult - Enhanced search and navigation with live preview
 (use-package consult
@@ -135,6 +155,11 @@
   (setq consult-ripgrep-args
         "rg --null --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --with-filename --line-number --search-zip"))
 
+;; Embark - Contextual Actions
+
+;; Embark adds contextual actions to completion candidates, like right-click menus:
+
+
 ;; Embark - Contextual actions on completion candidates
 (use-package embark
   :bind
@@ -155,6 +180,11 @@
 ;; Embark-Consult integration
 (use-package embark-consult
   :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+;; Company Mode for Auto-completion
+
+;; Company provides auto-completion as you type, essential for productive coding:
+
 
 ;; In-buffer completion with Company
 ;; =================================
@@ -192,6 +222,11 @@
         company-box-max-candidates 50
         company-box-show-single-candidate t))
 
+;; Affe - Asynchronous Fuzzy Finder
+
+;; Affe provides very fast asynchronous searching, especially useful for large projects:
+
+
 ;; Advanced search tools
 ;; =====================
 
@@ -209,6 +244,11 @@
          :map vertico-map
          ("C-c f D" . consult-dir)
          ("C-c f j" . consult-dir-jump-file)))
+
+;; Project-aware Functions
+
+;; These functions provide intelligent project-aware file finding and searching:
+
 
 ;; Enhanced project-aware functions
 ;; ================================
@@ -246,6 +286,11 @@
       (consult-project-buffer)
     (consult-buffer)))
 
+;; Global Completion Configuration
+
+;; Set up global completion settings for consistency across Emacs:
+
+
 ;; Global completion configuration
 ;; ===============================
 
@@ -262,6 +307,11 @@
                    #'consult-completion-in-region
                  #'completion--in-region)
                args)))
+
+;; Completion Keybindings
+
+;; Set up VS Code-like shortcuts and organized keybindings:
+
 
 ;; Global keybindings for quick access
 ;; ===================================

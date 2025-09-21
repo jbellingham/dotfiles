@@ -1,3 +1,8 @@
+;; Perspective Workspaces
+
+;; Perspective provides VS Code-like workspace isolation:
+
+
 ;;; workspace.el --- Workspace and session management -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -70,6 +75,11 @@
   :init
   (persp-mode))
 
+;; Session Management
+
+;; Desktop save mode for persistent sessions:
+
+
 ;; Session management (desktop)
 (use-package desktop
   :ensure nil
@@ -126,6 +136,11 @@
 
   ;; Enable desktop save mode
   (desktop-save-mode 1))
+
+;; Workspace Keybindings
+
+;; Additional window management utilities and comprehensive keybindings:
+
 
 ;; Window management enhancements
 (defun my/split-window-sensibly ()

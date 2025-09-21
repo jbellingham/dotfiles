@@ -1,3 +1,8 @@
+;; Treemacs Configuration
+
+;; Treemacs provides a VS Code-like file tree sidebar:
+
+
 ;;; file-explorer.el --- File tree and project dashboard -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -109,6 +114,11 @@
    ("C-c e f" . treemacs-find-file)
    ("C-c e g" . treemacs-find-tag)))
 
+;; Treemacs Integrations
+
+;; Integration with projectile, magit, and icon themes:
+
+
 ;; Treemacs-Projectile integration
 (use-package treemacs-projectile
   :after (treemacs projectile)
@@ -123,6 +133,11 @@
 (use-package treemacs-all-the-icons
   :after (treemacs all-the-icons)
   :config (treemacs-load-theme "all-the-icons"))
+
+;; Startup Dashboard
+
+;; A welcoming dashboard with recent files and projects:
+
 
 ;; Dashboard for startup
 (use-package dashboard

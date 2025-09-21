@@ -1,3 +1,6 @@
+;; Ace Window for Quick Window Selection
+
+
 ;;; navigation.el --- Enhanced navigation and buffer management -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -32,6 +35,11 @@
           (?h aw-split-window-horz "Split Horz Window")
           (?o delete-other-windows "Delete Other Windows")
           (?? aw-show-dispatch-help))))
+
+;; IBuffer for Advanced Buffer Management
+
+;; IBuffer provides powerful buffer management with filtering and grouping:
+
 
 ;; Buffer management
 ;; ================
@@ -93,6 +101,9 @@
                 (mode 16 16 :left :elide)
                 " "
                 filename-and-process))))
+
+;; Recent Files and Buffer Utilities
+
 
 ;; Recent files with recentf
 (use-package recentf
@@ -167,6 +178,11 @@
     (if (featurep 'consult)
         (consult-buffer)
       (switch-to-buffer (other-buffer)))))
+
+;; Implementation and Test Switching
+
+;; Intelligent switching between implementation and test files for various languages:
+
 
 ;; Code navigation - find implementation and tests
 ;; ==============================================
@@ -411,6 +427,11 @@ Works with various language conventions."
         (my/find-implementation)
       (my/goto-test))))
 
+;; Bookmarks
+
+;; Enhanced bookmark management:
+
+
 ;; Bookmarks enhancement
 ;; ====================
 
@@ -419,6 +440,11 @@ Works with various language conventions."
   :config
   (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory)
         bookmark-save-flag 1))
+
+;; Window Management
+
+;; Utilities for better window management:
+
 
 ;; Window and frame management
 ;; ===========================
@@ -456,6 +482,11 @@ Works with various language conventions."
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
 
+;; Navigation Keybindings
+
+;; Comprehensive keybindings for navigation:
+
+
 ;; Navigation keybindings
 ;; =====================
 
@@ -479,7 +510,6 @@ Works with various language conventions."
 (global-set-key (kbd "C-c b A") #'my/kill-all-buffers)
 (global-set-key (kbd "C-c b R") #'my/rename-current-buffer)
 (global-set-key (kbd "C-c b l") #'ibuffer)
-
 
 ;; Navigation shortcuts
 (global-set-key (kbd "s-[") #'my/switch-to-previous-buffer)  ; Command+[
