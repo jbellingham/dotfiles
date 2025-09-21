@@ -34,6 +34,9 @@
 
 !.config/emacs
 .config/emacs/*
+!.config/emacs/.claude/CLAUDE.md
+!.config/emacs/config.org
+!.config/emacs/early-init.el
 !.config/emacs/modules
 !.config/emacs/init.el
 !.config/lazygit
