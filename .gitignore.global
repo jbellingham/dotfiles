@@ -55,9 +55,5 @@ build/
 .env.local
 .env.*.local
 
-# Claude AI
-CLAUDE.md
-.claude/
-
 # Process files
 Procfile.debug
