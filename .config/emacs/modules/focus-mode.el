@@ -1,3 +1,8 @@
+;; Focus Mode Configuration
+
+;; Core focus mode functionality with smart margin calculation:
+
+
 ;;; focus-mode.el --- Toggleable focus mode for distraction-free editing -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -46,6 +51,11 @@
   "Whether to keep the modeline visible in focus mode."
   :type 'boolean
   :group 'focus-mode)
+
+;; Focus Mode Functions
+
+;; Smart focus mode with automatic margin adjustment:
+
 
 ;; Core focus mode functions
 (defun my/focus-mode-calculate-margins ()
@@ -201,63 +211,6 @@
            my/focus-mode-width-percentage
            (window-margins)))
 
-(defun my/focus-mode-debug ()
-  "Debug focus mode settings and window state."
-  (interactive)
-  (message "=== Focus Mode Debug ===\nActive: %s\nWidth setting: %d%% (min %d cols)\nWindow width: %d\nMargins: %s\nEnable margins: %s\nBuffer: %s\nMeaningful change: %s"
-           my/focus-mode-active
-           my/focus-mode-width-percentage
-           my/focus-mode-min-width
-           (window-width)
-           (window-margins)
-           my/focus-mode-enable-margins
-           (buffer-name)
-           (my/focus-mode-meaningful-window-change-p)))
-
-(defun my/focus-mode-enter-debug ()
-  "Debug version of focus mode enter with verbose output."
-  (interactive)
-  (unless my/focus-mode-active
-    (message "1. Starting focus mode enter...")
-
-    ;; Store current window configuration
-    (setq my/focus-mode-window-config (current-window-configuration))
-    (message "2. Stored window configuration")
-
-    ;; Store current margins
-    (setq my/focus-mode-margins (list (car (window-margins))
-                                     (cdr (window-margins))))
-    (message "3. Stored margins: %s" my/focus-mode-margins)
-
-    ;; Delete other windows to focus on current buffer
-    (delete-other-windows)
-    (message "4. Deleted other windows, window width now: %d" (window-width))
-    (sit-for 0.1)  ; Longer pause to see intermediate state
-
-    ;; Apply centering margins if enabled
-    (when my/focus-mode-enable-margins
-      (let ((margin-width (my/focus-mode-calculate-margins)))
-        (message "5. Calculated margin width: %s" margin-width)
-        (when margin-width
-          ;; Set margins to center the text
-          (set-window-margins nil margin-width margin-width)
-          (message "6. Set margins to: %s" (window-margins))
-
-          ;; Force immediate visual update after margin setting
-          (redraw-display)
-          (force-window-update)
-          (sit-for 0.1))))
-
-    ;; Update state
-    (setq my/focus-mode-active t)
-    (message "7. Focus mode activated")
-
-    ;; Final window refresh
-    (redraw-display)
-    (recenter)
-    (sit-for 0.1)
-    (message "8. Final refresh complete")))
-
 (defun my/focus-mode-increase-width ()
   "Increase focus mode width percentage."
   (interactive)
@@ -321,11 +274,14 @@
    ;; Safe to toggle
    (t (my/focus-mode-toggle))))
 
+;; Focus Mode Keybindings
+
+;; Comprehensive keybindings and which-key integration:
+
+
 ;; Global keybindings
 (global-set-key (kbd "C-c f f") #'my/focus-mode-toggle)
 (global-set-key (kbd "C-c f s") #'my/focus-mode-status)
-(global-set-key (kbd "C-c f d") #'my/focus-mode-debug)
-(global-set-key (kbd "C-c f D") #'my/focus-mode-enter-debug)
 (global-set-key (kbd "C-c f +") #'my/focus-mode-increase-width)
 (global-set-key (kbd "C-c f -") #'my/focus-mode-decrease-width)
 (global-set-key (kbd "C-c f 1") #'my/focus-mode-narrow)
@@ -339,9 +295,6 @@
 (global-set-key (kbd "<pause>") #'my/focus-mode-toggle)   ; Pause/Break key
 (global-set-key (kbd "C-z") #'my/focus-mode-toggle)       ; Override suspend (immediate)
 
-;; Removed C-c F to avoid conflicts with projectile-find-file-dwim
-;; Use C-c f f for focus mode toggle instead
-
 ;; Which-key descriptions
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
@@ -349,8 +302,6 @@
     "C-c f" "Focus Mode"
     "C-c f f" "Toggle Focus"
     "C-c f s" "Focus Status"
-    "C-c f d" "Debug Focus"
-    "C-c f D" "Debug Enter (Verbose)"
     "C-c f +" "Increase Width (+5%)"
     "C-c f -" "Decrease Width (-5%)"
     "C-c f 1" "Narrow (50%)"

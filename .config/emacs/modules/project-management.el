@@ -1,3 +1,8 @@
+;; Projectile Setup
+
+;; Projectile provides intelligent project detection and management:
+
+
 ;;; project-management.el --- Project management with Projectile -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -47,6 +52,11 @@
                 '("*.log" "*.tmp" "*.pid" "*.lock" "*.min.js" "*.min.css"
                   "*.pyc" "*.pyo" "*.class" "*.o" "*.so" "*.dll"))))
 
+;; Project Functions
+
+;; Enhanced project management functions:
+
+
 ;; Enhanced project functions
 (defun my/project-switch-with-treemacs ()
   "Switch project and show it in treemacs."
@@ -65,6 +75,9 @@
     (project-find-file))
    (t
     (find-file (read-file-name "Find file: ")))))
+
+;; Project Keybindings
+
 
 ;; Project-specific keybindings
 (with-eval-after-load 'projectile

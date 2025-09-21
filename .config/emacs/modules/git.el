@@ -1,3 +1,8 @@
+;; Magit Configuration
+
+;; Magit provides an excellent Git interface:
+
+
 ;;; git.el --- Git integration configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -16,6 +21,11 @@
         magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")
         magit-log-arguments '("--graph" "--decorate" "--color")
         magit-log-section-commit-count 20))
+
+;; Git Visualization
+
+;; Git gutter and diff highlighting:
+
 
 ;; Git gutter - Show changes in fringe
 (use-package git-gutter
@@ -37,19 +47,6 @@
 ;; Git timemachine - Browse file history
 (use-package git-timemachine)
 
-;; Magit forge - GitHub/GitLab integration
-(use-package forge
-  :after magit
-  :config
-  (setq forge-owned-accounts '(("your-username"))
-        forge-database-file (expand-file-name "forge-database.sqlite" user-emacs-directory)))
-
-;; Git messenger - Show last commit message
-(use-package git-messenger
-  :config
-  (setq git-messenger:show-detail t
-        git-messenger:use-magit-popup t))
-
 ;; Diff highlight - Better diff colors
 (use-package diff-hl
   :hook ((prog-mode . diff-hl-mode)
@@ -65,6 +62,24 @@
 ;; Magit Delta - Better diffs with delta
 (use-package magit-delta
   :hook (magit-mode . magit-delta-mode))
+
+;; Git Utilities
+
+;; Additional Git tools and integrations:
+
+
+;; Magit forge - GitHub/GitLab integration
+(use-package forge
+  :after magit
+  :config
+  (setq forge-owned-accounts '(("your-username"))
+        forge-database-file (expand-file-name "forge-database.sqlite" user-emacs-directory)))
+
+;; Git messenger - Show last commit message
+(use-package git-messenger
+  :config
+  (setq git-messenger:show-detail t
+        git-messenger:use-magit-popup t))
 
 ;; Git auto-commit for specific files
 (use-package git-auto-commit-mode

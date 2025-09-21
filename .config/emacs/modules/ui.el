@@ -1,3 +1,8 @@
+;; UI Cleanup
+
+;; Clean, modern interface optimized for development:
+
+
 ;;; ui.el --- UI and theme configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -23,6 +28,11 @@
                                                 "%b")))
       frame-resize-pixelwise t
       window-resize-pixelwise t)
+
+;; Font Configuration
+
+;; Optimized for Apple Silicon Macs with high-DPI displays:
+
 
 ;; Font configuration optimized for M4 MacBook
 (defun setup-fonts ()
@@ -69,6 +79,11 @@
   (setq display-line-numbers-type 'relative
         display-line-numbers-width 3
         display-line-numbers-widen t))
+
+;; Theme & Modeline
+
+;; Modern theme with comprehensive modeline:
+
 
 ;; Theme
 (use-package doom-themes
@@ -147,6 +162,11 @@
   :if (display-graphic-p)
   :hook (dired-mode . all-the-icons-dired-mode))
 
+;; Visual Enhancements
+
+;; Beautiful visual enhancements for better coding experience:
+
+
 ;; Rainbow delimiters
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -196,6 +216,11 @@
   :ensure nil
   :config
   (pixel-scroll-precision-mode 1))
+
+;; Window Management UI
+
+;; Enhanced window management and visual feedback:
+
 
 ;; Window management
 (use-package ace-window
@@ -276,7 +301,6 @@
  '(ruby-string-delimiter-face ((t (:foreground "#58D68D"))))
  '(ruby-constant-face ((t (:foreground "#F4D03F"))))
  '(ruby-op-face ((t (:foreground "#EC7063")))))
-
 
 (provide 'ui)
 ;;; ui.el ends here

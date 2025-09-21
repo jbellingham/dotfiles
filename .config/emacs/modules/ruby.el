@@ -1,3 +1,8 @@
+;; Ruby Mode Configuration
+
+;; Enhanced Ruby mode with syntax highlighting and performance optimizations:
+
+
 ;;; ruby.el --- Ruby and Rails development configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -89,6 +94,11 @@
            (t (setq dir (file-name-directory (directory-file-name dir))))))
         ;; Return found root or original directory
         (or found-root (file-name-directory current-dir))))))
+
+;; Ruby Testing (RSpec)
+
+;; Comprehensive RSpec integration with intelligent Rails engine support:
+
 
 ;; Ruby testing with RSpec
 (use-package rspec-mode
@@ -196,6 +206,11 @@ For Rails engines, find the parent Rails application root."
               ("C-c T F" . my/rspec-toggle-auto-focus)) ; Toggle auto-focus
   )
 
+;; Ruby Refactoring & Quality
+
+;; Tools for Ruby code quality and refactoring:
+
+
 ;; Ruby refactoring tools
 (use-package ruby-refactor
   :hook (ruby-mode . ruby-refactor-mode-launch))
@@ -211,6 +226,11 @@ For Rails engines, find the parent Rails application root."
               ("C-c C-r f" . rubocop-check-current-file)
               ("C-c C-r F" . rubocop-autocorrect-current-file)
               ("C-c C-r P" . rubocop-autocorrect-project)))
+
+;; Ruby Template Support
+
+;; Support for ERB, HAML, and other Ruby template languages:
+
 
 ;; YAML support for Rails configs
 (use-package yaml-mode
@@ -237,6 +257,11 @@ For Rails engines, find the parent Rails application root."
 ;; Slim template support
 (use-package slim-mode
   :mode "\\.slim\\'")
+
+;; Rails Utilities
+
+;; Rails-specific enhancements and integrations:
+
 
 ;; Rails-specific enhancements
 (use-package projectile-rails
@@ -285,6 +310,11 @@ For Rails engines, find the parent Rails application root."
 ;; Ruby end block completion
 (use-package ruby-end
   :hook ((ruby-mode enh-ruby-mode) . ruby-end-mode))
+
+;; Ruby LSP Configuration
+
+;; Language Server Protocol setup for Ruby development:
+
 
 ;; Aggressive autocomplete for Ruby
 (use-package company
@@ -384,7 +414,6 @@ For Rails engines, find the parent Rails application root."
               ("C-c l s" . lsp-workspace-symbol)   ; Search workspace symbols
               ("C-c l h" . lsp-symbol-highlight))) ; Highlight symbol
 
-
 ;; LSP UI improvements
 (use-package lsp-ui
   :after lsp-mode
@@ -393,35 +422,17 @@ For Rails engines, find the parent Rails application root."
         lsp-ui-sideline-enable t       ; Show hints in sideline
         lsp-ui-flycheck-enable t))
 
+;; Ruby Keybindings
+
+;; Comprehensive which-key descriptions for Ruby development:
+
+
 ;; Additional Ruby tools
 (use-package seeing-is-believing
   :hook ((ruby-mode enh-ruby-mode) . seeing-is-believing)
   :bind (:map ruby-mode-map
               ("C-c ? ?" . seeing-is-believing-run)
               ("C-c ? c" . seeing-is-believing-clear)))
-
-;; Rubocop integration
-(use-package rubocop
-  :hook ((ruby-mode enh-ruby-mode) . rubocop-mode)
-  :bind (:map ruby-mode-map
-              ("C-c R a" . rubocop-check-project)
-              ("C-c R d" . rubocop-check-directory)
-              ("C-c R f" . rubocop-check-current-file)
-              ("C-c R F" . rubocop-autocorrect-current-file)
-              ("C-c R P" . rubocop-autocorrect-project)))
-
-;; Bundler integration (using C-c R B prefix to avoid conflict with rails jobs)
-(use-package bundler
-  :bind (:map ruby-mode-map
-              ("C-c R B i" . bundle-install)
-              ("C-c R B u" . bundle-update)
-              ("C-c R B c" . bundle-check)
-              ("C-c R B e" . bundle-exec)))
-
-;; YARI - Ruby documentation lookup
-(use-package yari
-  :bind (:map ruby-mode-map
-              ("C-c R h" . yari)))
 
 ;; Ruby hash syntax toggle function
 (defun ruby-hash-syntax-toggle ()
@@ -443,15 +454,6 @@ For Rails engines, find the parent Rails application root."
           (replace-match ":\\1 =>" nil nil)))))
   (message "Hash syntax toggled"))
 
-;; Ruby REPL integration
-(use-package inf-ruby
-  :hook ((ruby-mode enh-ruby-mode) . inf-ruby-minor-mode)
-  :bind (:map ruby-mode-map
-              ("C-c R s" . inf-ruby)
-              ("C-c R c" . ruby-send-region-and-go)
-              ("C-c R x" . ruby-send-definition)
-              ("C-c R r" . ruby-send-region)))
-
 ;; Ruby utilities keybinding
 (global-set-key (kbd "C-c h t") 'ruby-hash-syntax-toggle)
 
@@ -470,75 +472,6 @@ For Rails engines, find the parent Rails application root."
 ;; Which-key descriptions for Ruby development
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
-    ;; Ruby REPL operations
-    "C-c R s" "Start Ruby REPL"
-    "C-c R c" "Send Region & Go"
-    "C-c R x" "Send Definition"
-    "C-c R r" "Send Region"
-
-    ;; Rubocop code quality
-    "C-c R" "Rubocop"
-    "C-c R a" "Check Project"
-    "C-c R d" "Check Directory"
-    "C-c R f" "Check File"
-    "C-c R F" "Auto-correct File"
-    "C-c R P" "Auto-correct Project"
-
-    ;; Rails file navigation
-    "C-c R" "Rails"
-    "C-c R m" "Find Model"
-    "C-c R c" "Find Controller"
-    "C-c R v" "Find View"
-    "C-c R j" "Find JavaScript"
-    "C-c R s" "Find Stylesheet"
-    "C-c R h" "Find Helper"
-    "C-c R p" "Find Spec"
-    "C-c R t" "Find Test"
-    "C-c R n" "Find Migration"
-    "C-c R u" "Find Fixture"
-    "C-c R w" "Find Component"
-    "C-c R l" "Find Lib"
-    "C-c R f" "Find Feature"
-    "C-c R i" "Find Initializer"
-    "C-c R o" "Find Log"
-    "C-c R e" "Find Environment"
-    "C-c R a" "Find Locale"
-    "C-c R @" "Find Mailer"
-    "C-c R !" "Find Validator"
-    "C-c R y" "Find Layout"
-    "C-c R k" "Find Rake Task"
-    "C-c R b" "Find Job"
-    "C-c R z" "Find Serializer"
-    "C-c R x" "Extract Region"
-    "C-c R g" "Goto Map"
-    "C-c R !" "Run Map"
-
-    ;; Rails goto operations (C-c R g)
-    "C-c R g" "Rails Goto"
-    "C-c R g f" "Goto File at Point"
-    "C-c R g g" "Goto Gemfile"
-    "C-c R g r" "Goto Routes"
-    "C-c R g d" "Goto Schema"
-    "C-c R g s" "Goto Seeds"
-    "C-c R g h" "Goto Spec Helper"
-    "C-c R g p" "Goto Package"
-
-    ;; Rails run operations (C-c R !)
-    "C-c R !" "Rails Run"
-    "C-c R ! c" "Rails Console"
-    "C-c R ! s" "Rails Server"
-    "C-c R ! r" "Rails Rake"
-    "C-c R ! g" "Rails Generate"
-    "C-c R ! d" "Rails Destroy"
-    "C-c R ! b" "Rails DB Console"
-
-    ;; Bundler operations (C-c R B)
-    "C-c R B" "Bundler"
-    "C-c R B i" "Bundle Install"
-    "C-c R B u" "Bundle Update"
-    "C-c R B c" "Bundle Check"
-    "C-c R B e" "Bundle Exec"
-
     ;; RSpec testing
     "C-c T" "RSpec"
     "C-c T v" "Verify Test"
@@ -553,8 +486,15 @@ For Rails engines, find the parent Rails application root."
     "C-c T o" "Toggle Test/Output"
     "C-c T F" "Toggle Auto-Focus"
 
-    ;; Ruby utilities
+    ;; Rails navigation and commands
+    "C-c R" "Rails"
+    "C-c R m" "Find Model"
+    "C-c R c" "Find Controller"
+    "C-c R v" "Find View"
+    "C-c R s" "Start REPL"
     "C-c R h" "Ruby Documentation"
+
+    ;; Ruby utilities
     "C-c h t" "Toggle Hash Syntax"
     "C-c ? ?" "Execute with Annotations"
     "C-c ? c" "Clear Annotations"
