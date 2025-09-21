@@ -29,6 +29,7 @@ rake.cache
 
 # But keep our configuration files
 !config.org
+!config.el
 !init.el
 !early-init.el
 !modules/
