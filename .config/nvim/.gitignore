@@ -1,0 +1,10 @@
+# Ignore generated nvim files and directories
+plugin/
+autoload/
+.netrwhist
+*.vim~
+spell/
+
+# But keep our custom configurations
+!lua/custom/
+!coc-settings.json

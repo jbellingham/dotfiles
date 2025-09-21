@@ -1,0 +1,35 @@
+# Ignore emacs generated files and directories
+elpa/
+eln-cache/
+auto-save-list/
+auto-saves/
+backups/
+bookmarks
+.dap-breakpoints
+recentf
+.projectile-bookmarks
+projectile-bookmarks.eld
+projectile.cache
+anaconda-mode/
+.lsp-session-*
+var/
+transient/
+tree-sitter/
+straight/
+eshell/
+url/
+games/
+.org-id-locations
+.treemacs-persist
+desktop
+desktop.lock
+history
+places
+rake.cache
+
+# But keep our configuration files
+!config.org
+!init.el
+!early-init.el
+!modules/
+!.claude/CLAUDE.md

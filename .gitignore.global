@@ -1,20 +1,63 @@
+# OS and system files
 .DS_Store
+.Trash/
+Thumbs.db
+desktop.ini
+
+# Development environment
 .tool-versions
 .sdkmanrc
 .envrc
-.vscode/
-Session.vim
-node_modules
-
-.serverless
-.dynamodb
-__pycache__
-venv/
-
-.talismanrc
 .direnv
 shell.nix
-Procfile.debug
 
+# Editor and IDE files
+.vscode/
+.idea/
+Session.vim
+*.swp
+*.swo
+*~
+
+# Package managers and dependencies
+node_modules/
+.npm/
+.yarn/
+package-lock.json
+venv/
+__pycache__/
+.pytest_cache/
+.coverage
+
+# Cache and temporary files
+*.log
+*.tmp
+.cache/
+.temp/
+.sass-cache/
+
+# Build artifacts
+dist/
+build/
+*.o
+*.so
+*.dll
+*.exe
+
+# Cloud and deployment
+.serverless/
+.dynamodb/
+.terraform/
+
+# Security and configs
+.talismanrc
+.env
+.env.local
+.env.*.local
+
+# Claude AI
 CLAUDE.md
-.claude
+.claude/
+
+# Process files
+Procfile.debug

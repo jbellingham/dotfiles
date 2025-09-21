@@ -1,0 +1,7 @@
+# Ignore coc.nvim generated files
+extensions/
+commands
+mru
+
+# But keep our configurations
+!ultisnips/
