@@ -361,7 +361,17 @@
     "SPC f s" "Search Project"
     "SPC f g" "Find Git Files"
     "SPC b" "Buffers"
-    "SPC b p" "Project Buffers"))
+    "SPC b b" "Switch Buffer"
+    "SPC b p" "Project Buffers"
+    "SPC b r" "Recent Files"
+    "SPC b s" "Scratch Buffer"
+    "SPC b n" "New Buffer"
+    "SPC b d" "Duplicate Buffer"
+    "SPC b k" "Kill Buffer"
+    "SPC b K" "Kill Other Buffers"
+    "SPC b A" "Kill All Buffers"
+    "SPC b R" "Rename Buffer"
+    "SPC b l" "List Buffers"))
 
 ;; Dired improvements
 (use-package dired
@@ -440,8 +450,18 @@
     (kbd "<leader>ff") 'my/find-project-files    ; was C-c f p
     (kbd "<leader>fs") 'my/search-project        ; was C-c s p
     (kbd "<leader>fg") 'my/find-git-files        ; was C-c f g
-    (kbd "<leader>bb") 'my/smart-switch-buffer
+    ;; Buffer management (migrated from C-c b)
+    (kbd "<leader>bb") 'my/smart-switch-buffer   ; was C-c b b
     (kbd "<leader>bp") 'my/project-buffers       ; was C-c b p
+    (kbd "<leader>br") 'recentf-open-files       ; was C-c b r
+    (kbd "<leader>bs") 'scratch-buffer           ; was C-c b s
+    (kbd "<leader>bn") 'my/new-empty-buffer      ; was C-c b n
+    (kbd "<leader>bd") 'my/duplicate-buffer      ; was C-c b d
+    (kbd "<leader>bk") 'kill-current-buffer      ; was C-c b k
+    (kbd "<leader>bK") 'my/kill-other-buffers    ; was C-c b K
+    (kbd "<leader>bA") 'my/kill-all-buffers      ; was C-c b A
+    (kbd "<leader>bR") 'my/rename-current-buffer ; was C-c b R
+    (kbd "<leader>bl") 'ibuffer                  ; was C-c b l
     (kbd "<leader>gg") 'magit-status
     (kbd "<leader>pp") 'projectile-switch-project
     (kbd "<leader>tt") 'my/toggle-between-implementation-and-test))
