@@ -1,6 +1,16 @@
-;; Ace Window for Quick Window Selection
+#+TITLE: Emacs Navigation & Buffer Management
+#+AUTHOR: Jesse Bellingham
+#+DESCRIPTION: Enhanced navigation system for buffers, windows, and projects
+#+PROPERTY: header-args:emacs-lisp :tangle modules/navigation.el :comments org
+#+AUTO_TANGLE: t
 
+* Navigation & Buffer Management
 
+** Window Switching
+
+*** Ace Window for Quick Window Selection
+
+#+begin_src emacs-lisp
 ;;; navigation.el --- Enhanced navigation and buffer management -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -35,12 +45,15 @@
           (?h aw-split-window-horz "Split Horz Window")
           (?o delete-other-windows "Delete Other Windows")
           (?? aw-show-dispatch-help))))
+#+end_src
 
-;; IBuffer for Advanced Buffer Management
+** Buffer Management
 
-;; IBuffer provides powerful buffer management with filtering and grouping:
+*** IBuffer for Advanced Buffer Management
 
+IBuffer provides powerful buffer management with filtering and grouping:
 
+#+begin_src emacs-lisp
 ;; Buffer management
 ;; ================
 
@@ -101,10 +114,11 @@
                 (mode 16 16 :left :elide)
                 " "
                 filename-and-process))))
+#+end_src
 
-;; Recent Files and Buffer Utilities
+*** Recent Files and Buffer Utilities
 
-
+#+begin_src emacs-lisp
 ;; Recent files with recentf
 (use-package recentf
   :ensure nil
@@ -178,12 +192,15 @@
     (if (featurep 'consult)
         (consult-buffer)
       (switch-to-buffer (other-buffer)))))
+#+end_src
 
-;; Implementation and Test Switching
+** Code Navigation
 
-;; Intelligent switching between implementation and test files for various languages:
+*** Implementation and Test Switching
 
+Intelligent switching between implementation and test files for various languages:
 
+#+begin_src emacs-lisp
 ;; Code navigation - find implementation and tests
 ;; ==============================================
 
@@ -492,12 +509,13 @@ Works with various language conventions."
     (if (string-match-p "\\(test\\|spec\\)" current-name)
         (my/find-implementation)
       (my/goto-test))))
+#+end_src
 
-;; Bookmarks
+** Bookmarks
 
-;; Enhanced bookmark management:
+Enhanced bookmark management:
 
-
+#+begin_src emacs-lisp
 ;; Bookmarks enhancement
 ;; ====================
 
@@ -506,12 +524,13 @@ Works with various language conventions."
   :config
   (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory)
         bookmark-save-flag 1))
+#+end_src
 
-;; Window Management
+** Window Management
 
-;; Utilities for better window management:
+Utilities for better window management:
 
-
+#+begin_src emacs-lisp
 ;; Window and frame management
 ;; ===========================
 
@@ -547,12 +566,13 @@ Works with various language conventions."
           (set-window-buffer (next-window) next-win-buffer)
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
+#+end_src
 
-;; Navigation Keybindings
+** Navigation Keybindings
 
-;; Comprehensive keybindings for navigation:
+Comprehensive keybindings for navigation:
 
-
+#+begin_src emacs-lisp
 ;; Navigation keybindings
 ;; =====================
 
@@ -640,3 +660,4 @@ Works with various language conventions."
 
 (provide 'navigation)
 ;;; navigation.el ends here
+#+end_src
