@@ -92,43 +92,9 @@
 
 This is a literate Emacs configuration that provides a modern, powerful development environment optimized for Ruby on Rails and React Native development. It combines the flexibility of Emacs with modern IDE-like features and provides comprehensive documentation for every configuration decision.
 
-** Key Features
+** Overview
 
-- 🚀 *Performance Optimized*: Apple Silicon/M4 MacBook optimizations with fast startup
-- 🏗️ *Modular Architecture*: Clean separation of concerns with well-documented modules
-- 💎 *Ruby & Rails Focus*: Complete Rails development environment with RSpec, LSP, and project navigation
-- ⚛️ *React Native Ready*: TypeScript, JSX, debugging, and React Native tooling
-- 🎨 *Modern UI*: Beautiful themes, icons, and VS Code-like interface
-- 📋 *Unified Completion*: Telescope-like search and completion system
-- 🔍 *Advanced Navigation*: Smart file/buffer switching and project management
-- 🎯 *Focus Mode*: Distraction-free editing with customizable centering
-
-** How This Configuration Works
-
-This configuration uses org-babel's tangling feature to generate modular Emacs Lisp files from this single documented source. The =#+AUTO_TANGLE: t= header ensures automatic generation when you save this file.
-
-Generated files:
-- =modules/core.el= - Core Emacs settings and utilities
-- =modules/completion-unified.el= - Unified completion and search system
-- =modules/navigation.el= - Buffer and window management
-- =modules/file-explorer.el= - Treemacs and dashboard configuration
-- =modules/project-management.el= - Projectile setup
-- =modules/workspace.el= - Workspace and session management
-- =modules/git.el= - Git integration with Magit
-- =modules/ruby.el= - Ruby and Rails development tools
-- =modules/react-native.el= - React Native and TypeScript setup
-- =modules/ui.el= - Themes and visual enhancements
-- =modules/focus-mode.el= - Distraction-free editing mode
-
-* Configuration Philosophy
-
-This configuration is built around several core principles:
-
-1. *Performance First*: Every setting is chosen for speed and responsiveness
-2. *Documentation*: Every configuration decision is explained and documented
-3. *Modularity*: Separate concerns into focused, reusable modules
-4. *Modern Defaults*: Provide VS Code-like experience while preserving Emacs power
-5. *Developer Experience*: Optimize for Ruby/Rails and React Native development workflows
+Performance-optimized modular Emacs configuration for Ruby/Rails and React Native development. Uses org-babel tangling to generate modular .el files from this documented source.
 
 * Performance & Startup Optimization
 
@@ -778,13 +744,11 @@ Evil mode provides comprehensive Vim emulation in Emacs, bringing modal editing 
 
 * Completion & Search (Unified System)
 
-This section configures a modern, telescope-like completion and search system using Vertico, Consult, and friends. This provides the fuzzy finding and search capabilities that make Emacs feel like VS Code.
 
 ** Completion UI Components
 
 *** Vertico - Fast and Minimal Completion UI
 
-Vertico provides the completion interface that feels snappy and responsive:
 
 #+begin_src emacs-lisp
 ;;; completion-unified.el --- Unified completion and search system -*- lexical-binding: t; -*-
@@ -835,9 +799,8 @@ Marginalia adds helpful annotations to completion candidates:
   (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
 #+end_src
 
-*** Consult - Enhanced Search with Live Preview
+*** Consult - Search with Live Preview
 
-Consult provides powerful search commands with live preview, similar to telescope in other editors:
 
 #+begin_src emacs-lisp
 ;; Consult - Enhanced search and navigation with live preview
@@ -974,7 +937,6 @@ Embark adds contextual actions to completion candidates, like right-click menus:
 
 *** Company Mode for Auto-completion
 
-Company provides auto-completion as you type, essential for productive coding:
 
 #+begin_src emacs-lisp
 ;; In-buffer completion with Company
@@ -1018,7 +980,6 @@ Company provides auto-completion as you type, essential for productive coding:
 
 *** Affe - Asynchronous Fuzzy Finder
 
-Affe provides very fast asynchronous searching, especially useful for large projects:
 
 #+begin_src emacs-lisp
 ;; Advanced search tools
@@ -1045,7 +1006,7 @@ Affe provides very fast asynchronous searching, especially useful for large proj
 These functions provide intelligent project-aware file finding and searching:
 
 #+begin_src emacs-lisp
-;; Enhanced project-aware functions
+;; Project-aware functions
 ;; ================================
 
 (defun my/find-project-files ()
@@ -1185,7 +1146,6 @@ Set up VS Code-like shortcuts and organized keybindings:
 
 * Navigation & Buffer Management
 
-This section provides comprehensive buffer, window, and code navigation capabilities, including intelligent test/implementation switching.
 
 ** Window Switching
 
@@ -1314,7 +1274,7 @@ IBuffer provides powerful buffer management with filtering and grouping:
   ;; Save recent files every 5 minutes
   (run-at-time nil (* 5 60) 'recentf-save-list))
 
-;; Enhanced buffer switching
+;; Buffer switching
 ;; =========================
 
 (defun my/kill-other-buffers ()
@@ -2085,7 +2045,7 @@ Projectile provides intelligent project detection and management:
 Enhanced project management functions:
 
 #+begin_src emacs-lisp
-;; Enhanced project functions
+;; Project functions
 (defun my/project-switch-with-treemacs ()
   "Switch project and show it in treemacs."
   (interactive)
@@ -2227,7 +2187,7 @@ Perspective provides VS Code-like workspace isolation:
       (let ((project-name (projectile-project-name)))
         (persp-switch project-name))))
 
-  ;; Enhanced workspace creation
+  ;; Workspace creation
   (defun my/create-workspace (name)
     "Create a new workspace with NAME and switch to it."
     (interactive "sWorkspace name: ")
@@ -2518,11 +2478,9 @@ Additional Git tools and integrations:
 
 * Ruby & Rails Development
 
-This section provides comprehensive Ruby and Rails development capabilities, including RSpec testing, LSP integration, and Rails-specific utilities.
 
 ** Ruby Mode Configuration
 
-Enhanced Ruby mode with syntax highlighting and performance optimizations:
 
 #+begin_src emacs-lisp
 ;;; ruby.el --- Ruby and Rails development configuration -*- lexical-binding: t; -*-
@@ -2542,7 +2500,7 @@ Enhanced Ruby mode with syntax highlighting and performance optimizations:
         ruby-indent-tabs-mode nil
         ruby-insert-encoding-magic-comment nil))
 
-;; Enhanced Ruby mode with additional features
+;; Ruby mode with additional features
 (use-package enh-ruby-mode
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
@@ -3044,11 +3002,9 @@ Comprehensive which-key descriptions for Ruby development:
 
 * React Native & TypeScript Development
 
-This section provides comprehensive TypeScript and React Native development support with tree-sitter, LSP, and modern tooling.
 
 ** Tree-sitter Setup
 
-Modern syntax highlighting for TypeScript and JavaScript:
 
 #+begin_src emacs-lisp
 ;;; react-native.el --- React Native with TypeScript development configuration -*- lexical-binding: t; -*-
@@ -3087,7 +3043,6 @@ Modern syntax highlighting for TypeScript and JavaScript:
 
 ** TypeScript & JavaScript Modes
 
-Enhanced TypeScript and JavaScript support with syntax highlighting:
 
 #+begin_src emacs-lisp
 ;; TypeScript mode
@@ -3763,7 +3718,6 @@ Optimized for Apple Silicon Macs with high-DPI displays:
 
 ** Theme & Modeline
 
-Modern theme with comprehensive modeline:
 
 #+begin_src emacs-lisp
 ;; Theme
@@ -3896,7 +3850,6 @@ Beautiful visual enhancements for better coding experience:
 
 ** Window Management UI
 
-Enhanced window management and visual feedback:
 
 #+begin_src emacs-lisp
 ;; Window management
