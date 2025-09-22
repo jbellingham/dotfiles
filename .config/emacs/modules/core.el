@@ -1,6 +1,6 @@
-;; Garbage Collection Tuning
+;; Basic Editing Behavior
 
-;; We start by optimizing Emacs' garbage collection and file handling for faster startup, especially important on Apple Silicon Macs with abundant memory.
+;; These settings establish sane defaults for modern development:
 
 
 ;;; core.el --- Core Emacs settings -*- lexical-binding: t; -*-
@@ -9,74 +9,6 @@
 ;; Essential Emacs settings and behavior modifications.
 
 ;;; Code:
-
-;; Performance optimizations for startup (Apple Silicon optimized)
-;; ===============================================================
-
-(defvar file-name-handler-alist-original file-name-handler-alist)
-(setq file-name-handler-alist nil)
-(setq gc-cons-threshold most-positive-fixnum)
-(setq gc-cons-percentage 0.6)
-
-;; Apple Silicon Optimizations
-
-;; Apple Silicon Macs have different memory and processing characteristics that we can optimize for:
-
-
-;; Apple Silicon specific performance settings
-(setq read-process-output-max (* 2 1024 1024)) ; 2MB for faster LSP
-(setq process-adaptive-read-buffering nil)
-
-;; Post-initialization Cleanup
-
-;; After startup, we restore reasonable garbage collection settings optimized for Apple Silicon's ample memory:
-
-
-;; Restore after startup
-(defun restore-post-init-settings ()
-  "Restore settings after initialization."
-  (setq file-name-handler-alist file-name-handler-alist-original)
-  ;; Higher GC threshold for Apple Silicon's ample memory
-  (setq gc-cons-threshold (* 20 1000 1000))
-  (setq gc-cons-percentage 0.1))
-
-(add-hook 'emacs-startup-hook #'restore-post-init-settings)
-
-
-
-;; Let me create a proper init.el that tangles from the org file:
-
-
-;; Package management setup
-;; ========================
-
-(require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-
-(package-initialize)
-
-;; Use-package Bootstrap
-
-;; Use-package provides a clean, declarative way to configure packages:
-
-
-;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t
-      use-package-expand-minimally t
-      use-package-compute-statistics t
-      use-package-verbose t)
-
-;; Basic Editing Behavior
-
-;; These settings establish sane defaults for modern development:
-
 
 ;; Basic settings
 (setq-default
@@ -295,11 +227,7 @@
     (princ "Tip: These bindings also appear in which-key when you press them.\n")))
 
 ;; Custom keybindings
-(global-set-key (kbd "C-c c r") 'reload-config) ; C-c c r to reload config
-(global-set-key (kbd "C-c c e") 'open-config)   ; C-c c e to edit config
-(global-set-key (kbd "C-c c c") 'claude-code)   ; C-c c c to launch Claude Code
-(global-set-key (kbd "C-c c t") 'claude-code-terminal) ; C-c c t for Claude terminal
-(global-set-key (kbd "C-c c k") 'show-command-keybindings) ; C-c c k to show Command key bindings
+;; Config management keybindings migrated to SPC c (see evil config section)
 
 ;; Open Emacs keybinding reference
 (defun open-emacs-reference ()
@@ -315,7 +243,7 @@
           (message "Opened Emacs keybinding reference (read-only)"))
       (message "Reference file not found: %s" reference-file))))
 
-(global-set-key (kbd "C-c c h") 'open-emacs-reference) ; C-c c h for help/reference
+;; C-c c h migrated to SPC c h (see evil config section)
 
 ;; Which-key for discoverability
 (use-package which-key
@@ -358,7 +286,69 @@
     "s-t" "Toggle Impl/Test"
     "C-c c" "Claude Config"
     "C-c c k" "Show Command Keys"
-    "C-c c h" "Emacs Reference"))
+    "C-c c h" "Emacs Reference"
+    ;; Evil leader (SPC) bindings
+    "SPC c" "Config"
+    "SPC c r" "Reload Config"
+    "SPC c e" "Edit Config"
+    "SPC c c" "Claude Code"
+    "SPC c t" "Claude Terminal"
+    "SPC c k" "Show Command Keys"
+    "SPC c h" "Emacs Reference"
+    "SPC f" "Files"
+    "SPC f f" "Find Project Files"
+    "SPC f s" "Search Project"
+    "SPC f g" "Find Git Files"
+    "SPC b" "Buffers"
+    "SPC b b" "Switch Buffer"
+    "SPC b p" "Project Buffers"
+    "SPC b r" "Recent Files"
+    "SPC b s" "Scratch Buffer"
+    "SPC b n" "New Buffer"
+    "SPC b d" "Duplicate Buffer"
+    "SPC b k" "Kill Buffer"
+    "SPC b K" "Kill Other Buffers"
+    "SPC b A" "Kill All Buffers"
+    "SPC b R" "Rename Buffer"
+    "SPC b l" "List Buffers"
+    "SPC g" "Go to"
+    "SPC g i" "Find Implementation"
+    "SPC g t" "Go to Test"
+    "SPC g T" "Toggle Impl/Test"
+    "SPC g g" "Git Status"
+    "SPC w" "Window/Workspace"
+    "SPC w c" "Create Workspace"
+    "SPC w P" "Workspace for Project"
+    "SPC w d" "Delete Window"
+    "SPC w v" "Split Right"
+    "SPC w h" "Split Below"
+    "SPC w m" "Delete Other Windows"
+    "SPC w o" "Other Window"
+    "SPC w u" "Winner Undo"
+    "SPC w U" "Winner Redo"
+    "SPC w 2" "Split Sensibly"
+    "SPC w K" "Kill Other Buffers"
+    "SPC w s" "Save Session"
+    "SPC w r" "Restore Session"
+    "SPC z" "Focus/Zen"
+    "SPC z z" "Toggle Focus Mode"
+    "SPC z s" "Focus Status"
+    "SPC z +" "Increase Width"
+    "SPC z -" "Decrease Width"
+    "SPC z 1" "Narrow (50%)"
+    "SPC z 2" "Medium (60%)"
+    "SPC z 3" "Wide (75%)"
+    "SPC z 4" "Ultrawide (90%)"
+    "SPC j" "Bookmarks"
+    "SPC j m" "Set Bookmark"
+    "SPC j j" "Jump to Bookmark"
+    "SPC j l" "List Bookmarks"
+    "SPC j d" "Delete Bookmark"
+    "SPC p" "Project"
+    "SPC p p" "Switch Project"
+    "SPC p f" "Find File"
+    "SPC t" "Test/Toggle"
+    "SPC t t" "Toggle Impl/Test"))
 
 ;; Dired improvements
 (use-package dired
