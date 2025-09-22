@@ -351,7 +351,15 @@
     "s-t" "Toggle Impl/Test"
     "C-c c" "Claude Config"
     "C-c c k" "Show Command Keys"
-    "C-c c h" "Emacs Reference"))
+    "C-c c h" "Emacs Reference"
+    ;; Evil leader (SPC) bindings
+    "SPC c" "Config"
+    "SPC c r" "Reload Config"
+    "SPC c e" "Edit Config"
+    "SPC c c" "Claude Code"
+    "SPC c t" "Claude Terminal"
+    "SPC c k" "Show Command Keys"
+    "SPC c h" "Emacs Reference"))
 
 ;; Dired improvements
 (use-package dired
@@ -419,6 +427,14 @@
 
   ;; Some useful leader bindings that complement our C-c system
   (evil-define-key '(normal visual) 'global
+    ;; Config management (migrated from C-c c)
+    (kbd "<leader>cr") 'reload-config
+    (kbd "<leader>ce") 'open-config
+    (kbd "<leader>cc") 'claude-code
+    (kbd "<leader>ct") 'claude-code-terminal
+    (kbd "<leader>ck") 'show-command-keybindings
+    (kbd "<leader>ch") 'open-emacs-reference
+    ;; Project and file operations
     (kbd "<leader>ff") 'my/find-project-files
     (kbd "<leader>fs") 'my/search-project
     (kbd "<leader>bb") 'my/smart-switch-buffer
