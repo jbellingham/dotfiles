@@ -3644,12 +3644,6 @@ For Rails engines, find the parent Rails application root."
   (setq indent-guide-char "│"
         indent-guide-delay 0.1))
 
-;; Highlight indentation
-(use-package highlight-indentation
-  :hook ((ruby-mode enh-ruby-mode) . highlight-indentation-mode)
-  :config
-  (set-face-background 'highlight-indentation-face "#e3e3d3")
-  (set-face-background 'highlight-indentation-current-column-face "#c3b3b3"))
 
 ;; Smooth scrolling
 (use-package pixel-scroll

@@ -57,3 +57,5 @@ build/
 
 # Process files
 Procfile.debug
+
+.claude/
