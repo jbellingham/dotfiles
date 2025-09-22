@@ -1,8 +1,16 @@
-;; UI Cleanup
+#+TITLE: Emacs User Interface & Themes
+#+AUTHOR: Jesse Bellingham
+#+DESCRIPTION: UI improvements, themes, and visual enhancements
+#+PROPERTY: header-args:emacs-lisp :tangle modules/ui.el :comments org
+#+AUTO_TANGLE: t
 
-;; Clean, modern interface optimized for development:
+* User Interface & Themes
 
+** UI Cleanup
 
+Clean, modern interface optimized for development:
+
+#+begin_src emacs-lisp
 ;;; ui.el --- UI and theme configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -28,12 +36,13 @@
                                                 "%b")))
       frame-resize-pixelwise t
       window-resize-pixelwise t)
+#+end_src
 
-;; Font Configuration
+** Font Configuration
 
-;; Optimized for Apple Silicon Macs with high-DPI displays:
+Optimized for Apple Silicon Macs with high-DPI displays:
 
-
+#+begin_src emacs-lisp
 ;; Font configuration optimized for M4 MacBook
 (defun setup-fonts ()
   "Setup fonts with fallbacks for different systems."
@@ -79,10 +88,11 @@
   (setq display-line-numbers-type 'relative
         display-line-numbers-width 3
         display-line-numbers-widen t))
+#+end_src
 
-;; Theme & Modeline
+** Theme & Modeline
 
-
+#+begin_src emacs-lisp
 ;; Theme
 (use-package doom-themes
   :config
@@ -159,12 +169,13 @@
 (use-package all-the-icons-dired
   :if (display-graphic-p)
   :hook (dired-mode . all-the-icons-dired-mode))
+#+end_src
 
-;; Visual Enhancements
+** Visual Enhancements
 
-;; Beautiful visual enhancements for better coding experience:
+Beautiful visual enhancements for better coding experience:
 
-
+#+begin_src emacs-lisp
 ;; Rainbow delimiters
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -231,3 +242,4 @@
 
 (provide 'ui)
 ;;; ui.el ends here
+#+end_src
