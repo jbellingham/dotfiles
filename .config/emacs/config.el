@@ -390,7 +390,21 @@
     "SPC w 2" "Split Sensibly"
     "SPC w K" "Kill Other Buffers"
     "SPC w s" "Save Session"
-    "SPC w r" "Restore Session"))
+    "SPC w r" "Restore Session"
+    "SPC z" "Focus/Zen"
+    "SPC z z" "Toggle Focus Mode"
+    "SPC z s" "Focus Status"
+    "SPC z +" "Increase Width"
+    "SPC z -" "Decrease Width"
+    "SPC z 1" "Narrow (50%)"
+    "SPC z 2" "Medium (60%)"
+    "SPC z 3" "Wide (75%)"
+    "SPC z 4" "Ultrawide (90%)"
+    "SPC j" "Bookmarks"
+    "SPC j m" "Set Bookmark"
+    "SPC j j" "Jump to Bookmark"
+    "SPC j l" "List Bookmarks"
+    "SPC j d" "Delete Bookmark"))
 
 ;; Dired improvements
 (use-package dired
@@ -500,6 +514,20 @@
     (kbd "<leader>wK") 'my/kill-other-buffers      ; was C-c w K
     (kbd "<leader>ws") 'my/save-session            ; was C-c S s
     (kbd "<leader>wr") 'my/restore-session         ; was C-c S r
+    ;; Focus/Zen mode (migrated from C-c f)
+    (kbd "<leader>zz") 'my/focus-mode-toggle       ; was C-c f f/z
+    (kbd "<leader>zs") 'my/focus-mode-status       ; was C-c f s
+    (kbd "<leader>z+") 'my/focus-mode-increase-width ; was C-c f +
+    (kbd "<leader>z-") 'my/focus-mode-decrease-width ; was C-c f -
+    (kbd "<leader>z1") 'my/focus-mode-narrow       ; was C-c f 1
+    (kbd "<leader>z2") 'my/focus-mode-medium       ; was C-c f 2
+    (kbd "<leader>z3") 'my/focus-mode-wide         ; was C-c f 3
+    (kbd "<leader>z4") 'my/focus-mode-ultrawide    ; was C-c f 4
+    ;; Bookmarks (migrated from C-c j)
+    (kbd "<leader>jm") 'bookmark-set               ; was C-c j m
+    (kbd "<leader>jj") 'bookmark-jump              ; was C-c j j
+    (kbd "<leader>jl") 'bookmark-bmenu-list        ; was C-c j l
+    (kbd "<leader>jd") 'bookmark-delete            ; was C-c j d
     (kbd "<leader>pp") 'projectile-switch-project
     (kbd "<leader>tt") 'my/toggle-between-implementation-and-test))
 
@@ -1564,11 +1592,7 @@ Works with various language conventions."
    ("s-8" . winum-select-window-8)
    ("s-9" . winum-select-window-9)))
 
-;; Bookmarks
-(global-set-key (kbd "C-c j m") #'bookmark-set)
-(global-set-key (kbd "C-c j j") #'bookmark-jump)
-(global-set-key (kbd "C-c j l") #'bookmark-bmenu-list)
-(global-set-key (kbd "C-c j d") #'bookmark-delete)
+;; Bookmarks migrated to SPC j (see evil config section)
 
 ;; Which-key descriptions
 ;; ======================
@@ -2004,9 +2028,7 @@ Works with various language conventions."
                (y-or-n-p "Add current project to workspace? "))
       (my/workspace-for-project)))
 
-  ;; Bind custom functions
-  (global-set-key (kbd "C-c w c") #'my/create-workspace)
-  (global-set-key (kbd "C-c w P") #'my/workspace-for-project)
+  ;; Workspace functions migrated to SPC w (see evil config section)
 
   :init
   (persp-mode))
@@ -2067,8 +2089,7 @@ Works with various language conventions."
   (add-hook 'kill-emacs-hook #'desktop-save-in-desktop-dir)
 
   ;; Session keybindings (Changed from C-c s to C-c S to avoid conflict with search)
-  (global-set-key (kbd "C-c S s") #'my/save-session)
-  (global-set-key (kbd "C-c S r") #'my/restore-session)
+  ;; Session management migrated to SPC w s/r (see evil config section)
 
   ;; Enable desktop save mode
   (desktop-save-mode 1))
@@ -2094,15 +2115,7 @@ Works with various language conventions."
     (message "Killed all other buffers")))
 
 ;; Window management keybindings
-(global-set-key (kbd "C-c w d") #'delete-window)
-(global-set-key (kbd "C-c w v") #'split-window-right)
-(global-set-key (kbd "C-c w h") #'split-window-below)
-(global-set-key (kbd "C-c w m") #'delete-other-windows)
-(global-set-key (kbd "C-c w o") #'other-window)
-(global-set-key (kbd "C-c w u") #'winner-undo)
-(global-set-key (kbd "C-c w U") #'winner-redo)
-(global-set-key (kbd "C-c w 2") #'my/split-window-sensibly)
-(global-set-key (kbd "C-c w K") #'my/kill-other-buffers)
+;; Window management operations migrated to SPC w (see evil config section)
 
 ;; Winner mode for undo/redo window configurations
 (use-package winner
@@ -4013,21 +4026,11 @@ For Rails engines, find the parent Rails application root."
 ;; Comprehensive keybindings and which-key integration:
 
 
-;; Global keybindings
-(global-set-key (kbd "C-c f f") #'my/focus-mode-toggle)
-(global-set-key (kbd "C-c f s") #'my/focus-mode-status)
-(global-set-key (kbd "C-c f +") #'my/focus-mode-increase-width)
-(global-set-key (kbd "C-c f -") #'my/focus-mode-decrease-width)
-(global-set-key (kbd "C-c f 1") #'my/focus-mode-narrow)
-(global-set-key (kbd "C-c f 2") #'my/focus-mode-medium)
-(global-set-key (kbd "C-c f 3") #'my/focus-mode-wide)
-(global-set-key (kbd "C-c f 4") #'my/focus-mode-ultrawide)
-
+;; Focus mode operations migrated to SPC z (see evil config section)
 ;; Single-keystroke focus toggle (avoid prefix sequences)
 (global-set-key (kbd "<f11>") #'my/focus-mode-toggle)     ; F11 (if not captured by macOS)
 (global-set-key (kbd "<f10>") #'my/focus-mode-toggle)     ; F10 alternative
 (global-set-key (kbd "<pause>") #'my/focus-mode-toggle)   ; Pause/Break key
-(global-set-key (kbd "C-c f z") #'my/focus-mode-toggle)   ; C-c f z for zen/focus mode (moved from C-z for evil compatibility)
 
 ;; Which-key descriptions
 (with-eval-after-load 'which-key
