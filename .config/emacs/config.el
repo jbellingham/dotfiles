@@ -624,7 +624,6 @@
 
 ;; Vertico - Fast and Minimal Completion UI
 
-;; Vertico provides the completion interface that feels snappy and responsive:
 
 
 ;;; completion-unified.el --- Unified completion and search system -*- lexical-binding: t; -*-
@@ -674,7 +673,6 @@
 
 ;; Consult - Enhanced Search with Live Preview
 
-;; Consult provides powerful search commands with live preview, similar to telescope in other editors:
 
 
 ;; Consult - Enhanced search and navigation with live preview
@@ -807,7 +805,6 @@
 
 ;; Company Mode for Auto-completion
 
-;; Company provides auto-completion as you type, essential for productive coding:
 
 
 ;; In-buffer completion with Company
@@ -848,7 +845,6 @@
 
 ;; Affe - Asynchronous Fuzzy Finder
 
-;; Affe provides very fast asynchronous searching, especially useful for large projects:
 
 
 ;; Advanced search tools

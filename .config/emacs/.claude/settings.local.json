@@ -5,7 +5,9 @@
       "Bash(awk:*)",
       "Bash(emacs:*)",
       "Bash(git add:*)",
-      "Read(///**)"
+      "Read(///**)",
+      "Bash(rg:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
