@@ -552,7 +552,12 @@ Useful functions for configuration management and development workflow:
     "SPC j m" "Set Bookmark"
     "SPC j j" "Jump to Bookmark"
     "SPC j l" "List Bookmarks"
-    "SPC j d" "Delete Bookmark"))
+    "SPC j d" "Delete Bookmark"
+    "SPC p" "Project"
+    "SPC p p" "Switch Project"
+    "SPC p f" "Find File"
+    "SPC t" "Test/Toggle"
+    "SPC t t" "Toggle Impl/Test"))
 
 ;; Dired improvements
 (use-package dired
