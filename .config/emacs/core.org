@@ -1,8 +1,16 @@
-;; Basic Editing Behavior
+#+TITLE: Emacs Core Settings
+#+AUTHOR: Jesse Bellingham
+#+DESCRIPTION: Core Emacs settings and behavior modifications
+#+PROPERTY: header-args:emacs-lisp :tangle modules/core.el :comments org
+#+AUTO_TANGLE: t
 
-;; These settings establish sane defaults for modern development:
+* Core Settings
 
+** Basic Editing Behavior
 
+These settings establish sane defaults for modern development:
+
+#+begin_src emacs-lisp
 ;;; core.el --- Core Emacs settings -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -19,23 +27,25 @@
  sentence-end-double-space nil     ; Single space after periods
  require-final-newline t           ; Always end files with newline
  delete-trailing-lines t)          ; Remove trailing blank lines
+#+end_src
 
-;; Encoding Configuration
+** Encoding Configuration
 
-;; Ensure consistent UTF-8 encoding across all operations:
+Ensure consistent UTF-8 encoding across all operations:
 
-
+#+begin_src emacs-lisp
 ;; Encoding
 (set-default-coding-systems 'utf-8)
 (prefer-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+#+end_src
 
-;; File Management & Backups
+** File Management & Backups
 
-;; Configure backup and auto-save files to avoid cluttering project directories:
+Configure backup and auto-save files to avoid cluttering project directories:
 
-
+#+begin_src emacs-lisp
 ;; Backup and auto-save files
 (setq backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory)))
       auto-save-file-name-transforms `((".*" ,(expand-file-name "auto-saves/" user-emacs-directory) t))
@@ -48,24 +58,26 @@
 ;; Create directories if they don't exist
 (make-directory (expand-file-name "backups" user-emacs-directory) t)
 (make-directory (expand-file-name "auto-saves" user-emacs-directory) t)
+#+end_src
 
-;; Better Defaults
+** Better Defaults
 
-;; Improve Emacs' default behavior for modern development:
+Improve Emacs' default behavior for modern development:
 
-
+#+begin_src emacs-lisp
 ;; Better defaults
 (setq ring-bell-function 'ignore     ; Disable bell
       inhibit-startup-screen t       ; Skip startup screen
       initial-scratch-message nil    ; Empty scratch buffer
       auto-revert-verbose nil        ; Less verbose auto-revert
       global-auto-revert-non-file-buffers t) ; Auto-revert dired and other buffers
+#+end_src
 
-;; Error Handling & Process Fixes
+** Error Handling & Process Fixes
 
-;; Handle common process errors that can occur with LSP and other external processes:
+Handle common process errors that can occur with LSP and other external processes:
 
-
+#+begin_src emacs-lisp
 ;; Fix for process sentinel errors
 (defun filter-process-sentinel-errors (orig-fun &rest args)
   "Filter out 'Unprintable entity' errors from process sentinels."
@@ -97,12 +109,13 @@
 ;; Set safer process defaults
 (setq process-adaptive-read-buffering nil
       read-process-output-max (* 1024 1024)) ; 1MB for all processes
+#+end_src
 
-;; PATH Configuration
+** PATH Configuration
 
-;; Ensure Emacs can find tools installed via Homebrew and other package managers:
+Ensure Emacs can find tools installed via Homebrew and other package managers:
 
-
+#+begin_src emacs-lisp
 ;; Ensure proper PATH setup for shell commands (fixes mcfly/jump errors)
 (use-package exec-path-from-shell
   :config
@@ -119,12 +132,13 @@
     (when (file-directory-p homebrew-bin)
       (setenv "PATH" (concat homebrew-bin ":" homebrew-sbin ":" (getenv "PATH")))
       (setq exec-path (append (list homebrew-bin homebrew-sbin) exec-path)))))
+#+end_src
 
-;; Essential Modes
+** Essential Modes
 
-;; Enable helpful built-in modes for better editing experience:
+Enable helpful built-in modes for better editing experience:
 
-
+#+begin_src emacs-lisp
 ;; Enable useful modes
 (global-auto-revert-mode 1)          ; Auto-reload changed files
 (delete-selection-mode 1)            ; Replace selected text when typing
@@ -140,12 +154,13 @@
 
 ;; Yes/no prompts become y/n
 (fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
 
-;; Utility Packages
+** Utility Packages
 
-;; Configure essential utility packages for better buffer and file management:
+Configure essential utility packages for better buffer and file management:
 
-
+#+begin_src emacs-lisp
 ;; Better uniquify for buffer names
 (use-package uniquify
   :ensure nil
@@ -169,12 +184,13 @@
   :ensure nil
   :config
   (windmove-default-keybindings))
+#+end_src
 
-;; Development Helpers
+** Development Helpers
 
-;; Useful functions for configuration management and development workflow:
+Useful functions for configuration management and development workflow:
 
-
+#+begin_src emacs-lisp
 ;; Config management functions
 (defun reload-config ()
   "Reload Emacs configuration."
@@ -360,3 +376,4 @@
 
 (provide 'core)
 ;;; core.el ends here
+#+end_src
