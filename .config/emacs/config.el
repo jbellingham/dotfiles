@@ -288,11 +288,7 @@
     (princ "Tip: These bindings also appear in which-key when you press them.\n")))
 
 ;; Custom keybindings
-(global-set-key (kbd "C-c c r") 'reload-config) ; C-c c r to reload config
-(global-set-key (kbd "C-c c e") 'open-config)   ; C-c c e to edit config
-(global-set-key (kbd "C-c c c") 'claude-code)   ; C-c c c to launch Claude Code
-(global-set-key (kbd "C-c c t") 'claude-code-terminal) ; C-c c t for Claude terminal
-(global-set-key (kbd "C-c c k") 'show-command-keybindings) ; C-c c k to show Command key bindings
+;; Config management keybindings migrated to SPC c (see evil config section)
 
 ;; Open Emacs keybinding reference
 (defun open-emacs-reference ()
@@ -308,7 +304,7 @@
           (message "Opened Emacs keybinding reference (read-only)"))
       (message "Reference file not found: %s" reference-file))))
 
-(global-set-key (kbd "C-c c h") 'open-emacs-reference) ; C-c c h for help/reference
+;; C-c c h migrated to SPC c h (see evil config section)
 
 ;; Which-key for discoverability
 (use-package which-key
@@ -359,7 +355,13 @@
     "SPC c c" "Claude Code"
     "SPC c t" "Claude Terminal"
     "SPC c k" "Show Command Keys"
-    "SPC c h" "Emacs Reference"))
+    "SPC c h" "Emacs Reference"
+    "SPC f" "Files"
+    "SPC f f" "Find Project Files"
+    "SPC f s" "Search Project"
+    "SPC f g" "Find Git Files"
+    "SPC b" "Buffers"
+    "SPC b p" "Project Buffers"))
 
 ;; Dired improvements
 (use-package dired
@@ -434,11 +436,12 @@
     (kbd "<leader>ct") 'claude-code-terminal
     (kbd "<leader>ck") 'show-command-keybindings
     (kbd "<leader>ch") 'open-emacs-reference
-    ;; Project and file operations
-    (kbd "<leader>ff") 'my/find-project-files
-    (kbd "<leader>fs") 'my/search-project
+    ;; Project and file operations (migrated from C-c f/s/p)
+    (kbd "<leader>ff") 'my/find-project-files    ; was C-c f p
+    (kbd "<leader>fs") 'my/search-project        ; was C-c s p
+    (kbd "<leader>fg") 'my/find-git-files        ; was C-c f g
     (kbd "<leader>bb") 'my/smart-switch-buffer
-    (kbd "<leader>bp") 'my/project-buffers
+    (kbd "<leader>bp") 'my/project-buffers       ; was C-c b p
     (kbd "<leader>gg") 'magit-status
     (kbd "<leader>pp") 'projectile-switch-project
     (kbd "<leader>tt") 'my/toggle-between-implementation-and-test))
