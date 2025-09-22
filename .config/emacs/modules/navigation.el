@@ -119,7 +119,7 @@
   ;; Save recent files every 5 minutes
   (run-at-time nil (* 5 60) 'recentf-save-list))
 
-;; Enhanced buffer switching
+;; Buffer switching
 ;; =========================
 
 (defun my/kill-other-buffers ()
@@ -186,6 +186,72 @@
 
 ;; Code navigation - find implementation and tests
 ;; ==============================================
+
+(defun my/smart-goto-implementation ()
+  "Smart go-to-implementation function like RubyMine/IntelliJ.
+Tries LSP definition first, with language-specific fallbacks."
+  (interactive)
+  (let ((current-mode major-mode))
+    (cond
+     ;; TypeScript/JavaScript modes: prefer LSP, fallback to import resolution
+     ((derived-mode-p 'typescript-mode 'typescript-ts-mode 'tsx-ts-mode
+                      'js2-mode 'js-ts-mode 'jsx-ts-mode)
+      (cond
+       ;; Try LSP first (TypeScript Language Server)
+       ((and (fboundp 'lsp-find-definition) (lsp-workspaces))
+        (condition-case nil
+            (lsp-find-definition)
+          (error
+           (message "TypeScript LSP definition not found, trying file switching...")
+           (my/find-implementation))))
+
+       ;; Try eglot if available
+       ((and (fboundp 'eglot-find-definition) (eglot-current-server))
+        (condition-case nil
+            (eglot-find-definition)
+          (error
+           (message "TypeScript definition not found, trying file switching...")
+           (my/find-implementation))))
+
+       ;; Fallback to file switching
+       (t (my/find-implementation))))
+
+     ;; Ruby modes: prefer LSP (Solargraph), fallback to file switching
+     ((derived-mode-p 'ruby-mode 'enh-ruby-mode)
+      (cond
+       ;; Try LSP first (Solargraph)
+       ((and (fboundp 'lsp-find-definition) (lsp-workspaces))
+        (condition-case nil
+            (lsp-find-definition)
+          (error
+           (message "Ruby LSP definition not found, trying file switching...")
+           (my/find-implementation))))
+
+       ;; Try eglot if available
+       ((and (fboundp 'eglot-find-definition) (eglot-current-server))
+        (condition-case nil
+            (eglot-find-definition)
+          (error
+           (message "Ruby definition not found, trying file switching...")
+           (my/find-implementation))))
+
+       ;; Fallback to file switching (very useful for Rails)
+       (t (my/find-implementation))))
+
+     ;; Other languages: try LSP first, fallback to file switching
+     (t
+      (cond
+       ((and (fboundp 'lsp-find-definition) (lsp-workspaces))
+        (condition-case nil
+            (lsp-find-definition)
+          (error (my/find-implementation))))
+
+       ((and (fboundp 'eglot-find-definition) (eglot-current-server))
+        (condition-case nil
+            (eglot-find-definition)
+          (error (my/find-implementation))))
+
+       (t (my/find-implementation)))))))
 
 (defun my/find-implementation ()
   "Find implementation file for current buffer.
@@ -490,26 +556,14 @@ Works with various language conventions."
 ;; Navigation keybindings
 ;; =====================
 
-;; Code navigation
-(global-set-key (kbd "C-c g i") #'my/find-implementation)
-(global-set-key (kbd "C-c g t") #'my/goto-test)
-(global-set-key (kbd "C-c g T") #'my/toggle-between-implementation-and-test)
-;; Note: F12 disabled due to key conflict - use C-c g i or Cmd+T instead
-;; (global-set-key (kbd "F12") #'my/find-implementation)          ; F12 like VS Code
-;; (global-set-key (kbd "s-F12") #'my/goto-test)                 ; Cmd+F12 for tests
+;; Code navigation (C-c g operations migrated to SPC g - see evil config section)
+;; F12 for smart go-to-implementation like RubyMine/IntelliJ (LSP + file switching)
+(global-set-key (kbd "<f12>") #'my/smart-goto-implementation)    ; F12 like VS Code/RubyMine
+(global-set-key (kbd "s-<f12>") #'my/goto-test)                 ; Cmd+F12 for tests
 (global-set-key (kbd "s-t") #'my/toggle-between-implementation-and-test) ; Cmd+T toggle
 
 ;; Buffer operations
-(global-set-key (kbd "C-c b b") #'my/smart-switch-buffer)
-(global-set-key (kbd "C-c b r") #'recentf-open-files)
-(global-set-key (kbd "C-c b s") #'scratch-buffer)
-(global-set-key (kbd "C-c b n") #'my/new-empty-buffer)
-(global-set-key (kbd "C-c b d") #'my/duplicate-buffer)
-(global-set-key (kbd "C-c b k") #'kill-current-buffer)
-(global-set-key (kbd "C-c b K") #'my/kill-other-buffers)
-(global-set-key (kbd "C-c b A") #'my/kill-all-buffers)
-(global-set-key (kbd "C-c b R") #'my/rename-current-buffer)
-(global-set-key (kbd "C-c b l") #'ibuffer)
+;; Buffer management operations migrated to SPC b (see evil config section)
 
 ;; Navigation shortcuts
 (global-set-key (kbd "s-[") #'my/switch-to-previous-buffer)  ; Command+[
@@ -532,11 +586,7 @@ Works with various language conventions."
    ("s-8" . winum-select-window-8)
    ("s-9" . winum-select-window-9)))
 
-;; Bookmarks
-(global-set-key (kbd "C-c j m") #'bookmark-set)
-(global-set-key (kbd "C-c j j") #'bookmark-jump)
-(global-set-key (kbd "C-c j l") #'bookmark-bmenu-list)
-(global-set-key (kbd "C-c j d") #'bookmark-delete)
+;; Bookmarks migrated to SPC j (see evil config section)
 
 ;; Which-key descriptions
 ;; ======================
@@ -548,6 +598,8 @@ Works with various language conventions."
     "C-c g i" "Find Implementation"
     "C-c g t" "Go to Test"
     "C-c g T" "Toggle Impl/Test"
+    "<f12>" "Smart Go to Implementation (LSP + file switching)"
+    "s-<f12>" "Go to Test"
 
     ;; Buffer operations
     "C-c b" "Buffer"
