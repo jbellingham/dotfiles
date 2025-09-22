@@ -3,7 +3,9 @@
     "allow": [
       "Bash(find:*)",
       "Bash(awk:*)",
-      "Bash(emacs:*)"
+      "Bash(emacs:*)",
+      "Bash(git add:*)",
+      "Read(///**)"
     ],
     "deny": [],
     "ask": []
