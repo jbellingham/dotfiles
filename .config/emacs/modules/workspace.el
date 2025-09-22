@@ -59,7 +59,7 @@
       (let ((project-name (projectile-project-name)))
         (persp-switch project-name))))
 
-  ;; Enhanced workspace creation
+  ;; Workspace creation
   (defun my/create-workspace (name)
     "Create a new workspace with NAME and switch to it."
     (interactive "sWorkspace name: ")
@@ -68,9 +68,7 @@
                (y-or-n-p "Add current project to workspace? "))
       (my/workspace-for-project)))
 
-  ;; Bind custom functions
-  (global-set-key (kbd "C-c w c") #'my/create-workspace)
-  (global-set-key (kbd "C-c w P") #'my/workspace-for-project)
+  ;; Workspace functions migrated to SPC w (see evil config section)
 
   :init
   (persp-mode))
@@ -131,8 +129,7 @@
   (add-hook 'kill-emacs-hook #'desktop-save-in-desktop-dir)
 
   ;; Session keybindings (Changed from C-c s to C-c S to avoid conflict with search)
-  (global-set-key (kbd "C-c S s") #'my/save-session)
-  (global-set-key (kbd "C-c S r") #'my/restore-session)
+  ;; Session management migrated to SPC w s/r (see evil config section)
 
   ;; Enable desktop save mode
   (desktop-save-mode 1))
@@ -158,15 +155,7 @@
     (message "Killed all other buffers")))
 
 ;; Window management keybindings
-(global-set-key (kbd "C-c w d") #'delete-window)
-(global-set-key (kbd "C-c w v") #'split-window-right)
-(global-set-key (kbd "C-c w h") #'split-window-below)
-(global-set-key (kbd "C-c w m") #'delete-other-windows)
-(global-set-key (kbd "C-c w o") #'other-window)
-(global-set-key (kbd "C-c w u") #'winner-undo)
-(global-set-key (kbd "C-c w U") #'winner-redo)
-(global-set-key (kbd "C-c w 2") #'my/split-window-sensibly)
-(global-set-key (kbd "C-c w K") #'my/kill-other-buffers)
+;; Window management operations migrated to SPC w (see evil config section)
 
 ;; Winner mode for undo/redo window configurations
 (use-package winner
