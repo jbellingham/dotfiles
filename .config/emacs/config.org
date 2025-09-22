@@ -519,7 +519,12 @@ Useful functions for configuration management and development workflow:
     "SPC b K" "Kill Other Buffers"
     "SPC b A" "Kill All Buffers"
     "SPC b R" "Rename Buffer"
-    "SPC b l" "List Buffers"))
+    "SPC b l" "List Buffers"
+    "SPC g" "Go to"
+    "SPC g i" "Find Implementation"
+    "SPC g t" "Go to Test"
+    "SPC g T" "Toggle Impl/Test"
+    "SPC g g" "Git Status"))
 
 ;; Dired improvements
 (use-package dired
@@ -615,6 +620,10 @@ Evil mode provides comprehensive Vim emulation in Emacs, bringing modal editing 
     (kbd "<leader>bA") 'my/kill-all-buffers      ; was C-c b A
     (kbd "<leader>bR") 'my/rename-current-buffer ; was C-c b R
     (kbd "<leader>bl") 'ibuffer                  ; was C-c b l
+    ;; Navigation (migrated from C-c g)
+    (kbd "<leader>gi") 'my/find-implementation   ; was C-c g i
+    (kbd "<leader>gt") 'my/goto-test             ; was C-c g t
+    (kbd "<leader>gT") 'my/toggle-between-implementation-and-test ; was C-c g T
     (kbd "<leader>gg") 'magit-status
     (kbd "<leader>pp") 'projectile-switch-project
     (kbd "<leader>tt") 'my/toggle-between-implementation-and-test))
@@ -1049,10 +1058,7 @@ Set up VS Code-like shortcuts and organized keybindings:
 (global-set-key (kbd "s-b") #'my/project-buffers)       ; Command+B - Switch buffer
 
 ;; Quick access bindings
-(global-set-key (kbd "C-c f p") #'my/find-project-files) ; Find in project
-(global-set-key (kbd "C-c s p") #'my/search-project)     ; Search in project
-(global-set-key (kbd "C-c b p") #'my/project-buffers)    ; Project buffers
-(global-set-key (kbd "C-c f g") #'my/find-git-files)     ; Git files
+;; Project/file operations migrated to SPC f/b (see evil config section)
 
 ;; Which-key descriptions
 ;; ======================
@@ -1700,16 +1706,7 @@ Comprehensive keybindings for navigation:
 (global-set-key (kbd "s-t") #'my/toggle-between-implementation-and-test) ; Cmd+T toggle
 
 ;; Buffer operations
-(global-set-key (kbd "C-c b b") #'my/smart-switch-buffer)
-(global-set-key (kbd "C-c b r") #'recentf-open-files)
-(global-set-key (kbd "C-c b s") #'scratch-buffer)
-(global-set-key (kbd "C-c b n") #'my/new-empty-buffer)
-(global-set-key (kbd "C-c b d") #'my/duplicate-buffer)
-(global-set-key (kbd "C-c b k") #'kill-current-buffer)
-(global-set-key (kbd "C-c b K") #'my/kill-other-buffers)
-(global-set-key (kbd "C-c b A") #'my/kill-all-buffers)
-(global-set-key (kbd "C-c b R") #'my/rename-current-buffer)
-(global-set-key (kbd "C-c b l") #'ibuffer)
+;; Buffer management operations migrated to SPC b (see evil config section)
 
 ;; Navigation shortcuts
 (global-set-key (kbd "s-[") #'my/switch-to-previous-buffer)  ; Command+[
