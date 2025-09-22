@@ -232,16 +232,64 @@ This module combines Ruby/Rails and React Native/TypeScript development configur
 
 ** Development Keybindings
 
+RSpec and Rails keybindings for efficient Ruby development:
+
 #+begin_src emacs-lisp
+;; RSpec testing keybindings
+(with-eval-after-load 'rspec-mode
+  (define-key rspec-mode-map (kbd "C-c T v") 'rspec-verify)                ; Test verify (current)
+  (define-key rspec-mode-map (kbd "C-c T a") 'rspec-verify-all)            ; Test all
+  (define-key rspec-mode-map (kbd "C-c T s") 'rspec-verify-single)         ; Test single
+  (define-key rspec-mode-map (kbd "C-c T r") 'rspec-rerun)                 ; Test rerun
+  (define-key rspec-mode-map (kbd "C-c T t") 'rspec-toggle-spec-and-target) ; Test toggle
+  (define-key rspec-mode-map (kbd "C-c T e") 'rspec-toggle-example)        ; Test example
+  (define-key rspec-mode-map (kbd "C-c T f") 'rspec-verify-matching)       ; Test find/matching
+  (define-key rspec-mode-map (kbd "C-c T c") 'rspec-verify-continue))      ; Test continue
+
+;; RuboCop keybindings
+(with-eval-after-load 'rubocop
+  (define-key ruby-mode-map (kbd "C-c C-r a") 'rubocop-check-project)
+  (define-key ruby-mode-map (kbd "C-c C-r d") 'rubocop-check-directory)
+  (define-key ruby-mode-map (kbd "C-c C-r f") 'rubocop-check-current-file)
+  (define-key ruby-mode-map (kbd "C-c C-r F") 'rubocop-autocorrect-current-file)
+  (define-key ruby-mode-map (kbd "C-c C-r P") 'rubocop-autocorrect-project))
+
+;; Bundler keybindings
+(with-eval-after-load 'bundler
+  (define-key ruby-mode-map (kbd "C-c R b i") 'bundle-install)    ; Rails Bundle install
+  (define-key ruby-mode-map (kbd "C-c R b u") 'bundle-update)     ; Rails Bundle update
+  (define-key ruby-mode-map (kbd "C-c R b c") 'bundle-check)      ; Rails Bundle check
+  (define-key ruby-mode-map (kbd "C-c R b e") 'bundle-exec))      ; Rails Bundle exec
+
 ;; Development-specific keybindings
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
-    ;; Ruby/Rails
-    "C-c r" "Ruby"
-    "C-c r t" "RSpec Test"
-    "C-c r r" "RuboCop"
-    "C-c r b" "Bundler"
-    "C-c r k" "Rake"
+    ;; RSpec testing
+    "C-c T" "RSpec"
+    "C-c T v" "Verify Test"
+    "C-c T s" "Verify Single"
+    "C-c T a" "Verify All"
+    "C-c T r" "Rerun Test"
+    "C-c T t" "Toggle Spec/Impl"
+    "C-c T e" "Toggle Example"
+    "C-c T f" "Verify Matching"
+    "C-c T c" "Continue from Failure"
+
+    ;; Rails navigation and commands
+    "C-c R" "Rails"
+    "C-c R b" "Bundler"
+    "C-c R b i" "Bundle Install"
+    "C-c R b u" "Bundle Update"
+    "C-c R b c" "Bundle Check"
+    "C-c R b e" "Bundle Exec"
+
+    ;; RuboCop
+    "C-c C-r" "RuboCop"
+    "C-c C-r a" "Check Project"
+    "C-c C-r d" "Check Directory"
+    "C-c C-r f" "Check File"
+    "C-c C-r F" "Fix File"
+    "C-c C-r P" "Fix Project"
 
     ;; TypeScript/JavaScript
     "C-c j" "JavaScript/TypeScript"
