@@ -376,7 +376,21 @@
     "SPC g i" "Find Implementation"
     "SPC g t" "Go to Test"
     "SPC g T" "Toggle Impl/Test"
-    "SPC g g" "Git Status"))
+    "SPC g g" "Git Status"
+    "SPC w" "Window/Workspace"
+    "SPC w c" "Create Workspace"
+    "SPC w P" "Workspace for Project"
+    "SPC w d" "Delete Window"
+    "SPC w v" "Split Right"
+    "SPC w h" "Split Below"
+    "SPC w m" "Delete Other Windows"
+    "SPC w o" "Other Window"
+    "SPC w u" "Winner Undo"
+    "SPC w U" "Winner Redo"
+    "SPC w 2" "Split Sensibly"
+    "SPC w K" "Kill Other Buffers"
+    "SPC w s" "Save Session"
+    "SPC w r" "Restore Session"))
 
 ;; Dired improvements
 (use-package dired
@@ -472,6 +486,20 @@
     (kbd "<leader>gt") 'my/goto-test             ; was C-c g t
     (kbd "<leader>gT") 'my/toggle-between-implementation-and-test ; was C-c g T
     (kbd "<leader>gg") 'magit-status
+    ;; Window/Workspace management (migrated from C-c w/S)
+    (kbd "<leader>wc") 'my/create-workspace         ; was C-c w c
+    (kbd "<leader>wP") 'my/workspace-for-project   ; was C-c w P
+    (kbd "<leader>wd") 'delete-window              ; was C-c w d
+    (kbd "<leader>wv") 'split-window-right         ; was C-c w v
+    (kbd "<leader>wh") 'split-window-below         ; was C-c w h
+    (kbd "<leader>wm") 'delete-other-windows       ; was C-c w m
+    (kbd "<leader>wo") 'other-window               ; was C-c w o
+    (kbd "<leader>wu") 'winner-undo                ; was C-c w u
+    (kbd "<leader>wU") 'winner-redo                ; was C-c w U
+    (kbd "<leader>w2") 'my/split-window-sensibly   ; was C-c w 2
+    (kbd "<leader>wK") 'my/kill-other-buffers      ; was C-c w K
+    (kbd "<leader>ws") 'my/save-session            ; was C-c S s
+    (kbd "<leader>wr") 'my/restore-session         ; was C-c S r
     (kbd "<leader>pp") 'projectile-switch-project
     (kbd "<leader>tt") 'my/toggle-between-implementation-and-test))
 
@@ -1506,10 +1534,7 @@ Works with various language conventions."
 ;; Navigation keybindings
 ;; =====================
 
-;; Code navigation
-(global-set-key (kbd "C-c g i") #'my/find-implementation)
-(global-set-key (kbd "C-c g t") #'my/goto-test)
-(global-set-key (kbd "C-c g T") #'my/toggle-between-implementation-and-test)
+;; Code navigation (C-c g operations migrated to SPC g - see evil config section)
 ;; F12 for smart go-to-implementation like RubyMine/IntelliJ (LSP + file switching)
 (global-set-key (kbd "<f12>") #'my/smart-goto-implementation)    ; F12 like VS Code/RubyMine
 (global-set-key (kbd "s-<f12>") #'my/goto-test)                 ; Cmd+F12 for tests
