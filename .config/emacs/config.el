@@ -3519,8 +3519,8 @@ For Rails engines, find the parent Rails application root."
 ;; Line numbers
 (use-package display-line-numbers
   :ensure nil
-  :hook (prog-mode . display-line-numbers-mode)
   :config
+  (global-display-line-numbers-mode 1)
   (setq display-line-numbers-type 'relative
         display-line-numbers-width 3
         display-line-numbers-widen t))
