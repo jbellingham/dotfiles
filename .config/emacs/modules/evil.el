@@ -110,7 +110,27 @@
     (kbd "<leader>jl") 'bookmark-bmenu-list        ; was C-c j l
     (kbd "<leader>jd") 'bookmark-delete            ; was C-c j d
     (kbd "<leader>pp") 'projectile-switch-project
-    (kbd "<leader>tt") 'my/toggle-between-implementation-and-test))
+    (kbd "<leader>tt") 'my/toggle-between-implementation-and-test
+    ;; Ruby/Rails development (migrated from C-c r/T/R)
+    (kbd "<leader>rr") 'rubocop-check-current-file   ; was C-c r f
+    (kbd "<leader>rp") 'rubocop-check-project        ; was C-c r a
+    (kbd "<leader>rd") 'rubocop-check-directory      ; was C-c r d
+    (kbd "<leader>rf") 'rubocop-autocorrect-current-file ; was C-c r F
+    (kbd "<leader>rF") 'rubocop-autocorrect-project  ; was C-c r P
+    ;; RSpec testing (migrated from C-c T)
+    (kbd "<leader>tr") 'rspec-verify                 ; was C-c T v
+    (kbd "<leader>ta") 'rspec-verify-all             ; was C-c T a
+    (kbd "<leader>ts") 'rspec-verify-single          ; was C-c T s
+    (kbd "<leader>tR") 'rspec-rerun                  ; was C-c T r
+    (kbd "<leader>tt") 'rspec-toggle-spec-and-target ; was C-c T t (override previous)
+    (kbd "<leader>te") 'rspec-toggle-example         ; was C-c T e
+    (kbd "<leader>tf") 'rspec-verify-matching        ; was C-c T f
+    (kbd "<leader>tc") 'rspec-verify-continue        ; was C-c T c
+    ;; Bundler/Rails (migrated from C-c R)
+    (kbd "<leader>rbi") 'bundle-install              ; was C-c R b i
+    (kbd "<leader>rbu") 'bundle-update               ; was C-c R b u
+    (kbd "<leader>rbc") 'bundle-check                ; was C-c R b c
+    (kbd "<leader>rbe") 'bundle-exec))                ; was C-c R b e
 
 ;; Evil collection for package integrations
 (use-package evil-collection
