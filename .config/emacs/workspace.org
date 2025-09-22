@@ -1,8 +1,16 @@
-;; Perspective Workspaces
+#+TITLE: Emacs Workspace Management
+#+AUTHOR: Jesse Bellingham
+#+DESCRIPTION: Workspace and session management with perspective
+#+PROPERTY: header-args:emacs-lisp :tangle modules/workspace.el :comments org
+#+AUTO_TANGLE: t
 
-;; Perspective provides VS Code-like workspace isolation:
+* Workspace Management
 
+** Perspective Workspaces
 
+Perspective provides VS Code-like workspace isolation:
+
+#+begin_src emacs-lisp
 ;;; workspace.el --- Workspace and session management -*- lexical-binding: t; -*-
 
 ;;; Commentary:
@@ -72,12 +80,13 @@
 
   :init
   (persp-mode))
+#+end_src
 
-;; Session Management
+** Session Management
 
-;; Desktop save mode for persistent sessions:
+Desktop save mode for persistent sessions:
 
-
+#+begin_src emacs-lisp
 ;; Session management (desktop)
 (use-package desktop
   :ensure nil
@@ -133,12 +142,13 @@
 
   ;; Enable desktop save mode
   (desktop-save-mode 1))
+#+end_src
 
-;; Workspace Keybindings
+** Workspace Keybindings
 
-;; Additional window management utilities and comprehensive keybindings:
+Additional window management utilities and comprehensive keybindings:
 
-
+#+begin_src emacs-lisp
 ;; Window management enhancements
 (defun my/split-window-sensibly ()
   "Split window based on available space."
@@ -204,3 +214,4 @@
 
 (provide 'workspace)
 ;;; workspace.el ends here
+#+end_src
