@@ -74,15 +74,13 @@
 ;; Line numbers
 (use-package display-line-numbers
   :ensure nil
-  :hook (prog-mode . display-line-numbers-mode)
   :config
+  (global-display-line-numbers-mode 1)
   (setq display-line-numbers-type 'relative
         display-line-numbers-width 3
         display-line-numbers-widen t))
 
 ;; Theme & Modeline
-
-;; Modern theme with comprehensive modeline:
 
 
 ;; Theme
@@ -204,71 +202,11 @@
   (setq indent-guide-char "│"
         indent-guide-delay 0.1))
 
-;; Highlight indentation
-(use-package highlight-indentation
-  :hook ((ruby-mode enh-ruby-mode) . highlight-indentation-mode)
-  :config
-  (set-face-background 'highlight-indentation-face "#e3e3d3")
-  (set-face-background 'highlight-indentation-current-column-face "#c3b3b3"))
-
 ;; Smooth scrolling
 (use-package pixel-scroll
   :ensure nil
   :config
   (pixel-scroll-precision-mode 1))
-
-;; Window Management UI
-
-;; Enhanced window management and visual feedback:
-
-
-;; Window management
-(use-package ace-window
-  :bind ("s-o" . ace-window)
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
-        aw-dispatch-always t
-        aw-dispatch-alist
-        '((?x aw-delete-window "Delete Window")
-          (?m aw-swap-window "Swap Windows")
-          (?M aw-move-window "Move Window")
-          (?c aw-copy-window "Copy Window")
-          (?j aw-switch-buffer-in-window "Select Buffer")
-          (?n aw-flip-window)
-          (?u aw-switch-buffer-other-window "Switch Buffer Other Window")
-          (?c aw-split-window-fair "Split Fair Window")
-          (?v aw-split-window-vert "Split Vert Window")
-          (?b aw-split-window-horz "Split Horz Window")
-          (?o delete-other-windows "Delete Other Windows")
-          (?? aw-show-dispatch-help))))
-
-;; Centered window mode
-(use-package centered-window
-  :config
-  (setq cwm-centered-window-width 120))
-
-;; Dimmer - Dim unfocused windows
-(use-package dimmer
-  :config
-  (setq dimmer-fraction 0.20
-        dimmer-adjustment-mode :foreground
-        dimmer-use-colorspace :rgb
-        dimmer-watch-frame-focus-events nil)
-  (dimmer-configure-which-key)
-  (dimmer-configure-magit)
-  (dimmer-configure-org)
-  (dimmer-mode t))
-
-;; Page break lines
-(use-package page-break-lines
-  :hook (after-init . global-page-break-lines-mode))
-
-;; Pretty symbols
-(use-package prettify-symbols-mode
-  :ensure nil
-  :hook ((ruby-mode enh-ruby-mode) . prettify-symbols-mode)
-  :config
-  (setq prettify-symbols-unprettify-at-point 'right-edge))
 
 ;; Beacon - Highlight cursor on window switch
 (use-package beacon
@@ -283,17 +221,6 @@
 (use-package solaire-mode
   :config
   (solaire-global-mode +1))
-
-;; Dashboard customizations
-(setq dashboard-banner-logo-title "Ruby on Rails Development Environment"
-      dashboard-startup-banner 'logo
-      dashboard-center-content t
-      dashboard-items '((recents  . 10)
-                       (projects . 5)
-                       (bookmarks . 5))
-      dashboard-set-heading-icons t
-      dashboard-set-file-icons t
-      dashboard-show-shortcuts nil)
 
 ;; Custom faces for Ruby
 (custom-set-faces
