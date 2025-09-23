@@ -42,9 +42,9 @@ This configuration is organized into feature-based modules, each in its own `.or
   "Auto-tangle all .org configuration files in the config directory."
   (interactive)
   (let ((config-dir (file-name-directory (or load-file-name buffer-file-name)))
-        (org-files '("config/performance.org" "config/core.org" "config/evil.org" "config/completion.org"
-                     "config/navigation.org" "config/explorer.org" "config/project.org" "config/workspace.org"
-                     "config/git.org" "config/development.org" "config/ui.org" "config/focus.org")))
+        (org-files '("modules/performance.org" "modules/core.org" "modules/evil.org" "modules/completion.org"
+                     "modules/navigation.org" "modules/explorer.org" "modules/project.org" "modules/workspace.org"
+                     "modules/git.org" "modules/development.org" "modules/ui.org" "modules/focus.org")))
     (dolist (file org-files)
       (let ((full-path (expand-file-name file config-dir)))
         (when (file-exists-p full-path)

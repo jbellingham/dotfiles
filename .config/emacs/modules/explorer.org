@@ -1,9 +1,17 @@
-;; Treemacs Configuration
+#+TITLE: Emacs File Explorer & Project Dashboard
+#+AUTHOR: Jesse Bellingham
+#+DESCRIPTION: File tree management with treemacs and startup dashboard
+#+PROPERTY: header-args:emacs-lisp :tangle explorer.el :comments org
+#+AUTO_TANGLE: t
 
-;; Treemacs provides a VS Code-like file tree sidebar:
+* File Explorer & Project Dashboard
 
+** Treemacs Configuration
 
-;;; file-explorer.el --- File tree and project dashboard -*- lexical-binding: t; -*-
+Treemacs provides a VS Code-like file tree sidebar:
+
+#+begin_src emacs-lisp
+;;; explorer.el --- File tree and project dashboard -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; File tree management with treemacs and startup dashboard.
@@ -113,12 +121,13 @@
    ("C-c e b" . treemacs-bookmark)
    ("C-c e f" . treemacs-find-file)
    ("C-c e g" . treemacs-find-tag)))
+#+end_src
 
-;; Treemacs Integrations
+** Treemacs Integrations
 
-;; Integration with projectile, magit, and icon themes:
+Integration with projectile, magit, and icon themes:
 
-
+#+begin_src emacs-lisp
 ;; Treemacs-Projectile integration
 (use-package treemacs-projectile
   :after (treemacs projectile)
@@ -133,12 +142,13 @@
 (use-package treemacs-all-the-icons
   :after (treemacs all-the-icons)
   :config (treemacs-load-theme "all-the-icons"))
+#+end_src
 
-;; Startup Dashboard
+** Startup Dashboard
 
-;; A welcoming dashboard with recent files and projects:
+A welcoming dashboard with recent files and projects:
 
-
+#+begin_src emacs-lisp
 ;; Dashboard for startup
 (use-package dashboard
   :config
@@ -170,5 +180,6 @@
     ;; Global Command key bindings
     "s-0" "Select Explorer"))
 
-(provide 'file-explorer)
-;;; file-explorer.el ends here
+(provide 'explorer)
+;;; explorer.el ends here
+#+end_src

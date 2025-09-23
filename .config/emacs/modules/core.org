@@ -1,7 +1,7 @@
 #+TITLE: Emacs Core Settings
 #+AUTHOR: Jesse Bellingham
 #+DESCRIPTION: Core Emacs settings and behavior modifications
-#+PROPERTY: header-args:emacs-lisp :tangle modules/core.el :comments org
+#+PROPERTY: header-args:emacs-lisp :tangle core.el :comments org
 #+AUTO_TANGLE: t
 
 * Core Settings

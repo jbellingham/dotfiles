@@ -1,7 +1,7 @@
 #+TITLE: Emacs Evil Mode Configuration
 #+AUTHOR: Jesse Bellingham
 #+DESCRIPTION: Comprehensive Vim emulation using evil-mode
-#+PROPERTY: header-args:emacs-lisp :tangle modules/evil.el :comments org
+#+PROPERTY: header-args:emacs-lisp :tangle evil.el :comments org
 #+AUTO_TANGLE: t
 
 * Evil Mode (Vim Emulation)

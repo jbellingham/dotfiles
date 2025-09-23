@@ -1,7 +1,7 @@
 #+TITLE: Emacs Git Integration
 #+AUTHOR: Jesse Bellingham
 #+DESCRIPTION: Git integration with Magit and related tools
-#+PROPERTY: header-args:emacs-lisp :tangle modules/git.el :comments org
+#+PROPERTY: header-args:emacs-lisp :tangle git.el :comments org
 #+AUTO_TANGLE: t
 
 * Version Control & Git
