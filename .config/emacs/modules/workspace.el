@@ -90,7 +90,21 @@
         desktop-files-not-to-save "^$"
         desktop-load-locked-desktop nil
         desktop-auto-save-timeout 30        ; Auto-save every 30 seconds
-        desktop-restore-forces-onscreen t)  ; Ensure windows are visible
+        desktop-restore-forces-onscreen t   ; Ensure windows are visible
+        desktop-restore-in-current-display t
+        desktop-restore-reuses-frames t)
+
+  ;; Exclude problematic window types from session saving
+  (add-to-list 'desktop-minor-mode-table '(treemacs-mode . nil))
+
+  ;; Filter out side windows and special buffers from desktop saving
+  (setq desktop-buffers-not-to-save
+        (concat "\\("
+                "^nn\\.a[0-9]+\\|^\\*.*\\*\\|"
+                "^magit\\|^COMMIT_EDITMSG\\|"
+                "\\*Treemacs\\*\\|\\*Messages\\*\\|"
+                "\\*compilation\\*\\|\\*Completions\\*"
+                "\\)"))
 
   ;; Save additional variables
   (setq desktop-globals-to-save
@@ -109,30 +123,206 @@
                   register-alist)
                 desktop-globals-to-save))
 
-  ;; Custom session functions
+  ;; Custom desktop save/restore with side window handling
+  (defun my/desktop-save-safe ()
+    "Save desktop while handling side windows properly."
+    (interactive)
+    ;; Close treemacs before saving to avoid window conflicts
+    (when (treemacs-current-visibility)
+      (treemacs-kill-buffer))
+    (desktop-save-in-desktop-dir)
+    (message "Session saved safely!"))
+
+  (defun my/desktop-restore-safe ()
+    "Restore desktop and properly handle side windows."
+    (interactive)
+    (when (and (file-exists-p (desktop-full-file-name))
+               (y-or-n-p "Restore previous session? "))
+      ;; Close any existing treemacs before restoring
+      (when (treemacs-current-visibility)
+        (treemacs-kill-buffer))
+      (desktop-read)
+      ;; Brief delay before reopening treemacs to avoid conflicts
+      (run-with-timer 0.5 nil (lambda ()
+                                (when (bound-and-true-p treemacs-mode)
+                                  (treemacs))))
+      (message "Session restored safely!")))
+
+  ;; Legacy functions for compatibility
   (defun my/save-session ()
     "Save current session with confirmation."
     (interactive)
     (when (y-or-n-p "Save current session? ")
-      (desktop-save-in-desktop-dir)
-      (message "Session saved!")))
+      (my/desktop-save-safe)))
 
   (defun my/restore-session ()
     "Restore previous session with confirmation."
     (interactive)
-    (when (and (file-exists-p (desktop-full-file-name))
-               (y-or-n-p "Restore previous session? "))
-      (desktop-read)
-      (message "Session restored!")))
+    (my/desktop-restore-safe))
 
-  ;; Auto-save session on exit
-  (add-hook 'kill-emacs-hook #'desktop-save-in-desktop-dir)
+  ;; Auto-save session on exit (use safe version)
+  (add-hook 'kill-emacs-hook #'my/desktop-save-safe)
 
   ;; Session keybindings (Changed from C-c s to C-c S to avoid conflict with search)
   ;; Session management migrated to SPC w s/r (see evil config section)
 
   ;; Enable desktop save mode
   (desktop-save-mode 1))
+
+;; Emergency Window Management
+
+;; Functions to handle problematic window states:
+
+
+;; Debug function to see window properties
+(defun my/debug-windows ()
+  "Show information about all windows for debugging."
+  (interactive)
+  (let ((debug-info '()))
+    (dolist (window (window-list))
+      (let* ((buffer (window-buffer window))
+             (buffer-name (buffer-name buffer))
+             (side-param (window-parameter window 'window-side))
+             (window-slot (window-parameter window 'window-slot))
+             (treemacs-window (treemacs-is-treemacs-window? window)))
+        (push (format "Window %s: buffer=%s, side=%s, slot=%s, treemacs=%s"
+                      window buffer-name side-param window-slot treemacs-window)
+              debug-info)))
+    (with-current-buffer (get-buffer-create "*Window Debug*")
+      (erase-buffer)
+      (insert (mapconcat 'identity (reverse debug-info) "\n"))
+      (display-buffer (current-buffer)))))
+
+;; Fixed emergency window cleanup functions
+(defun my/kill-all-side-windows ()
+  "Kill all side windows to resolve conflicts."
+  (interactive)
+  (let ((killed-count 0))
+    (dolist (window (window-list))
+      (let* ((buffer (window-buffer window))
+             (buffer-name (buffer-name buffer))
+             (side-param (window-parameter window 'window-side))
+             (is-treemacs (and (boundp 'treemacs-is-treemacs-window?)
+                              (treemacs-is-treemacs-window? window))))
+        (when (or side-param is-treemacs
+                  (string-match-p "\\*Treemacs" buffer-name))
+          (condition-case err
+              (progn
+                (delete-window window)
+                (setq killed-count (1+ killed-count)))
+            (error
+             (message "Could not delete window %s: %s" window err))))))
+    (message "Closed %d side windows" killed-count)))
+
+(defun my/reset-window-layout ()
+  "Emergency reset of window layout when things get broken."
+  (interactive)
+  (when (y-or-n-p "Reset entire window layout? This will close all windows except current buffer. ")
+    (message "Starting window layout reset...")
+
+    ;; First, try to close treemacs properly
+    (condition-case err
+        (when (and (fboundp 'treemacs-current-visibility)
+                   (treemacs-current-visibility))
+          (treemacs-kill-buffer)
+          (message "Treemacs closed"))
+      (error (message "Could not close treemacs properly: %s" err)))
+
+    ;; Force close any remaining treemacs windows by buffer name
+    (dolist (window (window-list))
+      (let ((buffer-name (buffer-name (window-buffer window))))
+        (when (string-match-p "\\*Treemacs" buffer-name)
+          (condition-case err
+              (delete-window window)
+            (error nil)))))
+
+    ;; Clear winner history to prevent restoration conflicts
+    (when (bound-and-true-p winner-mode)
+      (setq winner-ring nil))
+
+    ;; Kill all other windows using a more aggressive approach
+    (condition-case err
+        (delete-other-windows)
+      (error
+       ;; If delete-other-windows fails, try more aggressive cleanup
+       (let ((current-window (selected-window)))
+         (dolist (window (window-list))
+           (unless (eq window current-window)
+             (condition-case nil
+                 (delete-window window)
+               (error nil)))))))
+
+    ;; Force refresh display
+    (redraw-display)
+    (message "Window layout reset complete")))
+
+(defun my/fix-empty-windows ()
+  "Find and kill empty or problematic windows."
+  (interactive)
+  (let ((killed-count 0))
+    (dolist (window (window-list))
+      (let ((buffer (window-buffer window)))
+        (when (or
+               ;; Empty buffers
+               (string-match-p "^\\s-*$" (buffer-name buffer))
+               ;; Buffers with problematic names
+               (string-match-p "^\\*.*\\*$" (buffer-name buffer))
+               ;; Very small windows that might be artifacts
+               (< (window-height window) 3))
+          (unless (one-window-p)
+            (delete-window window)
+            (setq killed-count (1+ killed-count))))))
+    (message "Cleaned up %d problematic windows" killed-count)))
+
+;; Nuclear option for frameset errors
+(defun my/fix-frameset-conflicts ()
+  "Fix frameset conflicts by completely resetting window state."
+  (interactive)
+  (message "Fixing frameset conflicts...")
+
+  ;; Disable desktop-save temporarily to prevent saving broken state
+  (let ((desktop-save-backup desktop-save))
+    (setq desktop-save nil)
+
+    ;; Kill all treemacs buffers first
+    (dolist (buffer (buffer-list))
+      (when (string-match-p "\\*Treemacs" (buffer-name buffer))
+        (kill-buffer buffer)))
+
+    ;; Clear all window parameters that might cause conflicts
+    (dolist (window (window-list))
+      (set-window-parameter window 'window-side nil)
+      (set-window-parameter window 'window-slot nil)
+      (set-window-parameter window 'delete-window nil)
+      (set-window-parameter window 'delete-other-windows nil))
+
+    ;; Reset to single window
+    (delete-other-windows)
+
+    ;; Clear winner mode ring
+    (when (bound-and-true-p winner-mode)
+      (setq winner-ring nil))
+
+    ;; Force display refresh
+    (redraw-display)
+
+    ;; Restore desktop-save setting
+    (setq desktop-save desktop-save-backup)
+
+    (message "Frameset conflicts resolved")))
+
+(defun my/emergency-window-recovery ()
+  "Complete emergency window recovery procedure."
+  (interactive)
+  (message "Starting emergency window recovery...")
+  (my/fix-frameset-conflicts)
+  (sit-for 0.5)
+  (my/kill-all-side-windows)
+  (sit-for 0.5)
+  (my/fix-empty-windows)
+  (sit-for 0.5)
+  (my/reset-window-layout)
+  (message "Emergency window recovery complete"))
 
 ;; Workspace Keybindings
 

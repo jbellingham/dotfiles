@@ -302,6 +302,13 @@
        (string-prefix-p "*scratch" name)
        (string-prefix-p "*dashboard" name)
        (string-prefix-p "*doom" name)
+       (string-prefix-p "*Treemacs" name)
+       ;; Hide Treemacs buffers (covers all variations)
+       (string-match-p "^.*Treemacs.*" name)
+       ;; Hide by buffer mode (more reliable for treemacs)
+       (with-current-buffer x
+         (or (derived-mode-p 'treemacs-mode)
+             (eq major-mode 'treemacs-mode)))
        ;; Hide buffers with certain modes
        (and (string-prefix-p "*" name)
             (not (string-equal "*vterm*" name))
