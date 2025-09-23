@@ -1,7 +1,7 @@
 #+TITLE: Emacs Workspace Management
 #+AUTHOR: Jesse Bellingham
 #+DESCRIPTION: Workspace and session management with perspective
-#+PROPERTY: header-args:emacs-lisp :tangle modules/workspace.el :comments org
+#+PROPERTY: header-args:emacs-lisp :tangle workspace.el :comments org
 #+AUTO_TANGLE: t
 
 * Workspace Management

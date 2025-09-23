@@ -1,7 +1,7 @@
 #+TITLE: Emacs User Interface & Themes
 #+AUTHOR: Jesse Bellingham
 #+DESCRIPTION: UI improvements, themes, and visual enhancements
-#+PROPERTY: header-args:emacs-lisp :tangle modules/ui.el :comments org
+#+PROPERTY: header-args:emacs-lisp :tangle ui.el :comments org
 #+AUTO_TANGLE: t
 
 * User Interface & Themes

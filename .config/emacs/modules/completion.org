@@ -1,9 +1,18 @@
-;; Vertico - Fast and Minimal Completion UI
+#+TITLE: Emacs Completion & Search System
+#+AUTHOR: Jesse Bellingham
+#+DESCRIPTION: Unified completion and search system with fuzzy finding
+#+PROPERTY: header-args:emacs-lisp :tangle completion.el :comments org
 
-;; Vertico provides the completion interface that feels snappy and responsive:
+#+AUTO_TANGLE: t
 
+* Completion & Search (Unified System)
 
-;;; completion-unified.el --- Unified completion and search system -*- lexical-binding: t; -*-
+** Completion UI Components
+
+*** Vertico - Fast and Minimal Completion UI
+
+#+begin_src emacs-lisp
+;;; completion.el --- Unified completion and search system -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Modern, unified completion system combining the best of telescope-like fuzzy finding
@@ -22,24 +31,26 @@
   (setq vertico-cycle t
         vertico-resize t
         vertico-count 20))
+#+end_src
 
-;; Orderless - Flexible Fuzzy Matching
+*** Orderless - Flexible Fuzzy Matching
 
-;; Orderless enables powerful fuzzy matching that works across word boundaries:
+Orderless enables powerful fuzzy matching that works across word boundaries:
 
-
+#+begin_src emacs-lisp
 ;; Orderless - Flexible completion style for fuzzy matching
 (use-package orderless
   :config
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
 
-;; Marginalia - Rich Annotations
+*** Marginalia - Rich Annotations
 
-;; Marginalia adds helpful annotations to completion candidates:
+Marginalia adds helpful annotations to completion candidates:
 
-
+#+begin_src emacs-lisp
 ;; Marginalia - Rich annotations in minibuffer
 (use-package marginalia
   :after vertico
@@ -47,12 +58,11 @@
   (marginalia-mode 1)
   :config
   (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
+#+end_src
 
-;; Consult - Enhanced Search with Live Preview
+*** Consult - Search with Live Preview
 
-;; Consult provides powerful search commands with live preview, similar to telescope in other editors:
-
-
+#+begin_src emacs-lisp
 ;; Consult - Enhanced search and navigation with live preview
 (use-package consult
   :bind
@@ -64,13 +74,7 @@
    ("C-c f p" . my/find-project-files)  ; Project files
    ("C-c f D" . consult-dir)            ; Find directory
 
-   ;; Search operations - S prefix (Search)
-   ("C-c s s" . consult-line)           ; Search in buffer
-   ("C-c s m" . consult-line-multi)     ; Search in multiple buffers
-   ("C-c s g" . consult-grep)           ; Grep
-   ("C-c s r" . consult-ripgrep)        ; Ripgrep (faster)
-   ("C-c s l" . consult-locate)         ; Locate files
-   ("C-c s p" . my/search-project)      ; Search in project
+   ;; Search operations (migrated to SPC s - see evil config)
 
    ;; Jump/Navigation - J prefix (Jump)
    ("C-c j g" . consult-goto-line)      ; Go to line
@@ -154,12 +158,13 @@
   ;; Configure ripgrep arguments for better search
   (setq consult-ripgrep-args
         "rg --null --line-buffered --color=never --max-columns=1000 --path-separator / --smart-case --no-heading --with-filename --line-number --search-zip"))
+#+end_src
 
-;; Embark - Contextual Actions
+*** Embark - Contextual Actions
 
-;; Embark adds contextual actions to completion candidates, like right-click menus:
+Embark adds contextual actions to completion candidates, like right-click menus:
 
-
+#+begin_src emacs-lisp
 ;; Embark - Contextual actions on completion candidates
 (use-package embark
   :bind
@@ -180,12 +185,13 @@
 ;; Embark-Consult integration
 (use-package embark-consult
   :hook (embark-collect-mode . consult-preview-at-point-mode))
+#+end_src
 
-;; Company Mode for Auto-completion
+** In-buffer Completion
 
-;; Company provides auto-completion as you type, essential for productive coding:
+*** Company Mode for Auto-completion
 
-
+#+begin_src emacs-lisp
 ;; In-buffer completion with Company
 ;; =================================
 
@@ -221,12 +227,13 @@
   (setq company-box-icons-alist 'company-box-icons-all-the-icons
         company-box-max-candidates 50
         company-box-show-single-candidate t))
+#+end_src
 
-;; Affe - Asynchronous Fuzzy Finder
+** Advanced Search Tools
 
-;; Affe provides very fast asynchronous searching, especially useful for large projects:
+*** Affe - Asynchronous Fuzzy Finder
 
-
+#+begin_src emacs-lisp
 ;; Advanced search tools
 ;; =====================
 
@@ -244,13 +251,14 @@
          :map vertico-map
          ("C-c f D" . consult-dir)
          ("C-c f j" . consult-dir-jump-file)))
+#+end_src
 
-;; Project-aware Functions
+** Project-aware Functions
 
-;; These functions provide intelligent project-aware file finding and searching:
+These functions provide intelligent project-aware file finding and searching:
 
-
-;; Enhanced project-aware functions
+#+begin_src emacs-lisp
+;; Project-aware functions
 ;; ================================
 
 (defun my/find-project-files ()
@@ -285,12 +293,13 @@
   (if (projectile-project-p)
       (consult-project-buffer)
     (consult-buffer)))
+#+end_src
 
-;; Global Completion Configuration
+** Global Completion Configuration
 
-;; Set up global completion settings for consistency across Emacs:
+Set up global completion settings for consistency across Emacs:
 
-
+#+begin_src emacs-lisp
 ;; Global completion configuration
 ;; ===============================
 
@@ -307,12 +316,13 @@
                    #'consult-completion-in-region
                  #'completion--in-region)
                args)))
+#+end_src
 
-;; Completion Keybindings
+** Completion Keybindings
 
-;; Set up VS Code-like shortcuts and organized keybindings:
+Set up VS Code-like shortcuts and organized keybindings:
 
-
+#+begin_src emacs-lisp
 ;; Global keybindings for quick access
 ;; ===================================
 
@@ -322,10 +332,7 @@
 (global-set-key (kbd "s-b") #'my/project-buffers)       ; Command+B - Switch buffer
 
 ;; Quick access bindings
-(global-set-key (kbd "C-c f p") #'my/find-project-files) ; Find in project
-(global-set-key (kbd "C-c s p") #'my/search-project)     ; Search in project
-(global-set-key (kbd "C-c b p") #'my/project-buffers)    ; Project buffers
-(global-set-key (kbd "C-c f g") #'my/find-git-files)     ; Git files
+;; Project/file operations migrated to SPC f/b (see evil config section)
 
 ;; Which-key descriptions
 ;; ======================
@@ -342,14 +349,14 @@
     "C-c f D" "Find Directory"
     "C-c f j" "Jump to File"
 
-    ;; Search operations
-    "C-c s" "Search"
-    "C-c s s" "Search Buffer"
-    "C-c s m" "Search Multi-Buffer"
-    "C-c s g" "Grep"
-    "C-c s r" "Ripgrep"
-    "C-c s l" "Locate"
-    "C-c s p" "Search Project"
+    ;; Search operations (migrated to SPC s - see evil config)
+    "SPC s" "Search"
+    "SPC ss" "Search Buffer"
+    "SPC sm" "Search Multi-Buffer"
+    "SPC sg" "Grep"
+    "SPC sr" "Ripgrep"
+    "SPC sl" "Locate"
+    "SPC sp" "Search Project"
 
     ;; Jump/Navigation
     "C-c j" "Jump"
@@ -385,5 +392,6 @@
     "s-F" "Search Project"
     "s-b" "Switch Buffer"))
 
-(provide 'completion-unified)
-;;; completion-unified.el ends here
+(provide 'completion)
+;;; completion.el ends here
+#+end_src

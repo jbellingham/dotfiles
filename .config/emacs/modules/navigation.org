@@ -1,7 +1,7 @@
 #+TITLE: Emacs Navigation & Buffer Management
 #+AUTHOR: Jesse Bellingham
 #+DESCRIPTION: Enhanced navigation system for buffers, windows, and projects
-#+PROPERTY: header-args:emacs-lisp :tangle modules/navigation.el :comments org
+#+PROPERTY: header-args:emacs-lisp :tangle navigation.el :comments org
 #+AUTO_TANGLE: t
 
 * Navigation & Buffer Management
