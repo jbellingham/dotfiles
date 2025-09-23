@@ -239,7 +239,115 @@ Beautiful visual enhancements for better coding experience:
  '(ruby-string-delimiter-face ((t (:foreground "#58D68D"))))
  '(ruby-constant-face ((t (:foreground "#F4D03F"))))
  '(ruby-op-face ((t (:foreground "#EC7063")))))
+#+end_src
 
+** VS Code-like Buffer Tabs
+
+Buffer tabs across the top with VS Code-like appearance and middle-click to close:
+
+#+begin_src emacs-lisp
+;; Centaur tabs - VS Code-like buffer tabs
+(use-package centaur-tabs
+  :ensure t
+  :demand t
+  :config
+  ;; Enable centaur-tabs globally
+  (centaur-tabs-mode t)
+
+  ;; VS Code-like appearance
+  (setq centaur-tabs-style "bar"
+        centaur-tabs-height 32
+        centaur-tabs-set-icons t
+        centaur-tabs-show-navigation-buttons t
+        centaur-tabs-set-modified-marker t
+        centaur-tabs-modified-marker "*"
+        centaur-tabs-show-count t
+        centaur-tabs-set-close-button t
+        centaur-tabs-close-button "×"
+        centaur-tabs-set-bar 'left
+        centaur-tabs-gray-out-icons 'buffer
+        centaur-tabs-plain-icons t
+        centaur-tabs-cycle-scope 'tabs)
+
+  ;; Group tabs by project/directory
+  (centaur-tabs-group-by-projectile-project)
+
+  ;; Buffer grouping rules
+  (defun centaur-tabs-buffer-groups ()
+    "Buffer groups for centaur-tabs."
+    (list
+     (cond
+      ;; Special buffers
+      ((string-match-p "^\\*.*\\*$" (buffer-name))
+       "System")
+      ;; Magit buffers
+      ((string-match-p "^magit.*" (buffer-name))
+       "Magit")
+      ;; Help buffers
+      ((string-match-p "^\\*Help\\|\\*info\\|\\*Man\\|\\*woman" (buffer-name))
+       "Help")
+      ;; Project files
+      ((and (projectile-project-p)
+            (not (string-match-p "^\\*.*\\*$" (buffer-name))))
+       (projectile-project-name))
+      ;; Default group
+      (t "Common"))))
+
+  ;; Exclude certain buffers from tabs
+  (defun centaur-tabs-hide-tab (x)
+    "Hide certain buffers from tabs."
+    (let ((name (format "%s" x)))
+      (or
+       ;; Hide these specific buffers
+       (string-prefix-p "*epc" name)
+       (string-prefix-p "*helm" name)
+       (string-prefix-p "*Compile-Log*" name)
+       (string-prefix-p "*lsp" name)
+       (string-prefix-p "*company" name)
+       (string-prefix-p "*Flycheck" name)
+       (string-prefix-p "*Warnings" name)
+       (string-prefix-p "*flycheck" name)
+       (string-prefix-p "*Backtrace" name)
+       (string-prefix-p "*Messages" name)
+       (string-prefix-p "*scratch" name)
+       (string-prefix-p "*dashboard" name)
+       (string-prefix-p "*doom" name)
+       ;; Hide buffers with certain modes
+       (and (string-prefix-p "*" name)
+            (not (string-equal "*vterm*" name))
+            (not (string-prefix-p "*magit" name))))))
+
+  ;; Mouse support - middle click to close buffer
+  (defun centaur-tabs-buffer-close-on-middle-click (event)
+    "Close buffer on middle mouse click."
+    (interactive "e")
+    (let* ((click-pos (event-start event))
+           (window (posn-window click-pos))
+           (buffer (window-buffer window)))
+      (with-current-buffer buffer
+        (kill-buffer buffer))))
+
+  ;; Enable mouse support
+  (when (display-graphic-p)
+    ;; Middle click to close tab
+    (global-set-key [header-line mouse-2] #'centaur-tabs-buffer-close-on-middle-click)
+    ;; Left click to switch tab
+    (global-set-key [header-line mouse-1] #'centaur-tabs-do-select)
+    ;; Mouse wheel scrolling through tabs
+    (global-set-key [header-line wheel-up] #'centaur-tabs-backward)
+    (global-set-key [header-line wheel-down] #'centaur-tabs-forward))
+
+  ;; Keybindings for tab navigation
+  :bind
+  (("C-<prior>" . centaur-tabs-backward)
+   ("C-<next>" . centaur-tabs-forward)
+   ("s-[" . centaur-tabs-backward)
+   ("s-]" . centaur-tabs-forward)
+   ("s-t" . centaur-tabs-counsel-switch-group)
+   ("s-w" . kill-current-buffer)))
+#+end_src
+
+#+begin_src emacs-lisp
 (provide 'ui)
 ;;; ui.el ends here
 #+end_src
