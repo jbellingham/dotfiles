@@ -138,6 +138,49 @@
       scroll-preserve-screen-position t
       auto-window-vscroll nil)
 
+;; Enable horizontal mouse scrolling
+(when (display-graphic-p)
+  ;; Enable mouse wheel support
+  (mouse-wheel-mode 1)
+
+  ;; Configure horizontal scroll speed (characters per scroll)
+  ;; Adjust this value to make scrolling faster (higher) or slower (lower)
+  ;; Default Emacs scroll-left/scroll-right uses current window width/2
+  ;; Values: 1=very slow, 3=moderate, 5=fast, 8=very fast
+  (defvar my/horizontal-scroll-amount 3
+    "Number of characters to scroll horizontally per mouse wheel event.")
+
+  ;; Custom horizontal scroll functions with configurable speed
+  (defun my/scroll-left-slow ()
+    "Scroll left by a small amount."
+    (interactive)
+    (scroll-left my/horizontal-scroll-amount))
+
+  (defun my/scroll-right-slow ()
+    "Scroll right by a small amount."
+    (interactive)
+    (scroll-right my/horizontal-scroll-amount))
+
+  ;; Horizontal scrolling with mouse wheel
+  (global-set-key [wheel-left] 'my/scroll-right-slow)
+  (global-set-key [wheel-right] 'my/scroll-left-slow)
+
+  ;; Alternative bindings for shift+wheel (common on some mice/trackpads)
+  (global-set-key [S-wheel-up] 'my/scroll-right-slow)
+  (global-set-key [S-wheel-down] 'my/scroll-left-slow)
+
+  ;; Also bind double-wheel events that some mice send
+  (global-set-key [double-wheel-left] 'my/scroll-right-slow)
+  (global-set-key [double-wheel-right] 'my/scroll-left-slow))
+
+;; Function to adjust horizontal scroll speed interactively
+(defun my/set-horizontal-scroll-speed (amount)
+  "Set the horizontal scroll amount to AMOUNT characters.
+Useful for fine-tuning scroll speed without restarting Emacs."
+  (interactive "nHorizontal scroll amount (1-10): ")
+  (setq my/horizontal-scroll-amount (max 1 (min 10 amount)))
+  (message "Horizontal scroll speed set to %d characters" my/horizontal-scroll-amount))
+
 ;; Yes/no prompts become y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
