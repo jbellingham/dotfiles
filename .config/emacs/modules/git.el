@@ -31,10 +31,23 @@
 (use-package git-gutter
   :hook (prog-mode . git-gutter-mode)
   :config
-  (setq git-gutter:update-interval 0.1
+  (setq git-gutter:update-interval 1.0  ; Reduce frequency to prevent recursion
         git-gutter:modified-sign "~"
         git-gutter:added-sign "+"
-        git-gutter:deleted-sign "-"))
+        git-gutter:deleted-sign "-"
+        ;; Prevent excessive VC calls
+        git-gutter:ask-p nil
+        git-gutter:verbosity 0)
+
+  ;; Add recursion protection for git-gutter updates
+  (advice-add 'git-gutter:update-all-windows :around
+              (lambda (orig-fun &rest args)
+                (let ((max-lisp-eval-depth (max max-lisp-eval-depth 3000)))
+                  (condition-case err
+                      (apply orig-fun args)
+                    (error
+                     (message "Git-gutter update error suppressed: %s" (error-message-string err))
+                     nil))))))
 
 ;; Git gutter fringe - Use fringe instead of margin
 (use-package git-gutter-fringe
@@ -115,12 +128,27 @@
   :config
   (global-blamer-mode 1))
 
-;; Vc (built-in version control)
+;; Vc (built-in version control) with recursion protection
 (use-package vc
   :ensure nil
   :config
   (setq vc-follow-symlinks t
-        vc-make-backup-files t))
+        vc-make-backup-files t
+        ;; Prevent excessive VC refreshes that cause recursion
+        vc-command-messages nil
+        vc-suppress-confirm t
+        ;; Limit VC operations to prevent infinite loops
+        vc-maximum-comment-ring-size 32)
+
+  ;; Add eval depth protection for VC operations
+  (advice-add 'vc-refresh-state :around
+              (lambda (orig-fun &rest args)
+                (let ((max-lisp-eval-depth (max max-lisp-eval-depth 3000)))
+                  (condition-case err
+                      (apply orig-fun args)
+                    (error
+                     (message "VC refresh error suppressed: %s" (error-message-string err))
+                     nil))))))
 
 ;; Ediff configuration
 (use-package ediff

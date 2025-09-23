@@ -9,7 +9,7 @@
       "Bash(rg:*)",
       "Bash(grep:*)",
       "Read(//Users/jessebellingham/.config/emacs/modules/**)",
-      "Read(//Users/jessebellingham/.config/emacs/elpa/centaur-tabs-20241215.1321/**)"
+      "Read(//Users/jessebellingham/.config/emacs/**)"
     ],
     "deny": [],
     "ask": []

@@ -12,7 +12,3 @@
   - How to use registers
 
 ### Bugs
-- Text colour is black on black now for some reason
-  - Fixed maybe?
-- TAB in org-mode isn't revealing collapsed sections. I can only Shift TAB to open _every_ section
-- My s-[ and s-] keybindings don't work quite as I expect (move forward/backward through buffers)
