@@ -61,16 +61,7 @@
   :config
   (setq rspec-use-spring-when-possible t
         rspec-use-bundler-when-possible t)
-  :bind (:map rspec-mode-map
-              ("C-c T v" . rspec-verify)                ; Test verify (current)
-              ("C-c T a" . rspec-verify-all)            ; Test all
-              ("C-c T s" . rspec-verify-single)         ; Test single
-              ("C-c T r" . rspec-rerun)                 ; Test rerun
-              ("C-c T t" . rspec-toggle-spec-and-target) ; Test toggle
-              ("C-c T e" . rspec-toggle-example)        ; Test example
-              ("C-c T f" . rspec-verify-matching)       ; Test find/matching
-              ("C-c T c" . rspec-verify-continue))      ; Test continue
-  )
+)
 
 ;; Ruby refactoring tools
 (use-package ruby-refactor
@@ -219,31 +210,10 @@
          (enh-ruby-mode . rubocop-mode))
   :config
   (setq rubocop-check-command "rubocop --format emacs")
-  :bind ((:map ruby-mode-map
-               ("C-c r a" . rubocop-check-project)
-               ("C-c r d" . rubocop-check-directory)
-               ("C-c r f" . rubocop-check-current-file)
-               ("C-c r F" . rubocop-autocorrect-current-file)
-               ("C-c r P" . rubocop-autocorrect-project))
-         (:map enh-ruby-mode-map
-               ("C-c r a" . rubocop-check-project)
-               ("C-c r d" . rubocop-check-directory)
-               ("C-c r f" . rubocop-check-current-file)
-               ("C-c r F" . rubocop-autocorrect-current-file)
-               ("C-c r P" . rubocop-autocorrect-project))))
+)
 
 ;; Bundler support
 (use-package bundler
-  :bind ((:map ruby-mode-map
-               ("C-c R b i" . bundle-install)    ; Rails Bundle install
-               ("C-c R b u" . bundle-update)     ; Rails Bundle update
-               ("C-c R b c" . bundle-check)      ; Rails Bundle check
-               ("C-c R b e" . bundle-exec))      ; Rails Bundle exec
-         (:map enh-ruby-mode-map
-               ("C-c R b i" . bundle-install)    ; Rails Bundle install
-               ("C-c R b u" . bundle-update)     ; Rails Bundle update
-               ("C-c R b c" . bundle-check)      ; Rails Bundle check
-               ("C-c R b e" . bundle-exec)))     ; Rails Bundle exec
   :defer t)
 
 ;; Rake support
@@ -258,40 +228,37 @@
 ;; Development-specific keybindings
 (with-eval-after-load 'which-key
   (which-key-add-key-based-replacements
-    ;; RSpec testing
-    "C-c T" "RSpec"
-    "C-c T v" "Verify Test"
-    "C-c T s" "Verify Single"
-    "C-c T a" "Verify All"
-    "C-c T r" "Rerun Test"
-    "C-c T t" "Toggle Spec/Impl"
-    "C-c T e" "Toggle Example"
-    "C-c T f" "Verify Matching"
-    "C-c T c" "Continue from Failure"
+    ;; Ruby/Rails development (SPC r prefix)
+    "SPC r" "Ruby/Rails"
+    "SPC rr" "RuboCop Check File"
+    "SPC rp" "RuboCop Check Project"
+    "SPC rd" "RuboCop Check Directory"
+    "SPC rf" "RuboCop Fix File"
+    "SPC rF" "RuboCop Fix Project"
+    "SPC rb" "Bundler"
+    "SPC rbi" "Bundle Install"
+    "SPC rbu" "Bundle Update"
+    "SPC rbc" "Bundle Check"
+    "SPC rbe" "Bundle Exec"
 
-    ;; Rails navigation and commands
-    "C-c R" "Rails"
-    "C-c R b" "Bundler"
-    "C-c R b i" "Bundle Install"
-    "C-c R b u" "Bundle Update"
-    "C-c R b c" "Bundle Check"
-    "C-c R b e" "Bundle Exec"
+    ;; Testing (SPC t prefix)
+    "SPC t" "Testing"
+    "SPC tr" "RSpec Verify Test"
+    "SPC ta" "RSpec Verify All"
+    "SPC ts" "RSpec Verify Single"
+    "SPC tR" "RSpec Rerun"
+    "SPC tt" "Toggle Spec/Impl"
+    "SPC te" "RSpec Toggle Example"
+    "SPC tf" "RSpec Verify Matching"
+    "SPC tc" "RSpec Continue from Failure"
 
-    ;; RuboCop
-    "C-c r" "RuboCop"
-    "C-c r a" "Check Project"
-    "C-c r d" "Check Directory"
-    "C-c r f" "Check File"
-    "C-c r F" "Fix File"
-    "C-c r P" "Fix Project"
-
-    ;; TypeScript/JavaScript
+    ;; TypeScript/JavaScript (keep C-c for language-specific)
     "C-c j" "JavaScript/TypeScript"
     "C-c j t" "Jest Test"
     "C-c j p" "Prettier Format"
     "C-c j l" "ESLint"
 
-    ;; LSP
+    ;; LSP (keep C-c for language-specific)
     "C-c l" "LSP"
     "C-c l r" "Rename"
     "C-c l f" "Format"

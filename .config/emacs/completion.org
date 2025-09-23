@@ -73,13 +73,7 @@ Marginalia adds helpful annotations to completion candidates:
    ("C-c f p" . my/find-project-files)  ; Project files
    ("C-c f D" . consult-dir)            ; Find directory
 
-   ;; Search operations - S prefix (Search)
-   ("C-c s s" . consult-line)           ; Search in buffer
-   ("C-c s m" . consult-line-multi)     ; Search in multiple buffers
-   ("C-c s g" . consult-grep)           ; Grep
-   ("C-c s r" . consult-ripgrep)        ; Ripgrep (faster)
-   ("C-c s l" . consult-locate)         ; Locate files
-   ("C-c s p" . my/search-project)      ; Search in project
+   ;; Search operations (migrated to SPC s - see evil config)
 
    ;; Jump/Navigation - J prefix (Jump)
    ("C-c j g" . consult-goto-line)      ; Go to line
@@ -354,14 +348,14 @@ Set up VS Code-like shortcuts and organized keybindings:
     "C-c f D" "Find Directory"
     "C-c f j" "Jump to File"
 
-    ;; Search operations
-    "C-c s" "Search"
-    "C-c s s" "Search Buffer"
-    "C-c s m" "Search Multi-Buffer"
-    "C-c s g" "Grep"
-    "C-c s r" "Ripgrep"
-    "C-c s l" "Locate"
-    "C-c s p" "Search Project"
+    ;; Search operations (migrated to SPC s - see evil config)
+    "SPC s" "Search"
+    "SPC ss" "Search Buffer"
+    "SPC sm" "Search Multi-Buffer"
+    "SPC sg" "Grep"
+    "SPC sr" "Ripgrep"
+    "SPC sl" "Locate"
+    "SPC sp" "Search Project"
 
     ;; Jump/Navigation
     "C-c j" "Jump"
