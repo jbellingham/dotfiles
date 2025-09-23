@@ -276,13 +276,17 @@ Useful for fine-tuning scroll speed without restarting Emacs."
 (defun open-emacs-reference ()
   "Open the Emacs keybinding reference document in a read-only buffer in a new window split."
   (interactive)
-  (let ((reference-file (expand-file-name "docs/emacs-keybinding-reference.md" user-emacs-directory)))
+  (let ((reference-file (expand-file-name "docs/emacs-keybinding-reference.org" user-emacs-directory)))
     (if (file-exists-p reference-file)
         (progn
           (split-window-right)
           (other-window 1)
           (find-file reference-file)
           (read-only-mode 1)
+          ;; Enable org-mode features for better navigation
+          (when (derived-mode-p 'org-mode)
+            (org-overview)  ; Start with overview (folded)
+            (goto-char (point-min)))
           (message "Opened Emacs keybinding reference (read-only)"))
       (message "Reference file not found: %s" reference-file))))
 
