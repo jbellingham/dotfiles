@@ -112,8 +112,17 @@ Optimized for Apple Silicon Macs with high-DPI displays:
 
 ;; Modeline
 (use-package doom-modeline
-  :init (doom-modeline-mode 1)
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
   :config
+  ;; Prevent recursion during reloads by ensuring clean state
+  (when (and (fboundp 'doom-modeline-mode)
+             (not doom-modeline-mode))
+    ;; Increase eval depth temporarily for complex modeline setup
+    (let ((max-lisp-eval-depth (max max-lisp-eval-depth 3000)))
+      (doom-modeline-mode 1)))
+
+  ;; Safe configuration with recursion protection
   (setq doom-modeline-height 25
         doom-modeline-bar-width 3
         doom-modeline-project-detection 'projectile

@@ -236,10 +236,24 @@ Useful functions for configuration management and development workflow:
 #+begin_src emacs-lisp
 ;; Config management functions
 (defun reload-config ()
-  "Reload Emacs configuration."
+  "Safely reload Emacs configuration with eval depth protection."
   (interactive)
-  (load-file user-init-file)
-  (message "Config reloaded!"))
+  (let ((max-lisp-eval-depth (max max-lisp-eval-depth 3000))
+        (max-specpdl-size (max max-specpdl-size 5000)))
+    ;; Clean up potential problematic state before reload
+    (when (fboundp 'doom-modeline-mode)
+      (doom-modeline-mode -1))
+
+    ;; Reload configuration
+    (condition-case err
+        (progn
+          (load-file user-init-file)
+          (message "Config reloaded successfully!"))
+      (error
+       (message "Config reload failed: %s" (error-message-string err))
+       ;; Attempt to restore basic functionality
+       (when (fboundp 'doom-modeline-mode)
+         (doom-modeline-mode 1))))))
 
 (defun open-config ()
   "Open Emacs configuration file."
