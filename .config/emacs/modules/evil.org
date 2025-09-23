@@ -142,6 +142,10 @@ Evil mode provides comprehensive Vim emulation in Emacs, bringing modal editing 
     (kbd "<leader>te") 'rspec-toggle-example         ; was C-c T e
     (kbd "<leader>tf") 'rspec-verify-matching        ; was C-c T f
     (kbd "<leader>tc") 'rspec-verify-continue        ; was C-c T c
+    ;; Search and Replace operations
+    (kbd "<leader>Rr") 'my/search-and-replace-in-buffer      ; Replace in buffer (Ctrl+H style)
+    (kbd "<leader>RR") 'my/search-and-replace-regex-in-buffer ; Regex replace in buffer
+    (kbd "<leader>Rp") 'my/search-and-replace-in-project     ; Project-wide replace
     ;; Bundler/Rails (migrated from C-c R)
     (kbd "<leader>rbi") 'bundle-install              ; was C-c R b i
     (kbd "<leader>rbu") 'bundle-update               ; was C-c R b u
@@ -230,6 +234,87 @@ Evil mode provides comprehensive Vim emulation in Emacs, bringing modal editing 
   :after evil
   :config
   (evil-indent-plus-default-bindings))
+
+;; Evil multiple cursors (VS Code-like multi-cursor)
+(use-package evil-mc
+  :ensure t
+  :after evil
+  :config
+  (global-evil-mc-mode 1)
+
+  ;; VS Code-like keybindings for multi-cursor
+  (evil-define-key 'normal 'global
+    (kbd "C-d") 'evil-mc-make-and-goto-next-match      ; VS Code Ctrl+D
+    (kbd "C-S-d") 'evil-mc-make-and-goto-prev-match    ; VS Code Ctrl+Shift+D
+    (kbd "C-S-l") 'evil-mc-make-all-cursors            ; VS Code Ctrl+Shift+L (select all)
+    (kbd "C-M-d") 'evil-mc-undo-last-added-cursor     ; Undo last cursor
+    (kbd "C-g") 'evil-mc-undo-all-cursors)            ; Clear all cursors (C-g is standard cancel)
+
+  ;; Additional SPC bindings for multi-cursor
+  (evil-define-key '(normal visual) 'global
+    (kbd "<leader>ms") 'evil-mc-skip-and-goto-next-match     ; Skip current, select next
+    (kbd "<leader>mu") 'evil-mc-undo-last-added-cursor      ; Undo last cursor
+    (kbd "<leader>mq") 'evil-mc-undo-all-cursors)           ; Quit multi-cursor
+
+  ;; Additional Evil multi-cursor bindings with SPC prefix
+  (with-eval-after-load 'which-key
+    (which-key-add-key-based-replacements
+      "SPC m" "Multi-cursor"
+      "SPC m n" "Next Match"
+      "SPC m p" "Previous Match"
+      "SPC m a" "All Matches"
+      "SPC m s" "Skip Next"
+      "SPC m u" "Undo Last"
+      "SPC m q" "Quit Multi-cursor")))
+
+;; Multiple cursors alternative (iedit for in-place editing)
+(use-package iedit
+  :ensure t
+  :config
+  ;; Bind iedit to a convenient key
+  (global-set-key (kbd "C-c ;") 'iedit-mode)
+
+  ;; SPC leader binding for iedit
+  (with-eval-after-load 'which-key
+    (which-key-add-key-based-replacements
+      "SPC e" "Edit"
+      "SPC e e" "Iedit Mode")))
+
+;; Evil org-mode integration
+(use-package evil-org
+  :ensure t
+  :after (evil org)
+  :hook (org-mode . evil-org-mode)
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys)
+
+  ;; Ensure TAB works for folding in org-mode
+  (evil-define-key 'normal org-mode-map
+    (kbd "TAB") 'org-cycle
+    (kbd "S-TAB") 'org-shifttab
+    (kbd "<tab>") 'org-cycle
+    (kbd "<S-tab>") 'org-shifttab)
+
+  ;; Fix company-mode TAB conflict in org-mode specifically
+  (with-eval-after-load 'company
+    (add-hook 'org-mode-hook
+              (lambda ()
+                ;; In org-mode, prioritize org-cycle over company completion
+                (setq-local company-idle-delay nil)  ; Disable auto-completion
+                (define-key evil-normal-state-local-map (kbd "TAB") 'org-cycle)
+                (define-key evil-insert-state-local-map (kbd "TAB") 'org-cycle))))))
+
+;; Additional org-mode Evil integration
+(with-eval-after-load 'org
+  ;; Make sure org-cycle works in normal mode
+  (evil-define-key 'normal org-mode-map
+    (kbd "TAB") 'org-cycle
+    (kbd "S-TAB") 'org-shifttab)
+
+  ;; Ensure insert mode TAB works for indentation when needed
+  (evil-define-key 'insert org-mode-map
+    (kbd "TAB") 'org-cycle))
 
 (provide 'evil)
 ;;; evil.el ends here
