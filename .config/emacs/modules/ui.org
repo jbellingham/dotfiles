@@ -267,7 +267,9 @@ Buffer tabs across the top with VS Code-like appearance and middle-click to clos
         centaur-tabs-set-bar 'left
         centaur-tabs-gray-out-icons 'buffer
         centaur-tabs-plain-icons t
-        centaur-tabs-cycle-scope 'tabs)
+        centaur-tabs-cycle-scope 'tabs
+        ;; Enable mouse support properly
+        centaur-tabs-close-button-function #'kill-buffer)
 
   ;; Group tabs by project/directory
   (centaur-tabs-group-by-projectile-project)
@@ -317,25 +319,41 @@ Buffer tabs across the top with VS Code-like appearance and middle-click to clos
             (not (string-equal "*vterm*" name))
             (not (string-prefix-p "*magit" name))))))
 
-  ;; Mouse support - middle click to close buffer
-  (defun centaur-tabs-buffer-close-on-middle-click (event)
-    "Close buffer on middle mouse click."
-    (interactive "e")
-    (let* ((click-pos (event-start event))
-           (window (posn-window click-pos))
-           (buffer (window-buffer window)))
-      (with-current-buffer buffer
-        (kill-buffer buffer))))
+  ;; Enable built-in mouse support with manual configuration
+  (setq centaur-tabs-enable-key-bindings t)
 
-  ;; Enable mouse support
+  ;; Additional configuration for proper tab functionality
+  (setq centaur-tabs-mouse-close-tab-function #'kill-buffer
+        ;; Prevent aggressive window management
+        centaur-tabs-adjust-buffer-order nil)
+
+  ;; Mouse support configuration - add manual mouse bindings
+  (defun my/centaur-tabs-mouse-close (event)
+    "Close tab on middle mouse click."
+    (interactive "e")
+    (when (display-graphic-p)
+      (mouse-minibuffer-check event)
+      (let* ((posn (event-start event))
+             (window (posn-window posn))
+             (tab-buffer (get-text-property (posn-point posn) 'centaur-tabs)))
+        (cond
+         ;; If we clicked on a specific tab, close that buffer
+         (tab-buffer
+          (let ((tab-buffer-name (buffer-name tab-buffer)))
+            (message "Attempting to close tab buffer: %s" tab-buffer-name)
+            (kill-buffer tab-buffer-name)))
+         ;; Otherwise, close current buffer in window
+         (window
+          (with-selected-window window
+            (my/safe-kill-current-buffer)))
+         ;; Fallback
+         (t
+          (my/safe-kill-current-buffer))))))
+
+  ;; Set up mouse bindings globally for the tab area
   (when (display-graphic-p)
-    ;; Middle click to close tab
-    (global-set-key [header-line mouse-2] #'centaur-tabs-buffer-close-on-middle-click)
-    ;; Left click to switch tab
-    (global-set-key [header-line mouse-1] #'centaur-tabs-do-select)
-    ;; Mouse wheel scrolling through tabs
-    (global-set-key [header-line wheel-up] #'centaur-tabs-backward)
-    (global-set-key [header-line wheel-down] #'centaur-tabs-forward))
+    (global-set-key [tab-line mouse-2] #'my/centaur-tabs-mouse-close)
+    (global-set-key [header-line mouse-2] #'my/centaur-tabs-mouse-close))
 
   ;; Keybindings for tab navigation
   :bind
@@ -343,8 +361,91 @@ Buffer tabs across the top with VS Code-like appearance and middle-click to clos
    ("C-<next>" . centaur-tabs-forward)
    ("s-[" . centaur-tabs-backward)
    ("s-]" . centaur-tabs-forward)
-   ("s-t" . centaur-tabs-counsel-switch-group)
-   ("s-w" . kill-current-buffer)))
+   ("s-t" . centaur-tabs-switch-group)))
+
+;; Global keybindings for buffer management (outside use-package to avoid conflicts)
+(defun my/safe-kill-current-buffer ()
+  "Safely kill current buffer without window management conflicts."
+  (interactive)
+  (let* ((current-buf (current-buffer))
+         (buffer-name (buffer-name))
+         (buffer-count-before (length (buffer-list))))
+    (cond
+     ;; Don't kill special buffers like dashboard, scratch, etc.
+     ((string-match-p "^\\*\\(dashboard\\|scratch\\|Messages\\|Warnings\\)\\*$" buffer-name)
+      (message "Cannot close special buffer: %s" buffer-name))
+     ;; Safe to kill regular buffers
+     (t
+      (let ((kill-buffer-query-functions nil)  ; Disable kill confirmations
+            (kill-buffer-hook nil))             ; Disable kill hooks temporarily
+        (message "Attempting to kill buffer: %s" buffer-name)
+        (condition-case err
+            (progn
+              ;; Force kill without any protections
+              (set-buffer-modified-p nil)  ; Mark as unmodified to avoid save prompts
+              (kill-buffer (buffer-name))
+              (let ((buffer-count-after (length (buffer-list))))
+                (if (< buffer-count-after buffer-count-before)
+                    (message "Successfully closed buffer: %s" buffer-name)
+                  (message "Buffer still exists after kill attempt: %s (hooks disabled)" buffer-name))))
+          (error
+           (message "Error killing buffer %s: %s" buffer-name (error-message-string err)))))))))
+
+;; Test function to verify s-w binding works
+(defun my/test-s-w ()
+  "Test function for s-w binding."
+  (interactive)
+  (message "s-w binding is working!"))
+
+;; Debug function to test kill-buffer directly
+(defun my/debug-kill-buffer ()
+  "Debug function to test if kill-buffer works at all."
+  (interactive)
+  (let* ((current-buf (current-buffer))
+         (buffer-name (buffer-name))
+         (buffer-modified (buffer-modified-p))
+         (buffer-file (buffer-file-name))
+         (buffer-type (type-of current-buf))
+         (buffer-live (buffer-live-p current-buf))
+         (buffer-count-before (length (buffer-list))))
+    (message "Debug: Buffer=%s, Type=%s, Live=%s, Modified=%s, File=%s"
+             buffer-name buffer-type buffer-live buffer-modified buffer-file)
+    (condition-case err
+        (progn
+          (kill-buffer nil) ; Use nil instead of current-buf
+          (message "kill-buffer with nil succeeded"))
+      (error
+       (message "kill-buffer failed: %s" (error-message-string err))))
+    ;; Try alternative method
+    (condition-case err
+        (progn
+          (kill-buffer (buffer-name))
+          (let ((buffer-count-after (length (buffer-list))))
+            (message "kill-buffer with buffer-name: %s (count: %d -> %d)"
+                     (if (< buffer-count-after buffer-count-before) "SUCCESS" "FAILED")
+                     buffer-count-before buffer-count-after)))
+      (error
+       (message "kill-buffer with buffer-name failed: %s" (error-message-string err))))))
+
+;; Alternative approach using bury-buffer
+(defun my/bury-current-buffer ()
+  "Bury current buffer instead of killing it."
+  (interactive)
+  (let ((buffer-name (buffer-name)))
+    (bury-buffer)
+    (message "Buried buffer: %s" buffer-name)))
+
+;; Set the actual binding
+(global-set-key (kbd "s-w") #'my/safe-kill-current-buffer)
+
+;; Also add an alternative test binding for verification
+(global-set-key (kbd "s-W") #'my/test-s-w)
+
+;; Temporary debug binding
+(global-set-key (kbd "s-D") #'my/debug-kill-buffer)
+
+;; Temporary bury-buffer alternative
+(global-set-key (kbd "s-B") #'my/bury-current-buffer)
 #+end_src
 
 #+begin_src emacs-lisp

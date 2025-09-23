@@ -566,8 +566,6 @@ Works with various language conventions."
 ;; Buffer management operations migrated to SPC b (see evil config section)
 
 ;; Navigation shortcuts
-;; s-[ and s-] are now used for tab navigation (see ui.org centaur-tabs config)
-(global-set-key (kbd "s-w") #'kill-current-buffer)           ; Command+W
 (global-set-key (kbd "s-n") #'my/new-empty-buffer)           ; Command+N
 
 ;; Quick window switching with numbers
@@ -621,8 +619,6 @@ Works with various language conventions."
     "C-c j d" "Delete Bookmark"
 
     ;; Global navigation shortcuts
-    ;; s-[ and s-] now used for tab navigation (see ui.org)
-    "s-w" "Kill Buffer"
     "s-n" "New Buffer"
     "s-o" "Switch Window"
     "s-j" "Jump Impl/Test"
