@@ -6,9 +6,9 @@
   "Auto-tangle all .org configuration files in the config directory."
   (interactive)
   (let ((config-dir (file-name-directory (or load-file-name buffer-file-name)))
-        (org-files '("performance.org" "core.org" "evil.org" "completion.org"
-                     "navigation.org" "explorer.org" "project.org" "workspace.org"
-                     "git.org" "development.org" "ui.org" "focus.org")))
+        (org-files '("config/performance.org" "config/core.org" "config/evil.org" "config/completion.org"
+                     "config/navigation.org" "config/explorer.org" "config/project.org" "config/workspace.org"
+                     "config/git.org" "config/development.org" "config/ui.org" "config/focus.org")))
     (dolist (file org-files)
       (let ((full-path (expand-file-name file config-dir)))
         (when (file-exists-p full-path)
