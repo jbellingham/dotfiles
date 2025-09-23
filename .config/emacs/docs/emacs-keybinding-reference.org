@@ -586,11 +586,68 @@ Essential Emacs bindings that remain available alongside Evil mode.
 5. =SPC r f= → Fix code style with RuboCop
 6. =SPC g g= → Check git status
 
+** Multi-Cursor and Search/Replace
+
+*** VS Code-like Multi-Cursor (evil-mc)
+| Key | Action | Description |
+|-----|--------|-------------|
+| =C-d= | Select next match | Add cursor at next occurrence of word under cursor |
+| =C-S-d= | Select previous match | Add cursor at previous occurrence |
+| =C-S-l= | Select all matches | Add cursors at all occurrences in buffer |
+| =SPC m s= | Skip and select next | Skip current match, select next |
+| =C-M-d= | Undo last cursor | Remove most recently added cursor |
+| =C-g= | Clear all cursors | Exit multi-cursor mode (standard cancel) |
+
+*** Alternative Multi-Edit (iedit)
+| Key | Action | Description |
+|-----|--------|-------------|
+| =C-c ;= | Toggle iedit mode | Edit all occurrences of symbol at point |
+| =C-'= | Restrict to function | Limit editing to current function |
+| =C-"= | Restrict to region | Limit editing to selected region |
+
+*** Search and Replace in Buffer
+| Key | Action | Description |
+|-----|--------|-------------|
+| =SPC R r= | Replace in buffer | Interactive find and replace (like Ctrl+H) |
+| =SPC R R= | Regex replace | Replace using regular expressions |
+| =%= | Query replace | Built-in query-replace at point |
+| =*= then =cgn= | Change next | Search word, then change next occurrence |
+
+*** Project-wide Search and Replace
+| Key | Action | Description |
+|-----|--------|-------------|
+| =SPC R p= | Replace in project | Search project, then edit results with wgrep |
+| =SPC s p= | Search project | Use ripgrep to find all occurrences |
+
+**** wgrep Workflow (Project Replace):
+1. =SPC R p= → Enter search term → Results appear in grep buffer
+2. =r= → Enter wgrep-mode (makes results editable)
+3. Edit the results directly (use normal Emacs editing)
+4. =C-c C-c= → Apply all changes to actual files
+5. =C-c C-k= → Cancel changes if needed
+
+*** Multi-Cursor Workflow Examples
+**** Replace variable name across function:
+1. Position cursor on variable name
+2. =C-d= repeatedly to select all occurrences in view
+3. =C-S-l= to select ALL occurrences in buffer
+4. Type new name → all selected instances change simultaneously
+
+**** Add content to multiple lines:
+1. =C-v= (visual block) to select column
+2. =I= to insert at beginning of each line
+3. Type content → appears on all selected lines
+4. =ESC= to finish
+
+**** Project-wide rename:
+1. =SPC R p= → Enter old name
+2. =r= to enter wgrep-mode
+3. =M-%= → Enter old name → new name → =!= (replace all)
+4. =C-c C-c= to apply changes to all files
+
 ** Advanced Tips
 - **Registers**: Use ="0p= to paste last yank (not affected by deletes)
 - **Macros**: Record with =q{letter}=, play with =@{letter}=
-- **Multiple Cursors**: Use visual block mode (=C-v=) for column editing
-- **Search and Replace**: =*= to search word under cursor, then =cgn= to change next occurrence
 - **Window Management**: =C-w== to balance all windows
 
 ** Customization

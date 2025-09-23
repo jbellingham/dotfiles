@@ -310,6 +310,42 @@
 ;; Quick access bindings
 ;; Project/file operations migrated to SPC f/b (see evil config section)
 
+;; Enhanced Search and Replace with wgrep
+;; =====================================
+
+;; Wgrep - Edit grep results in-place for project-wide search and replace
+(use-package wgrep
+  :ensure t
+  :config
+  (setq wgrep-auto-save-buffer t
+        wgrep-enable-key "r"
+        wgrep-change-readonly-file t)
+
+  ;; Make wgrep work with consult-ripgrep by enabling it in compilation mode
+  (with-eval-after-load 'consult
+    (advice-add 'consult--grep-state :after
+                (lambda (&rest _)
+                  (when (derived-mode-p 'compilation-mode)
+                    (wgrep-setup))))))
+
+;; Project-wide search and replace functions
+(defun my/search-and-replace-in-project (search-term)
+  "Search for SEARCH-TERM across project files using ripgrep for editing with wgrep."
+  (interactive "sSearch for: ")
+  (let ((search-dir (or (projectile-project-root) default-directory)))
+    (consult-ripgrep search-dir search-term)
+    (message "Use 'r' to enter wgrep-mode, edit replacements, then C-c C-c to apply changes")))
+
+(defun my/search-and-replace-in-buffer ()
+  "Search and replace in current buffer with live preview."
+  (interactive)
+  (call-interactively 'query-replace))
+
+(defun my/search-and-replace-regex-in-buffer ()
+  "Search and replace using regex in current buffer."
+  (interactive)
+  (call-interactively 'query-replace-regexp))
+
 ;; Which-key descriptions
 ;; ======================
 
@@ -333,6 +369,12 @@
     "SPC sr" "Ripgrep"
     "SPC sl" "Locate"
     "SPC sp" "Search Project"
+
+    ;; Replace operations
+    "SPC R" "Replace"
+    "SPC Rr" "Replace in Buffer"
+    "SPC RR" "Regex Replace in Buffer"
+    "SPC Rp" "Replace in Project"
 
     ;; Jump/Navigation
     "C-c j" "Jump"
