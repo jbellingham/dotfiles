@@ -56,9 +56,12 @@
               ;; Direct path match
               (string= (file-name-directory buffer-file-name)
                        (expand-file-name user-emacs-directory))
-              ;; Symlink or dotfiles path - check if it resolves to emacs dir
-              (string= (file-truename (file-name-directory buffer-file-name))
-                       (file-truename (expand-file-name user-emacs-directory)))))
+              ;; Symlink or dotfiles path - check if it resolves to emacs dir (with recursion protection)
+              (condition-case nil
+                  (let ((max-lisp-eval-depth (max max-lisp-eval-depth 3000)))
+                    (string= (file-truename (file-name-directory buffer-file-name))
+                             (file-truename (expand-file-name user-emacs-directory))))
+                (error nil))))
     (let ((org-confirm-babel-evaluate nil))
       (message "Auto-tangling config.org...")
       (org-babel-tangle)

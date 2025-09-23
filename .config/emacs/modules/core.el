@@ -54,12 +54,15 @@
 ;; Improve Emacs' default behavior for modern development:
 
 
-;; Better defaults
+;; Better defaults with eval depth protection
 (setq ring-bell-function 'ignore     ; Disable bell
       inhibit-startup-screen t       ; Skip startup screen
       initial-scratch-message nil    ; Empty scratch buffer
       auto-revert-verbose nil        ; Less verbose auto-revert
-      global-auto-revert-non-file-buffers t) ; Auto-revert dired and other buffers
+      global-auto-revert-non-file-buffers t ; Auto-revert dired and other buffers
+      ;; Increase eval depth limits to prevent recursion errors
+      max-lisp-eval-depth 3000       ; Increase from default 1600
+      max-specpdl-size 5000)          ; Increase for complex operations
 
 ;; Error Handling & Process Fixes
 
