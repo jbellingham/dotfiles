@@ -306,9 +306,11 @@
        ;; Hide Treemacs buffers (covers all variations)
        (string-match-p "^.*Treemacs.*" name)
        ;; Hide by buffer mode (more reliable for treemacs)
-       (with-current-buffer x
-         (or (derived-mode-p 'treemacs-mode)
-             (eq major-mode 'treemacs-mode)))
+       (condition-case nil
+           (with-current-buffer x
+             (or (derived-mode-p 'treemacs-mode)
+                 (eq major-mode 'treemacs-mode)))
+         (error nil))
        ;; Hide buffers with certain modes
        (and (string-prefix-p "*" name)
             (not (string-equal "*vterm*" name))
