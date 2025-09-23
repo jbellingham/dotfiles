@@ -62,8 +62,14 @@
     (kbd "<leader>ch") 'open-emacs-reference
     ;; Project and file operations (migrated from C-c f/s/p)
     (kbd "<leader>ff") 'my/find-project-files    ; was C-c f p
-    (kbd "<leader>fs") 'my/search-project        ; was C-c s p
     (kbd "<leader>fg") 'my/find-git-files        ; was C-c f g
+    ;; Search operations (migrated from C-c s)
+    (kbd "<leader>ss") 'consult-line             ; was C-c s s
+    (kbd "<leader>sm") 'consult-line-multi       ; was C-c s m
+    (kbd "<leader>sg") 'consult-grep             ; was C-c s g
+    (kbd "<leader>sr") 'consult-ripgrep          ; was C-c s r
+    (kbd "<leader>sl") 'consult-locate           ; was C-c s l
+    (kbd "<leader>sp") 'my/search-project        ; was C-c s p
     ;; Buffer management (migrated from C-c b)
     (kbd "<leader>bb") 'my/smart-switch-buffer   ; was C-c b b
     (kbd "<leader>bp") 'my/project-buffers       ; was C-c b p
