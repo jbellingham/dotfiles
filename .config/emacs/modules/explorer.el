@@ -88,7 +88,9 @@
   (defun my/treemacs-toggle ()
     "Toggle treemacs with proper project initialization."
     (interactive)
-    (if (treemacs-current-visibility)
+    (if (and (fboundp 'treemacs-current-visibility)
+             (featurep 'treemacs)
+             (treemacs-current-visibility))
         (treemacs-quit)
       (progn
         ;; First, ensure treemacs is open

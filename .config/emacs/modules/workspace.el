@@ -128,7 +128,9 @@
     "Save desktop while handling side windows properly."
     (interactive)
     ;; Close treemacs before saving to avoid window conflicts
-    (when (treemacs-current-visibility)
+    (when (and (fboundp 'treemacs-current-visibility)
+               (featurep 'treemacs)
+               (treemacs-current-visibility))
       (treemacs-kill-buffer))
     (desktop-save-in-desktop-dir)
     (message "Session saved safely!"))
@@ -139,7 +141,9 @@
     (when (and (file-exists-p (desktop-full-file-name))
                (y-or-n-p "Restore previous session? "))
       ;; Close any existing treemacs before restoring
-      (when (treemacs-current-visibility)
+      (when (and (fboundp 'treemacs-current-visibility)
+                 (featurep 'treemacs)
+                 (treemacs-current-visibility))
         (treemacs-kill-buffer))
       (desktop-read)
       ;; Brief delay before reopening treemacs to avoid conflicts
@@ -223,6 +227,7 @@
     ;; First, try to close treemacs properly
     (condition-case err
         (when (and (fboundp 'treemacs-current-visibility)
+                   (featurep 'treemacs)
                    (treemacs-current-visibility))
           (treemacs-kill-buffer)
           (message "Treemacs closed"))
