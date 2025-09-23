@@ -580,14 +580,13 @@ Comprehensive keybindings for navigation:
 ;; F12 for smart go-to-implementation like RubyMine/IntelliJ (LSP + file switching)
 (global-set-key (kbd "<f12>") #'my/smart-goto-implementation)    ; F12 like VS Code/RubyMine
 (global-set-key (kbd "s-<f12>") #'my/goto-test)                 ; Cmd+F12 for tests
-(global-set-key (kbd "s-t") #'my/toggle-between-implementation-and-test) ; Cmd+T toggle
+(global-set-key (kbd "s-j") #'my/toggle-between-implementation-and-test) ; Cmd+J jump toggle
 
 ;; Buffer operations
 ;; Buffer management operations migrated to SPC b (see evil config section)
 
 ;; Navigation shortcuts
-(global-set-key (kbd "s-[") #'my/switch-to-previous-buffer)  ; Command+[
-(global-set-key (kbd "s-]") #'next-buffer)                   ; Command+]
+;; s-[ and s-] are now used for tab navigation (see ui.org centaur-tabs config)
 (global-set-key (kbd "s-w") #'kill-current-buffer)           ; Command+W
 (global-set-key (kbd "s-n") #'my/new-empty-buffer)           ; Command+N
 
@@ -642,12 +641,11 @@ Comprehensive keybindings for navigation:
     "C-c j d" "Delete Bookmark"
 
     ;; Global navigation shortcuts
-    "s-[" "Previous Buffer"
-    "s-]" "Next Buffer"
+    ;; s-[ and s-] now used for tab navigation (see ui.org)
     "s-w" "Kill Buffer"
     "s-n" "New Buffer"
     "s-o" "Switch Window"
-    "s-t" "Toggle Impl/Test"
+    "s-j" "Jump Impl/Test"
     "s-1" "Window 1"
     "s-2" "Window 2"
     "s-3" "Window 3"
