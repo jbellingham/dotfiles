@@ -323,37 +323,45 @@ Buffer tabs across the top with VS Code-like appearance and middle-click to clos
   (setq centaur-tabs-enable-key-bindings t)
 
   ;; Additional configuration for proper tab functionality
-  (setq centaur-tabs-mouse-close-tab-function #'kill-buffer
-        ;; Prevent aggressive window management
+  (setq ;; Prevent aggressive window management
         centaur-tabs-adjust-buffer-order nil)
 
-  ;; Mouse support configuration - add manual mouse bindings
+  ;; Configure centaur-tabs native mouse support
+  (setq centaur-tabs-enable-click t
+        centaur-tabs-enable-key-bindings t)
+
+  ;; Override centaur-tabs close functions to use our working approach
+  (defun centaur-tabs-buffer-close-tab (tab)
+    "Function for closing TAB using our working kill-buffer method."
+    (let ((buffer (centaur-tabs-tab-value tab)))
+      (with-current-buffer buffer
+        (my/safe-kill-current-buffer))
+      (centaur-tabs-buffer-update-groups)
+      (centaur-tabs-display-update)))
+
+  (defun centaur-tabs-close-tab ()
+    "Close current tab using our working kill-buffer method."
+    (interactive)
+    (my/safe-kill-current-buffer))
+
+  ;; Custom mouse close handler for middle-click
   (defun my/centaur-tabs-mouse-close (event)
     "Close tab on middle mouse click."
     (interactive "e")
     (when (display-graphic-p)
-      (mouse-minibuffer-check event)
       (let* ((posn (event-start event))
-             (window (posn-window posn))
-             (tab-buffer (get-text-property (posn-point posn) 'centaur-tabs)))
-        (cond
-         ;; If we clicked on a specific tab, close that buffer
-         (tab-buffer
-          (let ((tab-buffer-name (buffer-name tab-buffer)))
-            (message "Attempting to close tab buffer: %s" tab-buffer-name)
-            (kill-buffer tab-buffer-name)))
-         ;; Otherwise, close current buffer in window
-         (window
+             (window (posn-window posn)))
+        (when window
           (with-selected-window window
-            (my/safe-kill-current-buffer)))
-         ;; Fallback
-         (t
-          (my/safe-kill-current-buffer))))))
+            (my/safe-kill-current-buffer))))))
 
-  ;; Set up mouse bindings globally for the tab area
+  ;; Set up mouse bindings for centaur-tabs
   (when (display-graphic-p)
-    (global-set-key [tab-line mouse-2] #'my/centaur-tabs-mouse-close)
-    (global-set-key [header-line mouse-2] #'my/centaur-tabs-mouse-close))
+    ;; Middle-click anywhere on tab bar to close current buffer
+    (global-set-key [header-line mouse-2] #'my/centaur-tabs-mouse-close)
+    ;; Also bind to the centaur-tabs specific mouse events
+    (define-key centaur-tabs-mode-map [header-line mouse-2] #'my/centaur-tabs-mouse-close))
+
 
   ;; Keybindings for tab navigation
   :bind
