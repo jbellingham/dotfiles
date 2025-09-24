@@ -1,4 +1,5 @@
 # Ignore emacs generated files and directories
+*.elc
 elpa/
 eln-cache/
 auto-save-list/
