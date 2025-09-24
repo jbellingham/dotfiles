@@ -10,6 +10,7 @@
 - Emacs cheatsheet
   - How to use bookmarks
   - How to use registers
+- Key binding for commenting a line/block
 
 ### Bugs
 - Not really a bug as such, but part of the cool thing about using org-mode is being able to
