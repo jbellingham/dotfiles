@@ -3,20 +3,20 @@
 ;; We start by optimizing Emacs' garbage collection and file handling for faster startup, especially important on Apple Silicon Macs with abundant memory.
 
 
-;;; performance.el --- Performance optimizations -*- lexical-binding: t; -*-
+  ;;; performance.el --- Performance optimizations -*- lexical-binding: t; -*-
 
-;;; Commentary:
-;; Performance optimizations for Emacs startup and runtime.
+  ;;; Commentary:
+  ;; Performance optimizations for Emacs startup and runtime.
 
-;;; Code:
+  ;;; Code:
 
-;; Performance optimizations for startup (Apple Silicon optimized)
-;; ===============================================================
+  ;; Performance optimizations for startup (Apple Silicon optimized)
+  ;; ===============================================================
 
-(defvar file-name-handler-alist-original file-name-handler-alist)
-(setq file-name-handler-alist nil)
-(setq gc-cons-threshold most-positive-fixnum)
-(setq gc-cons-percentage 0.6)
+  (defvar file-name-handler-alist-original file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+  (setq gc-cons-threshold most-positive-fixnum)
+  (setq gc-cons-percentage 0.6)
 
 ;; Apple Silicon Optimizations
 
@@ -67,6 +67,8 @@
       (org-babel-tangle)
       (message "Auto-tangle complete!"))))
 
+;; Auto-tangle disabled due to org-src editing conflicts
+;; Use M-x org-babel-tangle or SPC m b t to tangle manually
 (add-hook 'after-save-hook #'auto-tangle-config-org)
 
 (provide 'performance)

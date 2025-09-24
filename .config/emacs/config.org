@@ -62,7 +62,6 @@ This configuration is organized into feature-based modules, each in its own `.or
                 (org-babel-tangle)))
             nil t))
 
-;; Initialize auto-tangling
 (add-hook 'org-mode-hook #'je/setup-auto-tangle-hooks)
 #+end_src
 

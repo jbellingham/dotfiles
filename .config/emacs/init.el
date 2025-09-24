@@ -58,8 +58,8 @@
                 (org-babel-tangle)))
             nil t))
 
-;; Initialize auto-tangling hooks
 (add-hook 'org-mode-hook #'je/setup-auto-tangle-hooks)
+
 
 ;; Load modular configuration from modules directory
 (let ((modules-dir (expand-file-name "modules" user-emacs-directory)))

@@ -429,6 +429,44 @@ Useful functions for configuration management and development workflow:
     "SPC t" "Test/Toggle"
     "SPC t t" "Toggle Impl/Test"))
 
+;; Org-src editing configuration - completely disable separate buffer editing
+;; Nuclear option: make org-edit-special do nothing to prevent all conflicts
+(setq org-src-window-setup 'current-window
+      org-src-strip-leading-and-trailing-blank-lines t
+      org-edit-src-content-indentation 0
+      org-src-fontify-natively t           ; Syntax highlighting in org buffer
+      org-src-preserve-indentation t       ; Keep your indentation
+      org-src-tab-acts-natively t)         ; Language-specific tab behavior
+
+;; Nuclear fix: completely disable org-edit-special to prevent any separate buffers
+(with-eval-after-load 'org
+  (defun org-edit-special (&optional arg)
+    "Disabled: Use direct editing in org buffer instead."
+    (interactive "P")
+    (message "Direct editing enabled - edit source blocks directly in this buffer"))
+
+  ;; Also disable related functions that might trigger separate editing
+  (defun org-edit-src-code (&optional code edit-buffer-name)
+    "Disabled: Use direct editing in org buffer instead."
+    (interactive)
+    (message "Direct editing enabled - edit source blocks directly in this buffer")))
+
+(use-package org
+  :defer t
+  :config
+
+  ;; Option 2: Keep separate buffer editing but with conflict protection
+  ;; Disabled in favor of direct in-buffer editing above
+  ;; (with-eval-after-load 'org-src
+  ;;   (defun org-src--safe-save-buffer (orig-fun &rest args)
+  ;;     "Disable after-save-hook during org-src buffer saves to prevent auto-tangle conflicts."
+  ;;     (if (and (boundp 'org-src--beg-marker) org-src--beg-marker)
+  ;;         (let ((after-save-hook nil))
+  ;;           (apply orig-fun args))
+  ;;       (apply orig-fun args)))
+  ;;   (advice-add 'save-buffer :around #'org-src--safe-save-buffer))
+  )
+
 ;; Dired improvements
 (use-package dired
   :ensure nil

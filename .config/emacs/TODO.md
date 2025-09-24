@@ -12,3 +12,9 @@
   - How to use registers
 
 ### Bugs
+- Not really a bug as such, but part of the cool thing about using org-mode is being able to
+create blocks of source code with #+begin_src emacs-lisp (;;some lisp code) #+end_src and you can edit
+these source blocks in a separate buffer with the correct major mode for the specified language and all the benefits that brings.
+Something about my setup meant this never worked, I would consistently get errors like
+"Cannot modify an area being edited in a dedicated buffer". I've gone with a configuration that essentially just
+stops that separate buffer from opening and instead I edit the src blocks inline. Would be cool to get this working.

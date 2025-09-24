@@ -26,8 +26,8 @@
                 (org-babel-tangle)))
             nil t))
 
-;; Initialize auto-tangling
-(add-hook 'org-mode-hook #'je/setup-auto-tangle-hooks)
+;; Auto-tangling disabled due to org-src editing conflicts
+;; (add-hook 'org-mode-hook #'je/setup-auto-tangle-hooks)
 
 ;; Module Loading
 
