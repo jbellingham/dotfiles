@@ -48,7 +48,7 @@
                         ((find-font (font-spec :name "Arial")) "Arial")
                         (t "sans-serif")))
         ;; Adjust height for high-DPI M4 MacBook displays
-        (font-height (if (> (display-pixel-width) 2560) 130 140)))
+        (font-height (if (> (display-pixel-width) 2560) 160 180)))
 
     (set-face-attribute 'default nil
                         :family mono-font
