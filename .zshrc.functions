@@ -1,1 +1,16 @@
-dev/dotfiles/.zshrc.functions
+function help() {
+  local query_string=""
+  for word in "$@"; do
+    query_string+="$word+"
+  done
+  curl "https://cht.sh/$(query_string)"
+}
+
+function reset-database {
+    cd ~/dev/work/chargefox
+    bin/rails db:drop
+    bin/rails db:create
+    bin/rails db:migrate
+    bin/rails db:seed
+    bin/rails dev:fake_data
+}

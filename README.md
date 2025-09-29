@@ -1,1 +1,1 @@
-dev/dotfiles/README.md
+Current dotfiles, for a fresh install of osx.
