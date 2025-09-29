@@ -1,1 +1,54 @@
-dev/dotfiles/.gitignore
+# Ignore everything by default
+/*
+
+# Shell configurations
+!.zshrc*
+!.zprofile
+!.aliases
+!.p10k.zsh
+
+# Editor configurations
+!.vimrc
+!.spacemacs
+
+# Git configurations
+!.gitignore*
+!.gitconfig*
+
+# Config directories (nested .gitignore files handle specifics)
+!.config/
+!.config/ghostty/
+!.config/nvim/
+!.config/lvim/
+!.config/sketchybar/
+!.config/yabai/
+!.config/fish/
+!.config/emacs/
+!.config/coc/
+!.config/lazygit/
+
+# System tools
+!.ripgreprc
+!.tmux.conf
+!.gnupg/
+!.tool-versions
+!.leptonrc
+
+# Package managers and setup
+!Brewfile*
+!packages.config
+!*.sh
+
+# Nix configurations
+!nix-darwin-config/
+!nixos-config/
+!.wezterm.lua
+
+# GitHub workflows
+!.github/
+
+# Project-specific exclusions
+**/*.aif
+**/*.aif.asd
+
+!CLAUDE.md
