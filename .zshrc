@@ -119,7 +119,7 @@ fi
 eval "$(mcfly init zsh)"
 eval "$(direnv hook zsh)"
 
-export PATH="$PATH:/opt/homebrew/Cellar/postgresql@17/17.5/bin"
+export PATH="$PATH:$HOMEBREW_PREFIX/opt/postgresql@16/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
