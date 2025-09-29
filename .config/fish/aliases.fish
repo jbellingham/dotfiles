@@ -3,6 +3,14 @@ function ...   ; cd ../.. ; end
 function ....  ; cd ../../.. ; end
 function ..... ; cd ../../../.. ; end
 
+function reset-database;
+    cd ~/dev/work/chargefox
+    bin/rails db:drop
+    bin/rails db:create
+    bin/rails db:migrate
+    bin/rails db:seed
+    bin/rails dev:fake_data
+end
 
 abbr brwe 'brew'
 abbr bewr 'brew'
@@ -24,13 +32,14 @@ alias be="bundle exec"
 alias cat="bat"
 alias top="btop"
 alias bu="brew upgrade"
-alias hgrep="history 1 | grep"
 alias hgrep="history | grep"
 alias grep="rg -iF --color=auto"
 alias formatjson="pbpaste | jq . | pbcopy"
 alias aliases="alias | less"
 
 alias assume="source (brew --prefix)/bin/assume.fish"
+alias cfxdebug="cd ~/dev/work/chargefox && overmind start -f Procfile.debug"
+alias claude="CLAUDE_CODE_USE_BEDROCK=1 AWS_REGION=us-west-2 AWS_PROFILE=dev command claude"
 
 if type -q trash
     alias rm="trash $argv"

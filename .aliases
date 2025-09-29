@@ -50,3 +50,6 @@ alias intellij="open -na 'IntelliJ IDEA Ultimate.app'"
 # Work-specific
 alias stopseqta="(cd ~/dev/work/seqta/seqta-suite-core/seqta-suite && docker compose stop)"
 alias startseqta="(cd ~/dev/work/seqta/seqta-suite-core/seqta-suite && docker compose up -d)"
+
+alias assume="source $(brew --prefix)/bin/assume"
+alias cfxdebug="cd ~/dev/work/chargefox && overmind start -f Procfile.debug"
