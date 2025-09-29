@@ -12,9 +12,14 @@ export UPDATE_ZSH_DAYS=10
 ENABLE_CORRECTION="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-# Plugins
-plugins=(evalcache asdf brew sudo zsh-autosuggestions macos direnv zsh-syntax-highlighting)
+# Plugins (fzf-tab should be last for proper integration)
+plugins=(evalcache brew sudo zsh-autosuggestions macos direnv zsh-syntax-highlighting fzf-tab)
 source $ZSH/oh-my-zsh.sh
+
+# Configure fzf-tab for better integration
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' fzf-flags --bind=tab:accept
 
 # Prompt configuration
 command_exists oh-my-posh
@@ -71,9 +76,9 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-# Interactive tool initialization
-command_exists direnv && _evalcache direnv hook zsh
+# Interactive tool initialization (mcfly after fzf-tab setup)
 eval "$(mcfly init zsh)"
+eval "$(mcfly-fzf init zsh)"
 
 # Load personal customizations
 load_file_if_exists "${HOME}/.zshrc.custom"
