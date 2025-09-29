@@ -50,3 +50,5 @@
 # Project-specific exclusions
 **/*.aif
 **/*.aif.asd
+
+!CLAUDE.md
