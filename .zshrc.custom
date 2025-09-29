@@ -1,9 +1,0 @@
-# file location: ~/.zshrc.custom
-# PERSONAL CUSTOMIZATIONS - Aliases, functions, and personal preferences
-
-# Load personal aliases and functions
-load_file_if_exists "${HOME}/.aliases"
-load_file_if_exists "${HOME}/.zshrc.functions"
-
-# Terminal integrations
-load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
