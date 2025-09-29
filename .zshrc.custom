@@ -1,24 +1,18 @@
 # file location: ~/.zshrc.custom
 
-# Note: This file depends on the ~/.zshrc that is also shared for some shell functions
-
 load_file_if_exists "${HOME}/.aliases"
 load_file_if_exists "${HOME}/.zshrc.functions"
 
-# Homebrew
-export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$PATH"
-
-# Talisman
+# Tool homes and roots
 export TALISMAN_HOME=$HOME/.talisman/bin
-
-# Ruby
 export GEM_HOME=$HOME/.gem
-export PATH=$GEM_HOME/bin:$PATH
-
-# enables batect compatibility with colima
-# export DOCKER_HOST="unix:///${HOME}/.colima/docker.sock"
 export DOTNET_ROOT="${HOME}/.dotnet"
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
+# Consolidated PATH
+export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin"
+
+# Homebrew configuration
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_CLEANUP_MAX_AGE_DAYS=3
 export HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS=3
@@ -27,69 +21,61 @@ export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
 export HOMEBREW_VERBOSE_USING_DOTS=1
 export HOMEBREW_BUNDLE_FILE=$HOME/Brewfile
 
+# macOS-specific shell options
 if [[ "$OSTYPE" = darwin* ]] ; then
-  # setopt glob_dots                # no special treatment for file names with a leading dot
-  # # setopt no_auto_menu             # require an extra TAB press to open the completion menu
-  # setopt auto_menu                # automatically use menu completion
-  # setopt list_beep
-  # # setopt correct_all              # autocorrect commands
-  # setopt always_to_end            # move cursor to end if word had one match
-
+  # History options
   setopt append_history
-  setopt share_history            # share history between different instances of the shell
-  setopt inc_append_history       # append command to history file immediately after execution
-  setopt hist_ignore_all_dups     # do not put duplicated command into history list
+  setopt share_history
+  setopt inc_append_history
+  setopt hist_ignore_all_dups
   setopt hist_ignore_dups
   setopt hist_allow_clobber
-  setopt hist_reduce_blanks       # remove unnecessary blanks
-  setopt hist_save_no_dups        # do not save duplicated command
-  setopt auto_cd                  # cd into directory if the name is not an alias or function, but matches a directory
-  setopt auto_pushd               # Make cd push the old directory onto the directory stack.
-  setopt pushd_silent             # Do not print the directory stack after pushd or popd.
-  setopt pushd_ignore_dups        # Don’t push multiple copies of the same directo
+  setopt hist_reduce_blanks
+  setopt hist_save_no_dups
+
+  # Directory navigation
+  setopt auto_cd
+  setopt auto_pushd
+  setopt pushd_silent
+  setopt pushd_ignore_dups
+
+  # Completion and display
   setopt beep
   setopt extended_glob
-  setopt auto_list                # Automatically list choices on an ambiguous completion.
+  setopt auto_list
   setopt list_ambiguous
-  setopt list_types               # If the file being listed is a directory, show a trailing slash
+  setopt list_types
 
-
-  # console colors
+  # Console colors
   autoload -U colors && colors
 fi
 
-### Fix slowness of pastes with zsh-syntax-highlighting.zsh
+# Fix slowness of pastes with zsh-syntax-highlighting
 pasteinit() {
   OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+  zle -N self-insert url-quote-magic
 }
 pastefinish() {
   zle -N self-insert $OLD_SELF_INSERT
 }
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
-### Fix slowness of pastes
 
+# Development tools
 ASDF_DIR=$HOME/.asdf
 if [ -d $ASDF_DIR ]; then
   load_file_if_exists "$ASDF_DIR/asdf.sh"
 fi
 
-# If brew exists, do the following
-command_exists brew
-if [ $? -eq 0 ]; then
-
-# Load asdf path changes at the end (even though this is loaded as part of omz's plugins - since the PATH gets messed up)
-
-
+# Homebrew-dependent setup
+command_exists brew && {
   # zlib - required for installing python via asdf
   ZLIB_DIR=$HOMEBREW_PREFIX/opt/zlib
   if [ -d $ZLIB_DIR ]; then
     export LDFLAGS="-L$ZLIB_DIR/lib $LDFLAGS"
     export CPPFLAGS="-I$ZLIB_DIR/include $CPPFLAGS"
   fi
-fi
+}
 
-export RIPGREP_CONFIG_PATH=~/.ripgreprc
-# iTerm2 shell integrations
+# Terminal integrations
 load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
