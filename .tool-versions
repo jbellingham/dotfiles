@@ -1,1 +1,8 @@
-dev/dotfiles/.tool-versions
+nodejs 22.17.1
+dotnet-core 5.0.302
+python 3.9.6
+java zulu-javafx-8.72.0.17
+erlang 24.2.1
+elixir 1.13.2
+erlang 24.2.1
+ruby 3.3.0

@@ -1,1 +1,1 @@
-dev/dotfiles/.gitconfig-work.inc
+# file location: ~/.gitconfig-work.inc
