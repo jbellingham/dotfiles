@@ -56,7 +56,7 @@ export HOMEBREW_VERBOSE_USING_DOTS=1
 export HOMEBREW_BUNDLE_FILE=$HOME/Brewfile
 
 # Consolidated PATH (all modifications in one place)
-export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:/home/jesse/.local/bin:/home/linuxbrew/.linuxbrew/bin:/Users/jessebellingham/Library/Application Support/JetBrains/Toolbox/scripts:/usr/local/bin:$HOMEBREW_PREFIX/opt/postgresql@16/bin:/home/jesse/.config/herd-lite/bin"
+export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$HOME/.local/bin:/home/jesse/.local/bin:/home/linuxbrew/.linuxbrew/bin:/Users/jessebellingham/Library/Application Support/JetBrains/Toolbox/scripts:/usr/local/bin:$HOMEBREW_PREFIX/opt/postgresql@16/bin:/home/jesse/.config/herd-lite/bin"
 
 # Development tool environment setup
 ASDF_DIR=$HOME/.asdf
