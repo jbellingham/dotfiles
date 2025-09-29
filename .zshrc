@@ -80,5 +80,9 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 eval "$(mcfly init zsh)"
 eval "$(mcfly-fzf init zsh)"
 
-# Load personal customizations
-load_file_if_exists "${HOME}/.zshrc.custom"
+# Personal customizations
+load_file_if_exists "${HOME}/.aliases"
+load_file_if_exists "${HOME}/.zshrc.functions"
+
+# Terminal integrations
+load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
