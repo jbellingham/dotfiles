@@ -1,81 +1,9 @@
 # file location: ~/.zshrc.custom
+# PERSONAL CUSTOMIZATIONS - Aliases, functions, and personal preferences
 
+# Load personal aliases and functions
 load_file_if_exists "${HOME}/.aliases"
 load_file_if_exists "${HOME}/.zshrc.functions"
-
-# Tool homes and roots
-export TALISMAN_HOME=$HOME/.talisman/bin
-export GEM_HOME=$HOME/.gem
-export DOTNET_ROOT="${HOME}/.dotnet"
-export RIPGREP_CONFIG_PATH=~/.ripgreprc
-
-# Consolidated PATH
-export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin"
-
-# Homebrew configuration
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_CLEANUP_MAX_AGE_DAYS=3
-export HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS=3
-export HOMEBREW_BAT=1
-export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
-export HOMEBREW_VERBOSE_USING_DOTS=1
-export HOMEBREW_BUNDLE_FILE=$HOME/Brewfile
-
-# macOS-specific shell options
-if [[ "$OSTYPE" = darwin* ]] ; then
-  # History options
-  setopt append_history
-  setopt share_history
-  setopt inc_append_history
-  setopt hist_ignore_all_dups
-  setopt hist_ignore_dups
-  setopt hist_allow_clobber
-  setopt hist_reduce_blanks
-  setopt hist_save_no_dups
-
-  # Directory navigation
-  setopt auto_cd
-  setopt auto_pushd
-  setopt pushd_silent
-  setopt pushd_ignore_dups
-
-  # Completion and display
-  setopt beep
-  setopt extended_glob
-  setopt auto_list
-  setopt list_ambiguous
-  setopt list_types
-
-  # Console colors
-  autoload -U colors && colors
-fi
-
-# Fix slowness of pastes with zsh-syntax-highlighting
-pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic
-}
-pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
-}
-zstyle :bracketed-paste-magic paste-init pasteinit
-zstyle :bracketed-paste-magic paste-finish pastefinish
-
-# Development tools
-ASDF_DIR=$HOME/.asdf
-if [ -d $ASDF_DIR ]; then
-  load_file_if_exists "$ASDF_DIR/asdf.sh"
-fi
-
-# Homebrew-dependent setup
-command_exists brew && {
-  # zlib - required for installing python via asdf
-  ZLIB_DIR=$HOMEBREW_PREFIX/opt/zlib
-  if [ -d $ZLIB_DIR ]; then
-    export LDFLAGS="-L$ZLIB_DIR/lib $LDFLAGS"
-    export CPPFLAGS="-I$ZLIB_DIR/include $CPPFLAGS"
-  fi
-}
 
 # Terminal integrations
 load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"

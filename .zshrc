@@ -1,20 +1,10 @@
 zmodload zsh/zprof
 source ${HOME}/.zprofile
 
-# Path to your oh-my-zsh installation.
-export ZSH=${HOME}/.oh-my-zsh
-command_exists oh-my-posh
-if [ $? -eq 0 ]; then
-    eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
-fi
+# INTERACTIVE SHELL SETUP - UI, behavior, and user interface
 
-arch=`uname -m`
-if [[ $arch =~ "arm" ]]
-then
-    eval "$(jump shell zsh)"
-else
-    . /usr/share/autojump/autojump.sh
-fi
+# Oh My Zsh setup
+export ZSH=${HOME}/.oh-my-zsh
 
 # Oh My Zsh Configuration
 DISABLE_UPDATE_PROMPT="true"
@@ -26,28 +16,64 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(evalcache asdf brew sudo zsh-autosuggestions macos direnv zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-# Editor setup
-command_exists code
-[[ "${EDITOR}" == "" && $? -eq 0 ]] && export EDITOR="code --goto"
-[[ "${EDITOR}" == "" ]] && export EDITOR="vi"
-
-# Architecture-specific compilation flags
-[[ $arch =~ "x86" ]] && export ARCHFLAGS="-arch x86_64"
-
-load_file_if_exists "${HOME}/.zshrc.custom"
-
-# Tool-specific setup
-if [ -f ~/.asdf/plugins/golang/set-env.zsh ]; then
-    . ~/.asdf/plugins/golang/set-env.zsh
+# Prompt configuration
+command_exists oh-my-posh
+if [ $? -eq 0 ]; then
+    eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
 fi
 
-# Additional PATH entries
-export PATH="$PATH:$HOMEBREW_PREFIX/opt/postgresql@16/bin"
+# Navigation tools (interactive)
+arch=`uname -m`
+if [[ $arch =~ "arm" ]]
+then
+    eval "$(jump shell zsh)"
+else
+    . /usr/share/autojump/autojump.sh
+fi
 
-# Tool initialization
+# macOS-specific shell options (moved from .zshrc.custom)
+if [[ "$OSTYPE" = darwin* ]] ; then
+  # History options
+  setopt append_history
+  setopt share_history
+  setopt inc_append_history
+  setopt hist_ignore_all_dups
+  setopt hist_ignore_dups
+  setopt hist_allow_clobber
+  setopt hist_reduce_blanks
+  setopt hist_save_no_dups
+
+  # Directory navigation
+  setopt auto_cd
+  setopt auto_pushd
+  setopt pushd_silent
+  setopt pushd_ignore_dups
+
+  # Completion and display
+  setopt beep
+  setopt extended_glob
+  setopt auto_list
+  setopt list_ambiguous
+  setopt list_types
+
+  # Console colors
+  autoload -U colors && colors
+fi
+
+# Fix slowness of pastes with zsh-syntax-highlighting (moved from .zshrc.custom)
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic
+}
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+
+# Interactive tool initialization
 command_exists direnv && _evalcache direnv hook zsh
 eval "$(mcfly init zsh)"
+
+# Load personal customizations
+load_file_if_exists "${HOME}/.zshrc.custom"
