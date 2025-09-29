@@ -1,0 +1,1 @@
+I use ripgrep instead of regular grep. grep has been aliased to rg.
