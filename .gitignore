@@ -52,3 +52,5 @@
 **/*.aif.asd
 
 !CLAUDE.md
+
+!scripts/
