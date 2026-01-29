@@ -1,0 +1,8 @@
+{
+    "defaults": {
+      "bash_timeout": 600000
+    },
+    "permissions": {
+      "defaultMode": "plan"
+    }
+}
