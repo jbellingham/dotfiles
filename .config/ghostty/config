@@ -4,3 +4,5 @@ font-family = "Monaspace Argon"
 font-thicken = true
 copy-on-select = true
 unfocused-split-opacity = 0.15
+keybind = shift+enter=text:\x1b\r
+macos-option-as-alt = true

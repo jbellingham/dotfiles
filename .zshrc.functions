@@ -14,3 +14,71 @@ function reset-database {
     bin/rails db:seed
     bin/rails dev:fake_data
 }
+
+# Interactive kaydet diary entry function
+function kentry() {
+    local entry_text=""
+    local tags_input=""
+    local metadata_input=""
+    local confirm=""
+
+    # Prompt for entry text with full line editing
+    vared -p "📝 Entry text: " entry_text
+
+    # Check if entry is empty
+    if [[ -z "$entry_text" ]]; then
+        echo "❌ Entry text cannot be empty"
+        return 1
+    fi
+
+    # Prompt for tags (optional) with full line editing
+    vared -p "🏷️  Tags (space-separated, e.g., work personal): " tags_input
+
+    # Convert tags to #tag format
+    if [[ -n "$tags_input" ]]; then
+        for tag in ${=tags_input}; do
+            # Add # prefix if not already present
+            if [[ "$tag" != \#* ]]; then
+                entry_text="$entry_text #$tag"
+            else
+                entry_text="$entry_text $tag"
+            fi
+        done
+    fi
+
+    # Prompt for metadata (optional) with full line editing
+    vared -p "📊 Metadata (key:value pairs, e.g., project:api status:done time:2h): " metadata_input
+
+    # Add metadata to entry text
+    if [[ -n "$metadata_input" ]]; then
+        entry_text="$entry_text $metadata_input"
+    fi
+
+    # Show preview
+    echo ""
+    echo "📋 Preview:"
+    echo "   $entry_text"
+    echo ""
+
+    # Confirm before saving
+    vared -p "💾 Save this entry? (Y/n): " confirm
+
+    if [[ "$confirm" =~ ^[Nn]$ ]]; then
+        echo "❌ Entry cancelled"
+        return 0
+    fi
+
+    # Execute kaydet command
+    kaydet "$entry_text"
+
+    if [[ $? -eq 0 ]]; then
+        echo "✅ Entry saved successfully"
+    else
+        echo "❌ Failed to save entry"
+        return 1
+    fi
+}
+
+# Alias for even shorter access
+alias journal='kentry'
+alias log='kentry'

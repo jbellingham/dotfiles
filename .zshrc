@@ -22,10 +22,10 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':fzf-tab:*' fzf-flags --bind=tab:accept
 
 # Prompt configuration
-command_exists oh-my-posh
-if [ $? -eq 0 ]; then
-    eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
-fi
+# command_exists oh-my-posh
+# if [ $? -eq 0 ]; then
+#     eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json')"
+# fi
 
 # Navigation tools (interactive)
 arch=`uname -m`
@@ -86,3 +86,13 @@ load_file_if_exists "${HOME}/.zshrc.functions"
 
 # Terminal integrations
 load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
+
+source /Users/jessebellingham/dev/work/chargefox-tools/awsconsole/function.zsh
+eval "$(starship init zsh)"
+# bun completions
+[ -s "/Users/jessebellingham/.bun/_bun" ] && source "/Users/jessebellingham/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(~/.local/bin/mise activate)"
