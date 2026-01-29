@@ -6,6 +6,7 @@ desktop.ini
 
 # Development environment
 .tool-versions
+mise.toml
 .sdkmanrc
 .envrc
 .direnv
@@ -59,3 +60,6 @@ build/
 Procfile.debug
 
 .claude/
+
+build-*
+AGENTS.md

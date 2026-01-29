@@ -51,6 +51,6 @@
 **/*.aif
 **/*.aif.asd
 
-!CLAUDE.md
+!.claude/
 
 !scripts/
