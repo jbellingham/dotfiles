@@ -6,3 +6,4 @@ copy-on-select = true
 unfocused-split-opacity = 0.15
 keybind = shift+enter=text:\x1b\r
 macos-option-as-alt = true
+command = /bin/zsh -c "/opt/homebrew/bin/tmux attach -t dev || /opt/homebrew/bin/tmux new-session -s dev"

@@ -1,4 +1,81 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(date:*)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(wc:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(sort:*)",
+      "Bash(grep:*)",
+      "Bash(tr:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git tag:*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/secrets/*)",
+      "Read(**/*credential*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)"
+    ]
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/route-feedback-detector.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/teaching-mode.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/opus-nudge.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "ruby-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "railway@claude-plugins-official": true,
+    "remember@claude-plugins-official": true,
+    "linear@claude-plugins-official": true,
+    "notion@claude-plugins-official": true,
+    "github@claude-plugins-official": true
+  },
   "alwaysThinkingEnabled": true,
-  "model": "sonnet"
+  "effortLevel": "xhigh",
+  "tui": "fullscreen"
 }

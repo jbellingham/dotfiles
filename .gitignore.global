@@ -24,7 +24,6 @@ Session.vim
 node_modules/
 .npm/
 .yarn/
-package-lock.json
 venv/
 __pycache__/
 .pytest_cache/
@@ -53,13 +52,20 @@ build/
 # Security and configs
 .talismanrc
 .env
+.envrc
 .env.local
 .env.*.local
 
 # Process files
 Procfile.debug
 
-.claude/
+# Scripts
+script/worktree-create
+script/worktree-remove
 
 build-*
 AGENTS.md
+.remember/
+.claude/settings.local.json
+.claude/
+.claude/teaching_mode

@@ -20,3 +20,7 @@ jump shell fish | source
 oh-my-posh init fish --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/1_shell.omp.json' | source
 direnv hook fish | source
 asdf completion fish > ~/.config/fish/completions/asdf.fish
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/jessebellingham/.lmstudio/bin
+# End of LM Studio CLI section
+

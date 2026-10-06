@@ -29,6 +29,10 @@ alias drunp="dotnet run --project"
 # laravel
 alias sail="sh $([ -f sail ] && echo sail || echo vendor/bin/sail)"
 
+# ruby
+alias rc="bundle exec rubocop"
+
+alias less="less --mouse"
 alias cat="bat"
 alias top="btop"
 # alias vim="lvim -S Session.vim"
@@ -37,7 +41,6 @@ alias bu="brew upgrade"
 alias dockerdebug="docker run -ti --entrypoint sh"
 alias reload='source ~/.zshrc'
 alias hgrep="history 1 | grep"
-alias grep="rg -iF --color=auto"
 alias formatjson="pbpaste | jq . | pbcopy"
 alias aliases="alias | less"
 alias home="code $HOME"
