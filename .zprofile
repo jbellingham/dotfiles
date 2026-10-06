@@ -33,16 +33,14 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Editor setup
-command_exists code
-[[ "${EDITOR}" == "" && $? -eq 0 ]] && export EDITOR="code --goto"
-[[ "${EDITOR}" == "" ]] && export EDITOR="vi"
+export EDITOR=nano
 
 # Architecture-specific compilation flags
 [[ $arch =~ "x86" ]] && export ARCHFLAGS="-arch x86_64"
 
 # Tool homes and roots
 export TALISMAN_HOME=$HOME/.talisman/bin
-export DOTNET_ROOT="${HOME}/.dotnet"
+# export DOTNET_ROOT="${HOME}/.dotnet"
 export RIPGREP_CONFIG_PATH=~/.ripgreprc
 export ANDROID_HOME=$HOME/Library/Android/sdk
 
@@ -57,7 +55,7 @@ export HOMEBREW_BUNDLE_FILE=$HOME/Brewfile
 
 
 # Consolidated PATH (all modifications in one place)
-export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$HOME/.local/bin:/home/jesse/.local/bin:/home/linuxbrew/.linuxbrew/bin:/Users/jessebellingham/Library/Application Support/JetBrains/Toolbox/scripts:/usr/local/bin:$HOMEBREW_PREFIX/opt/postgresql@16/bin:/home/jesse/.config/herd-lite/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
+export PATH="$PATH:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.bin:$HOME/.bin/git:$HOME/.bin/linux:$HOME/.bin/macos:$HOME/.dotnet:$HOME/.dotnet/tools:$HOME/dev/flutter/bin:$HOME/.pub-cache/bin:$GEM_HOME/bin:$HOME/.local/bin:/home/jesse/.local/bin:/home/linuxbrew/.linuxbrew/bin:/Users/jessebellingham/Library/Application Support/JetBrains/Toolbox/scripts:/usr/local/bin:$HOMEBREW_PREFIX/opt/postgresql@16/bin:/home/jesse/.config/herd-lite/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$HOME/scripts"
 
 # Homebrew-dependent development setup
 command_exists brew && {
