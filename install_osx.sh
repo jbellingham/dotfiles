@@ -106,7 +106,7 @@ cat <<'EOF'
 Still manual:
   - Put your SSH key in place (1Password SSH agent, or copy ~/.ssh). Then: ssh -T git@github.com
   - Sign in: 1Password, App Store, GitHub (gh auth login), Claude Code.
-  - Set the terminal font to "MesloLGS Nerd Font".
+  - Set the terminal font (Ghostty uses "Monaspace Argon").
   - Alfred: Preferences > Advanced > Syncing > Set preferences folder > ~/.config/alfred
   - Clone ~/dev/work/chargefox-tools. ~/.zshrc sources files from it.
   - Quit and reopen the terminal. exec zsh does not reload fonts.

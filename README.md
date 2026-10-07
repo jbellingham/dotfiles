@@ -27,7 +27,7 @@ You need to do these by hand:
 - Enter your password once when asked.
 - Put your SSH key in place. 1Password's SSH agent works. Test with `ssh -T git@github.com`.
 - Sign in to 1Password, the App Store, GitHub (`gh auth login`) and Claude Code. Mac App Store items in the Brewfile need the App Store sign-in first.
-- Set the terminal font to `MesloLGS Nerd Font`.
+- Set the terminal font. Ghostty uses `Monaspace Argon` (`font-monaspace` in the Brewfile).
 - Point Alfred at its synced settings: Preferences > Advanced > Syncing > Set preferences folder, then choose `~/.config/alfred`. Needs the Powerpack licence.
 - Clone `~/dev/work/chargefox-tools`. `.zshrc` sources files from it.
 - Quit and reopen the terminal.
@@ -90,6 +90,23 @@ Notes:
 - `evalcache` is dropped. Nothing in your shell files calls it.
 - `lib` keeps oh-my-zsh's history, correction and key bindings. Remove that line later to see what you really use.
 - After editing `.zsh_plugins.txt`, antidote rebuilds its cache on the next start.
+
+## Not captured by yadm
+
+Set these up by hand on a new Mac.
+
+- **Touch ID for sudo.** Create `/etc/pam.d/sudo_local` with the line `auth sufficient pam_tid.so`.
+- **Cron job.** Restore after cloning `~/second-brain`. Add it with `crontab -e`:
+
+  ```
+  15 9 * * * /usr/bin/ruby /Users/jessebellingham/second-brain/chargefox/snippets/scripts/export-claude-sessions.rb >> /Users/jessebellingham/second-brain/chargefox/snippets/scripts/export-claude-sessions.log 2>&1
+  ```
+
+- **Local dev DNS.** `puma-dev` is in the Brewfile but not set up. Per its docs, run `sudo puma-dev -setup` then `puma-dev -install`. Not tested here.
+- **Secrets and credentials.** Keep these in 1Password, not in git: `~/.ssh`, `~/.gnupg`, `~/.aws`, `~/.netrc`, `~/.wakatime.cfg`, `~/.docker/config.json`, `~/.granted`, and the `.env` files in the work repos.
+- **Shell history.** `~/.zsh_history` and McFly's `history.db` do not carry over.
+- **Other home items to copy or leave behind:** `~/bin`, `~/.talisman*`, `~/.zshenv`, `~/.git-template`, `~/.serverlessrc`, `~/.logseq`, `~/Documents`.
+- **Claude Code.** `~/.claude.json` (MCP servers, may hold tokens) and `~/.claude/hooks/` are not tracked. `settings.json` still points at the hooks, so remove those entries or copy the folder.
 
 ## Known gaps
 
