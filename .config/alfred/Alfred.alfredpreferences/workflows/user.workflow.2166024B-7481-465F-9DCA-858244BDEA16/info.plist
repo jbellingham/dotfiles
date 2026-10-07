@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.jessebellingham.alfred.kill-port</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>89CCE365-E798-4767-81E2-403B58F11B24</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CBB115A3-04E0-4012-ACC7-49726A29D440</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>AB7E3FE1-DC76-4D1E-A2BA-6A7E6FAD4483</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89CCE365-E798-4767-81E2-403B58F11B24</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Jesse Bellingham</string>
+	<key>description</key>
+	<string>List open TCP ports and kill processes by port number</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Kill Port</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Kill Port</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>CBB115A3-04E0-4012-ACC7-49726A29D440</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>port</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Scanning ports…</string>
+				<key>script</key>
+				<string>/usr/bin/python3 ./list_ports.py</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search and kill listening processes by port number</string>
+				<key>title</key>
+				<string>Open Ports</string>
+				<key>type</key>
+				<integer>11</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>AB7E3FE1-DC76-4D1E-A2BA-6A7E6FAD4483</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>kill -9 {query} 2&gt;/dev/null
+if [[ $? -eq 0 ]]; then
+    echo "Killed $process_name on port $port"
+else
+    echo "Could not kill {query}"
+fi
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>89CCE365-E798-4767-81E2-403B58F11B24</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Type "ports" to list all listening TCP ports, sorted by port number.
+
+Search by port number or process name. Press Enter to force-kill the selected process.
+
+Requires Python 3 (built into macOS).</string>
+	<key>uidata</key>
+	<dict>
+		<key>89CCE365-E798-4767-81E2-403B58F11B24</key>
+		<dict>
+			<key>xpos</key>
+			<real>350.0</real>
+			<key>ypos</key>
+			<real>50.0</real>
+		</dict>
+		<key>AB7E3FE1-DC76-4D1E-A2BA-6A7E6FAD4483</key>
+		<dict>
+			<key>xpos</key>
+			<real>50.0</real>
+			<key>ypos</key>
+			<real>50.0</real>
+		</dict>
+		<key>CBB115A3-04E0-4012-ACC7-49726A29D440</key>
+		<dict>
+			<key>xpos</key>
+			<real>650.0</real>
+			<key>ypos</key>
+			<real>50.0</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>

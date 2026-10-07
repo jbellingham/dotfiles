@@ -1,0 +1,2687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>om.github.vanstrouble.alfred.visualstudiocode</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>0713EB05-61B7-4A89-BF4B-F7A0E1DC7B52</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>50649526-317B-4E15-A15B-C1CF02EDFC86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>12965AEA-1050-46A5-ABA3-7D2FCA78A1E6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5483D3AE-DBE6-4FB8-ACF9-45EF494F0A57</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>57A04298-38E6-400F-AD7E-737864848305</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>40005596-AB84-4A54-9F32-A35FE3429799</string>
+				<key>disabled</key>
+				<true/>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>15125F00-E701-4077-A423-BE7CBF8C0A0F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CC170ECD-6B82-4A05-8681-8185ACE453FE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>17B64E35-554B-4627-99FA-EA224AC850F4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89FC3073-C0EC-41F9-A6FC-E0068FA0304E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>21750E1C-77A3-4F52-81DD-1052976D1742</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>50649526-317B-4E15-A15B-C1CF02EDFC86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>BB36521F-27E9-4608-8FB9-DF063652E6EE</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>0713EB05-61B7-4A89-BF4B-F7A0E1DC7B52</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>23DEA358-A623-4725-95B2-79C207AF4556</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>50649526-317B-4E15-A15B-C1CF02EDFC86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>40005596-AB84-4A54-9F32-A35FE3429799</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D57ED314-9F9C-48C7-BA02-4B8E0000DE9A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>50649526-317B-4E15-A15B-C1CF02EDFC86</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0DF99641-3C65-4832-B2BA-B2B6A5B78B3D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5483D3AE-DBE6-4FB8-ACF9-45EF494F0A57</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>50649526-317B-4E15-A15B-C1CF02EDFC86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>A715DB3D-EAD1-4231-AD8D-D0669E91AFE2</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>CB080C5E-956D-46AE-B833-3660D68FA9AD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5F4F8F0D-E4B4-4E4E-9D8E-42BE2D641571</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>50649526-317B-4E15-A15B-C1CF02EDFC86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>64470E15-F206-43B8-A4FE-9B773362994E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>23DEA358-A623-4725-95B2-79C207AF4556</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>66043649-7019-4E85-981D-72D242322D36</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7DC8F0A6-31C3-4356-98AC-8AC7B1319396</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>7DC8F0A6-31C3-4356-98AC-8AC7B1319396</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>12965AEA-1050-46A5-ABA3-7D2FCA78A1E6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>817C48B4-775B-4124-9717-EBD4BBCFE342</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89FC3073-C0EC-41F9-A6FC-E0068FA0304E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>89FC3073-C0EC-41F9-A6FC-E0068FA0304E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3A8598E0-5CE7-473A-AA5F-AF0E3ACA9435</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>90040218-BAB9-499A-8B4C-D0AAB0704E17</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>17B64E35-554B-4627-99FA-EA224AC850F4</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>FB958042-788F-4587-BB9C-5BF728610042</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9CCD5224-6FC1-4663-AD77-3C1F58D1643D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>90040218-BAB9-499A-8B4C-D0AAB0704E17</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A6EC7ED3-51E3-479B-9981-444C2C9A8503</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>ECA1A949-6E5F-44DE-B164-6217348C2193</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C2B0AF16-A043-433C-802F-0A21BC46DC04</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D851D54A-F4F2-4728-A1F6-2FE7E22C3C33</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>CB080C5E-956D-46AE-B833-3660D68FA9AD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>21750E1C-77A3-4F52-81DD-1052976D1742</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>CC170ECD-6B82-4A05-8681-8185ACE453FE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5483D3AE-DBE6-4FB8-ACF9-45EF494F0A57</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D326DB2F-7119-4603-814D-EC9AAB11AEF6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A6EC7ED3-51E3-479B-9981-444C2C9A8503</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D57ED314-9F9C-48C7-BA02-4B8E0000DE9A</key>
+		<array/>
+		<key>D851D54A-F4F2-4728-A1F6-2FE7E22C3C33</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FB958042-788F-4587-BB9C-5BF728610042</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>817C48B4-775B-4124-9717-EBD4BBCFE342</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>FB958042-788F-4587-BB9C-5BF728610042</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7EA317DB-83B3-46F1-8F87-376C7239EB75</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>vanstrouble</string>
+	<key>description</key>
+	<string>Open windows, find projects and recent files, and manage extensions in VS Code.</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Visual Studio Code</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>#!/usr/bin/env osascript -l JavaScript
+
+// JXA script to open a new VS Code window.
+// Supports: VS Code, VS Code Insiders, and VSCodium.
+
+ObjC.import("Foundation");
+
+const FILE_MANAGER = $.NSFileManager.defaultManager;
+
+// VS Code variants configuration (DRY principle)
+const VS_CODE_VARIANTS = [
+	{ name: "Visual Studio Code", path: "/Applications/Visual Studio Code.app" },
+	{ name: "Visual Studio Code - Insiders", path: "/Applications/Visual Studio Code - Insiders.app" },
+	{ name: "VSCodium", path: "/Applications/VSCodium.app" },
+];
+
+/**
+ * Checks if an application exists at path.
+ * @param {string} path - The path to check.
+ * @returns {boolean}
+ */
+function appExists(path) {
+	return FILE_MANAGER.fileExistsAtPath(path);
+}
+
+/**
+ * Finds the installed VS Code variant.
+ * Optimized: Uses centralized constant and functional find() method.
+ * @returns {string|null} Application name or null if not found.
+ */
+function findVSCodeVariant() {
+	const variant = VS_CODE_VARIANTS.find(v =&gt; appExists(v.path));
+	return variant?.name || null;
+}
+
+/**
+ * Main entry point to open a new VS Code window.
+ * Optimized: Cleaner logic flow and better variable naming.
+ */
+function run() {
+	"use strict";
+
+	const appName = findVSCodeVariant();
+
+	if (!appName) {
+		return "VS Code not found";
+	}
+
+	// Initialize applications
+	const VSCode = Application(appName);
+	const SystemEvents = Application("System Events");
+	VSCode.includeStandardAdditions = true;
+
+	// Check if VS Code is already running
+	const vscodeWasRunning = VSCode.running();
+
+	// Open a new window
+	if (!vscodeWasRunning) {
+		VSCode.activate(); // Opens one window automatically
+		delay(2);
+	} else {
+		VSCode.activate();
+		// Open a new window using keyboard shortcut (Cmd + Shift + N)
+		SystemEvents.keystroke("n", {
+			using: ["command down", "shift down"],
+		});
+	}
+}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>ECA1A949-6E5F-44DE-B164-6217348C2193</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>{var:code_keyword}</string>
+				<key>subtext</key>
+				<string>Open a new VS Code window</string>
+				<key>text</key>
+				<string>Open New Window</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>A6EC7ED3-51E3-479B-9981-444C2C9A8503</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsfiles</key>
+				<true/>
+				<key>acceptsmulti</key>
+				<integer>1</integer>
+				<key>acceptstext</key>
+				<true/>
+				<key>acceptsurls</key>
+				<false/>
+				<key>name</key>
+				<string>Open with VS Code</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>5F4F8F0D-E4B4-4E4E-9D8E-42BE2D641571</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string>/Applications/Visual Studio Code.app</string>
+				<key>sourcefile</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>0DF99641-3C65-4832-B2BA-B2B6A5B78B3D</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>D326DB2F-7119-4603-814D-EC9AAB11AEF6</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict/>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>50649526-317B-4E15-A15B-C1CF02EDFC86</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>64470E15-F206-43B8-A4FE-9B773362994E</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>anchorfields</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>daterange</key>
+				<integer>0</integer>
+				<key>fields</key>
+				<array>
+					<dict>
+						<key>field</key>
+						<string>kMDItemDisplayName</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemAlternateNames</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>field</key>
+						<string>kMDItemFinderComment</string>
+						<key>not</key>
+						<false/>
+						<key>split</key>
+						<true/>
+						<key>value</key>
+						<string>{query}</string>
+						<key>words</key>
+						<true/>
+					</dict>
+				</array>
+				<key>includesystem</key>
+				<false/>
+				<key>keyword</key>
+				<string>{var:codef_keyword}</string>
+				<key>limit</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>scopes</key>
+				<array/>
+				<key>sortmode</key>
+				<integer>0</integer>
+				<key>subtext</key>
+				<string>Open files and folders</string>
+				<key>title</key>
+				<string>Find and open with Visual Studio Code</string>
+				<key>types</key>
+				<array/>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.filefilter</string>
+			<key>uid</key>
+			<string>23DEA358-A623-4725-95B2-79C207AF4556</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>15125F00-E701-4077-A423-BE7CBF8C0A0F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>{var:codep_keyword}</string>
+				<key>subtext</key>
+				<string>Open selected folder or front Finder window</string>
+				<key>text</key>
+				<string>Open with Visual Studio Code</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>CC170ECD-6B82-4A05-8681-8185ACE453FE</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>tasksettings</key>
+				<dict/>
+				<key>taskuid</key>
+				<string>com.alfredapp.automation.core/files-and-folders/finder.selection</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.automation.task</string>
+			<key>uid</key>
+			<string>CB080C5E-956D-46AE-B833-3660D68FA9AD</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>1</integer>
+						<key>matchstring</key>
+						<string></string>
+						<key>outputlabel</key>
+						<string>Path</string>
+						<key>uid</key>
+						<string>A715DB3D-EAD1-4231-AD8D-D0669E91AFE2</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>No Path</string>
+				<key>hideelse</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>5483D3AE-DBE6-4FB8-ACF9-45EF494F0A57</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>tasksettings</key>
+				<dict/>
+				<key>taskuid</key>
+				<string>com.alfredapp.automation.core/files-and-folders/finder.windows.current</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.automation.task</string>
+			<key>uid</key>
+			<string>0713EB05-61B7-4A89-BF4B-F7A0E1DC7B52</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>1</integer>
+						<key>matchstring</key>
+						<string></string>
+						<key>outputlabel</key>
+						<string>Selection</string>
+						<key>uid</key>
+						<string>BB36521F-27E9-4608-8FB9-DF063652E6EE</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>No Selection</string>
+				<key>hideelse</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>21750E1C-77A3-4F52-81DD-1052976D1742</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>{var:coder_keyword}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Please Wait…</string>
+				<key>script</key>
+				<string>ObjC.import("Foundation");
+
+const FILE_MANAGER = $.NSFileManager.defaultManager;
+const HOME = ObjC.unwrap(
+	$.NSProcessInfo.processInfo.environment.objectForKey("HOME")
+);
+
+// VS Code variants configuration (DRY principle)
+const VS_CODE_VARIANTS = [
+	["Code", `${HOME}/Library/Application Support/Code/User/globalStorage/state.vscdb`],
+	["Code - Insiders", `${HOME}/Library/Application Support/Code - Insiders/User/globalStorage/state.vscdb`],
+	["VSCodium", `${HOME}/Library/Application Support/VSCodium/User/globalStorage/state.vscdb`],
+];
+
+/**
+ * Executes a shell command using NSTask (faster than doShellScript)
+ * @param {string} command - Command to execute
+ * @returns {string|null} Output or null on error
+ */
+function runShell(command) {
+	try {
+		const task = $.NSTask.alloc.init;
+		const stdout = $.NSPipe.pipe;
+
+		task.launchPath = "/bin/zsh";
+		task.arguments = ["-c", command];
+		task.standardOutput = stdout;
+		task.standardError = $.NSPipe.pipe;
+
+		task.launch;
+		task.waitUntilExit;
+
+		if (task.terminationStatus !== 0) return null;
+
+		const data = stdout.fileHandleForReading.readDataToEndOfFile;
+		if (!data || data.length === 0) return null;
+
+		return ObjC.unwrap(
+			$.NSString.alloc.initWithDataEncoding(data, $.NSUTF8StringEncoding)
+		);
+	} catch (e) {
+		return null;
+	}
+}
+
+/**
+ * Checks if a file exists at path
+ */
+function fileExists(path) {
+	return FILE_MANAGER.fileExistsAtPath(path);
+}
+
+/**
+ * Gets basename from path
+ */
+function getBasename(path) {
+	const parts = path.split("/");
+	return parts[parts.length - 1] || parts[parts.length - 2] || path;
+}
+
+/**
+ * Gets dirname from path
+ */
+function getDirname(path) {
+	const parts = path.split("/");
+	parts.pop();
+	return parts.join("/") || "/";
+}
+
+/**
+ * Gets git branches for multiple paths in parallel (much faster)
+ * @param {string[]} paths - Array of directory paths
+ * @returns {Object} Map of path -&gt; branch name
+ */
+function getGitBranchesParallel(paths) {
+    if (paths.length === 0) return {};
+
+    // Create a script that outputs "path:branch" for each repo
+    const script = paths.map(p =&gt;
+        `(cd "${p}" 2&gt;/dev/null &amp;&amp; echo "${p}:$(git rev-parse --abbrev-ref HEAD 2&gt;/dev/null)")`
+    ).join(" &amp; ");
+
+    const result = runShell(`{ ${script}; wait; } 2&gt;/dev/null`);
+    if (!result) return {};
+
+    const branches = {};
+    result.trim().split("\n").forEach(line =&gt; {
+        const colonIndex = line.lastIndexOf(":");
+        if (colonIndex &gt; 0) {
+            const path = line.substring(0, colonIndex);
+            const branch = line.substring(colonIndex + 1);
+            if (branch &amp;&amp; branch !== "HEAD") {
+                branches[path] = branch;
+            }
+        }
+    });
+    return branches;
+}
+
+/**
+ * Finds VS Code database path.
+ * Optimized: Uses centralized VS_CODE_VARIANTS constant.
+ */
+function findVSCodeDB() {
+	for (const [name, path] of VS_CODE_VARIANTS) {
+		if (fileExists(path)) {
+			return { dbPath: path, buildName: name };
+		}
+	}
+	return null;
+}
+
+/**
+ * Reads recent entries from VS Code SQLite database.
+ * Optimized: Single try-catch block, optional chaining.
+ */
+function getRecentEntries(dbPath) {
+    const query = `SELECT json_extract(value, '$.entries') FROM ItemTable WHERE key = 'history.recentlyOpenedPathsList';`;
+	const result = runShell(`/usr/bin/sqlite3 "${dbPath}" "${query}"`);
+    const storagePath = dbPath.replace(/state\.vscdb$/, "storage.json");
+
+    if (!result) return getRecentEntriesFromStorage(storagePath);
+
+	try {
+        const trimmed = result.trim();
+        if (!trimmed || trimmed.toLowerCase() === "null") {
+            return getRecentEntriesFromStorage(storagePath);
+        }
+        const entries = JSON.parse(trimmed) || [];
+        return entries.length ? entries : getRecentEntriesFromStorage(storagePath);
+	} catch (e) {
+        return getRecentEntriesFromStorage(storagePath);
+	}
+}
+
+/**
+ * Fallback for VS Code versions where recent paths moved from state.vscdb
+ * to globalStorage/storage.json.
+ */
+function getRecentEntriesFromStorage(storagePath) {
+    if (!fileExists(storagePath)) return [];
+
+    try {
+        const content = ObjC.unwrap(
+            $.NSString.stringWithContentsOfFileEncodingError(
+                storagePath,
+                $.NSUTF8StringEncoding,
+                null
+            )
+        );
+        if (!content) return [];
+
+        const data = JSON.parse(content);
+        const recentMenuItems = data.lastKnownMenubarData?.menus?.File?.items
+            ?.find((item) =&gt; item.id === "submenuitem.MenubarRecentMenu")
+            ?.submenu?.items || [];
+
+        return recentMenuItems.flatMap((item) =&gt; {
+            if (item.id === "openRecentFolder" &amp;&amp; item.uri?.path) {
+                return { folderUri: `file://${item.uri.path}` };
+            }
+            if (item.id === "openRecentFile" &amp;&amp; item.uri?.path) {
+                return { fileUri: `file://${item.uri.path}` };
+            }
+            return [];
+        });
+    } catch (e) {
+        return [];
+    }
+}
+
+/**
+ * Parses a URI string to a local file path
+ * @param {string} uri - URI to parse
+ * @returns {string|null} Local path or null if remote/invalid
+ */
+function parseUri(uri) {
+	if (!uri || uri.startsWith("vscode-remote://")) return null;
+	return decodeURIComponent(uri.replace("file://", ""));
+}
+
+/**
+ * Extracts path and type from an entry
+ * @param {Object} entry - Entry object
+ * @returns {{path: string, type: string, name: string}|null}
+ */
+function extractEntryInfo(entry) {
+	if (entry.folderUri) {
+		const path = parseUri(entry.folderUri);
+		return path ? { path, type: "folder", name: getBasename(path) } : null;
+	}
+
+	if (entry.workspace?.configPath) {
+		const path = parseUri(entry.workspace.configPath);
+		return path ? { path, type: "workspace", name: getBasename(path).replace(".code-workspace", "") } : null;
+	}
+
+	if (entry.fileUri) {
+		const path = parseUri(entry.fileUri);
+		return path ? { path, type: "file", name: getBasename(path) } : null;
+	}
+
+	return null;
+}
+
+/**
+ * Creates error/info item for Alfred.
+ * DRY: Extracted common pattern for error messages.
+ * @param {string} title - Title of the message.
+ * @param {string} subtitle - Subtitle of the message.
+ * @param {string} iconPath - Optional icon path.
+ * @returns {object} Alfred response object.
+ */
+function createInfoItem(title, subtitle, iconPath = "icon.png") {
+	return {
+		items: [{ title, subtitle, valid: false, icon: { path: iconPath } }]
+	};
+}
+
+/**
+ * Parses a single entry into Alfred item format
+ * @param {Object} entry - Entry object
+ * @param {Object} branchMap - Map of path -&gt; branch name
+ */
+function parseEntry(entry, branchMap = {}) {
+    const info = extractEntryInfo(entry);
+    if (!info || !fileExists(info.path)) return null;
+
+    const { path, type, name } = info;
+    const prettyPath = path.replace(HOME, "~");
+    const dirPath = getDirname(prettyPath);
+
+    // Get git branch from pre-fetched map (only for folders)
+    const branch = type === "folder" ? branchMap[path] : null;
+    const subtitle = branch ? `${dirPath} • ${branch}` : dirPath;
+
+    return {
+        uid: path,
+        title: name,
+        subtitle: subtitle,
+        arg: path,
+        autocomplete: name,
+        match: `${name} ${path}`,
+        type: "file",
+        icon: type === "workspace"
+            ? { path: "workspace.png" }
+            : { type: "fileicon", path: path },
+        mods: {
+            // ctrl: {
+            // 	subtitle: "⌃ Remove from recent projects",
+            // 	arg: `remove:${path}`,
+            // },
+            // "ctrl+shift": {
+            // 	subtitle: "⌃⇧ Remove all recent projects",
+            // 	arg: "remove:all",
+            // },
+        },
+    };
+}
+
+/**
+ * Main entry point for Alfred Script Filter.
+ * Optimized: Uses createInfoItem, cleaner error handling.
+ */
+function run() {
+    const vsCode = findVSCodeDB();
+
+    if (!vsCode) {
+        return JSON.stringify(createInfoItem(
+            "VS Code not found",
+            "Could not locate VS Code database"
+        ));
+    }
+
+    const entries = getRecentEntries(vsCode.dbPath);
+
+    if (!entries.length) {
+        return JSON.stringify(createInfoItem(
+            "No recent projects",
+            "Open some projects in VS Code first"
+        ));
+    }
+
+    // Extract folder paths for parallel git branch fetching
+    const folderPaths = entries
+        .map(extractEntryInfo)
+        .filter(info =&gt; info?.type === "folder" &amp;&amp; fileExists(info.path))
+        .map(info =&gt; info.path);
+
+    // Fetch all git branches in parallel (single shell call)
+    const branchMap = getGitBranchesParallel(folderPaths);
+
+    // Parse entries and filter out null values
+    const items = entries
+        .map(entry =&gt; parseEntry(entry, branchMap))
+        .filter(item =&gt; item !== null);
+
+    return JSON.stringify({
+        cache: { seconds: 5, loosereload: true },
+        items,
+    });
+}
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search recent projects…</string>
+				<key>title</key>
+				<string>Search recent projects</string>
+				<key>type</key>
+				<integer>7</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>7DC8F0A6-31C3-4356-98AC-8AC7B1319396</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>66043649-7019-4E85-981D-72D242322D36</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>#!/bin/zsh
+
+# Find VS Code database (same logic as list_recent_projects.js)
+db_path=""
+for variant in \
+    "${HOME}/Library/Application Support/Code/User/globalStorage/state.vscdb" \
+    "${HOME}/Library/Application Support/Code - Insiders/User/globalStorage/state.vscdb" \
+    "${HOME}/Library/Application Support/VSCodium/User/globalStorage/state.vscdb"
+do
+    if [[ -f "${variant}" ]]; then
+        db_path="${variant}"
+        break
+    fi
+done
+
+# Exit if DB not found
+if [[ -z "${db_path}" ]]; then
+    echo "Error: VS Code database not found" &gt;&amp;2
+    exit 1
+fi
+
+# Argument from Alfred (format: "remove:path" or "remove:all")
+arg="${1}"
+
+# Extract action from argument prefix
+if [[ "${arg}" == "remove:all" ]]; then
+    # Remove all entries
+    /usr/bin/sqlite3 "${db_path}" \
+        "UPDATE ItemTable SET value = '{\"entries\":[]}' WHERE key = 'history.recentlyOpenedPathsList';"
+else
+    # Remove single entry - extract path after "remove:" prefix
+    path_to_remove="${arg#remove:}"
+    /usr/bin/sqlite3 "${db_path}" &lt;&lt;EOF
+UPDATE ItemTable
+SET value = (
+    SELECT JSON_OBJECT(
+        'entries', JSON_GROUP_ARRAY(entry_json)
+    )
+    FROM (
+        SELECT value AS entry_json
+        FROM JSON_EACH(
+            (SELECT value FROM ItemTable WHERE key = 'history.recentlyOpenedPathsList'),
+            '$.entries'
+        )
+        WHERE COALESCE(
+            JSON_EXTRACT(value, '\$.folderUri'),
+            JSON_EXTRACT(value, '\$.workspace.configPath'),
+            JSON_EXTRACT(value, '\$.fileUri')
+        ) != 'file://${path_to_remove}'
+    )
+)
+WHERE key = 'history.recentlyOpenedPathsList';
+EOF
+fi
+
+echo "Updated recent projects"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>D57ED314-9F9C-48C7-BA02-4B8E0000DE9A</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<true/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>^(?!remove:).*</string>
+						<key>outputlabel</key>
+						<string>Path</string>
+						<key>uid</key>
+						<string>57A04298-38E6-400F-AD7E-737864848305</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>Remove</string>
+				<key>hideelse</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>12965AEA-1050-46A5-ABA3-7D2FCA78A1E6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict/>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>40005596-AB84-4A54-9F32-A35FE3429799</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>#!/usr/bin/env osascript -l JavaScript
+
+// JXA script to uninstall a VS Code extension from an Alfred workflow.
+// It finds the installed VS Code variant and uses its command-line interface
+// to uninstall the extension passed as an argument.
+
+ObjC.import("Foundation");
+
+const FILE_MANAGER = $.NSFileManager.defaultManager;
+const app = Application.currentApplication();
+app.includeStandardAdditions = true;
+
+// Consistent VS Code variants configuration
+const VS_CODE_VARIANTS = [
+	{
+		name: "Visual Studio Code",
+		path: "/Applications/Visual Studio Code.app",
+		cli: "code",
+	},
+	{
+		name: "Visual Studio Code - Insiders",
+		path: "/Applications/Visual Studio Code - Insiders.app",
+		cli: "code-insiders",
+	},
+	{ name: "VSCodium", path: "/Applications/VSCodium.app", cli: "codium" },
+];
+
+/**
+ * Checks if a file or directory exists.
+ * @param {string} path - The path to check.
+ * @returns {boolean}
+ */
+function fileExists(path) {
+	return FILE_MANAGER.fileExistsAtPath(path);
+}
+
+/**
+ * Finds the first installed VS Code variant.
+ * @returns {{name: string, path: string, cli: string}|null}
+ */
+function findVSCodeVariant() {
+	return VS_CODE_VARIANTS.find(variant =&gt; fileExists(variant.path)) || null;
+}
+
+/**
+ * Executes a shell command.
+ * @param {string} command - The command to execute.
+ * @returns {string|null} The result of the command, or null on error.
+ */
+function runShell(command) {
+	try {
+		return app.doShellScript(command);
+	} catch (e) {
+		console.log(`Error executing command: ${command}`);
+		console.log(e.message);
+		return null;
+	}
+}
+
+/**
+ * Main entry point for the JXA script.
+ * @param {string[]} argv - Arguments passed from the Alfred Run Script action.
+ */
+function run(argv) {
+	"use strict";
+
+	const extensionId = argv?.[0]?.trim();
+	if (!extensionId) {
+		return "No extension ID provided";
+	}
+
+	// Get the extension name from environment variable if available
+	const env = $.NSProcessInfo.processInfo.environment;
+	const extensionName = ObjC.unwrap(env.objectForKey("extension_name")) || extensionId;
+
+	const vscode = findVSCodeVariant();
+	if (!vscode) {
+		return "Application not detected on this system. Please install VS Code first.";
+	}
+
+	// Use the full path to the binary inside the app bundle.
+	const cliPath = `${vscode.path}/Contents/Resources/app/bin/${vscode.cli}`;
+	const command = `'${cliPath}' --uninstall-extension '${extensionId}'`;
+
+	const result = runShell(command);
+
+	if (result === null) {
+		return `${extensionName}\nUninstall failed. Please try again.`;
+	}
+
+	return `${extensionName}\nUninstalled successfully`;
+}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>17B64E35-554B-4627-99FA-EA224AC850F4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>9CCD5224-6FC1-4663-AD77-3C1F58D1643D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>{var:codex_keyword}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Please Wait…</string>
+				<key>script</key>
+				<string>#!/usr/bin/env osascript -l JavaScript
+
+// JXA script to list installed VS Code extensions from an Alfred workflow.
+// It finds all installed VS Code variants and displays their installed extensions
+// with support for opening them directly in VS Code or uninstalling them.
+
+ObjC.import("Foundation");
+
+const FILE_MANAGER = $.NSFileManager.defaultManager;
+const HOME = ObjC.unwrap(
+	$.NSProcessInfo.processInfo.environment.objectForKey("HOME")
+);
+
+// VS Code variants configuration (DRY principle)
+const VS_CODE_VARIANTS = [
+	{
+		name: "Code",
+		app: "/Applications/Visual Studio Code.app",
+		ext: ".vscode",
+		scheme: "vscode",
+	},
+	{
+		name: "Code - Insiders",
+		app: "/Applications/Visual Studio Code - Insiders.app",
+		ext: ".vscode-insiders",
+		scheme: "vscode-insiders",
+	},
+	{
+		name: "VSCodium",
+		app: "/Applications/VSCodium.app",
+		ext: ".vscode-oss",
+		scheme: "vscodium",
+	},
+];
+
+/**
+ * Checks if a file or directory exists.
+ * @param {string} path - The path to check.
+ * @returns {boolean}
+ */
+function fileExists(path) {
+	return FILE_MANAGER.fileExistsAtPath(path);
+}
+
+/**
+ * Finds installed VS Code variants and their extension directories.
+ * Optimized: Only checks paths once, constructs result directly.
+ * @returns {{name: string, extensionsPath: string, scheme: string}[]}
+ */
+function findVSCodeVariants() {
+	return VS_CODE_VARIANTS.map((v) =&gt; ({
+		...v,
+		extensionsPath: `${HOME}/${v.ext}/extensions`,
+	})).filter((v) =&gt; fileExists(v.extensionsPath));
+}
+
+/**
+ * Reads and parses a JSON file with caching.
+ * Optimized: Single try-catch, early return pattern.
+ * @param {string} path - Path to the JSON file.
+ * @returns {object|null}
+ */
+function readJson(path) {
+	try {
+		const content = $.NSString.stringWithContentsOfFileEncodingError(
+			path,
+			$.NSUTF8StringEncoding,
+			null
+		);
+		return content ? JSON.parse(ObjC.unwrap(content)) : null;
+	} catch (e) {
+		return null;
+	}
+}
+
+/**
+ * Resolves localization tokens in a string (e.g., %displayName%).
+ * Optimized: Early return, lazy loading of NLS file.
+ * @param {string} value - Value that may contain localization tokens.
+ * @param {string} extPath - Path to the extension directory.
+ * @returns {string}
+ */
+function resolveLocalization(value, extPath) {
+	if (!value || typeof value !== "string" || !value.includes("%")) {
+		return value;
+	}
+
+	const nls = readJson(`${extPath}/package.nls.json`);
+	return nls
+		? value.replace(/%([^%]+)%/g, (_, token) =&gt; nls[token] || `%${token}%`)
+		: value;
+}
+
+/**
+ * Gets the icon path for an extension.
+ * Optimized: Trust manifest.icon if present, otherwise use default.
+ * @param {string} extPath - Path to the extension directory.
+ * @param {object} manifest - The package.json manifest.
+ * @returns {object} Icon object for Alfred.
+ */
+function findExtensionIcon(extPath, manifest) {
+	// Trust manifest-specified icon (VS Code validates this)
+	if (manifest.icon) {
+		return { path: `${extPath}/${manifest.icon}` };
+	}
+	return { path: "icon.png" };
+}
+
+/**
+ * Creates an Alfred item from extension metadata.
+ * Optimized: Extracted to separate function for better readability and reusability.
+ * @param {string} id - Extension ID.
+ * @param {string} displayName - Display name of the extension.
+ * @param {string} description - Description of the extension.
+ * @param {string} publisher - Publisher name.
+ * @param {object} icon - Icon object.
+ * @param {object} variant - The VS Code variant this extension belongs to.
+ * @returns {object} Alfred item object.
+ */
+function createAlfredItem(
+	id,
+	displayName,
+	description,
+	publisher,
+	icon,
+	variant
+) {
+	const vscodeUrl = `${variant.scheme}:extension/${id}`;
+	return {
+		uid: id,
+		title: displayName,
+		subtitle: description,
+		arg: vscodeUrl,
+		autocomplete: displayName,
+		match: `${displayName} ${publisher} ${id}`,
+		icon: icon,
+		mods: {
+			ctrl: {
+				subtitle: `⌃ Uninstall "${displayName}"`,
+				arg: id,
+				variables: { action: "uninstall", extension_name: displayName },
+			},
+		},
+	};
+}
+
+/**
+ * Gets the set of obsolete (pending removal) extension folder names.
+ * VS Code marks uninstalled extensions in a .obsolete JSON file.
+ * @param {string} extensionsPath - Path to the extensions directory.
+ * @returns {Set&lt;string&gt;} Set of obsolete folder names.
+ */
+function getObsoleteExtensions(extensionsPath) {
+	const obsoleteFile = `${extensionsPath}/.obsolete`;
+	const obsoleteData = readJson(obsoleteFile);
+	return obsoleteData ? new Set(Object.keys(obsoleteData)) : new Set();
+}
+
+/**
+ * Gets locally installed extensions.
+ * Optimized: Streamlined logic, reduced nesting, better error handling.
+ * @param {object} variant - The VS Code variant object.
+ * @returns {object[]}
+ */
+function getLocalExtensions(variant) {
+	const extensionsPath = variant.extensionsPath;
+	if (!fileExists(extensionsPath)) return [];
+
+	const contents = FILE_MANAGER.contentsOfDirectoryAtPathError(
+		extensionsPath,
+		null
+	);
+	if (!contents) return [];
+
+	// Get obsolete extensions to filter them out
+	const obsolete = getObsoleteExtensions(extensionsPath);
+
+	const extensions = [];
+	const count = contents.count;
+
+	for (let i = 0; i &lt; count; i++) {
+		const dirName = ObjC.unwrap(contents.objectAtIndex(i));
+
+		// Skip obsolete (uninstalled) extensions
+		if (obsolete.has(dirName)) continue;
+
+		const extPath = `${extensionsPath}/${dirName}`;
+		const manifest = readJson(`${extPath}/package.json`);
+
+		if (!manifest?.name || !manifest?.publisher) continue;
+
+		const id = `${manifest.publisher}.${manifest.name}`;
+		const displayName =
+			resolveLocalization(manifest.displayName, extPath) || manifest.name;
+		const description =
+			resolveLocalization(manifest.description, extPath) || "";
+		const icon = findExtensionIcon(extPath, manifest);
+
+		extensions.push(
+			createAlfredItem(
+				id,
+				displayName,
+				description,
+				manifest.publisher,
+				icon,
+				variant
+			)
+		);
+	}
+
+	return extensions;
+}
+
+/**
+ * Creates error/info item for Alfred.
+ * DRY: Extracted common pattern for error messages.
+ * @param {string} title - Title of the message.
+ * @param {string} subtitle - Subtitle of the message.
+ * @returns {object} Alfred response object.
+ */
+function createInfoItem(title, subtitle) {
+	return {
+		items: [{ title, subtitle, valid: false }],
+	};
+}
+
+/**
+ * Main entry point for Alfred Script Filter.
+ * Optimized: Reduced complexity, better data flow, single JSON.stringify call.
+ */
+function run() {
+	const variants = findVSCodeVariants();
+
+	if (variants.length === 0) {
+		return JSON.stringify(
+			createInfoItem(
+				"VS Code installation not found",
+				"Could not locate VS Code, Insiders, or VSCodium extensions."
+			)
+		);
+	}
+
+	// Collect all extensions from all variants
+	const allExtensions = variants.flatMap((v) =&gt; getLocalExtensions(v));
+
+	if (allExtensions.length === 0) {
+		return JSON.stringify(
+			createInfoItem(
+				"No extensions found",
+				"Could not find any installed extensions."
+			)
+		);
+	}
+
+	// Remove duplicates using Map (O(n) instead of O(n²))
+	const uniqueExtensions = Array.from(
+		new Map(allExtensions.map((item) =&gt; [item.uid, item])).values()
+	);
+
+	// Sort alphabetically (case-insensitive)
+	uniqueExtensions.sort((a, b) =&gt; a.title.localeCompare(b.title));
+
+	return JSON.stringify({
+		cache: { seconds: 5, loosereload: true },
+		items: uniqueExtensions,
+	});
+}
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search extensions…</string>
+				<key>title</key>
+				<string>Search installed extensions</string>
+				<key>type</key>
+				<integer>7</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>90040218-BAB9-499A-8B4C-D0AAB0704E17</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>7EA317DB-83B3-46F1-8F87-376C7239EB75</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>{var:codes_keyword}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Please Wait…</string>
+				<key>script</key>
+				<string>ObjC.import("Foundation");
+
+const app = Application.currentApplication();
+app.includeStandardAdditions = true;
+
+const FILE_MANAGER = $.NSFileManager.defaultManager;
+const HOME = ObjC.unwrap($.NSProcessInfo.processInfo.environment.objectForKey("HOME"));
+const MAX_RESULTS = 20;
+const API_URL = "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery?api-version=3.0-preview.1";
+const MARKETPLACE_URL = "https://marketplace.visualstudio.com/items?itemName=";
+const DEFAULT_ICON = "icon.png";
+
+// Consistent VS Code variants configuration
+const VS_CODE_VARIANTS = [
+    { name: "Code", ext: ".vscode", path: "/Applications/Visual Studio Code.app", scheme: "vscode" },
+    { name: "Code - Insiders", ext: ".vscode-insiders", path: "/Applications/Visual Studio Code - Insiders.app", scheme: "vscode-insiders" },
+    { name: "VSCodium", ext: ".vscode-oss", path: "/Applications/VSCodium.app", scheme: "vscodium" },
+];
+
+// API Flags (combined for performance)
+const API_FLAGS = 0x2 | 0x4 | 0x10 | 0x20 | 0x80 | 0x100 | 0x200; // Files, Categories, VersionProps, ExcludeNonValidated, AssetUri, Statistics, LatestOnly
+
+/**
+ * Checks if a file or directory exists.
+ * @param {string} path - The path to check.
+ * @returns {boolean}
+ */
+function fileExists(path) {
+    return FILE_MANAGER.fileExistsAtPath(path);
+}
+
+/**
+ * Finds the first installed VS Code variant.
+ * @returns {{name: string, path: string, cli: string, scheme: string}|null}
+ */
+function findVSCodeVariant() {
+	return VS_CODE_VARIANTS.find(variant =&gt; fileExists(variant.path)) || null;
+}
+
+/**
+ * Executes a shell command
+ */
+function runShell(command) {
+	try {
+		return app.doShellScript(command);
+	} catch (e) {
+		return null;
+	}
+}
+
+/**
+ * Formats number compactly (1.2K, 3.4M)
+ */
+function compactNumber(num) {
+	if (num &gt;= 1e6) return (num / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
+	if (num &gt;= 1e3) return (num / 1e3).toFixed(1).replace(/\.0$/, "") + "K";
+	return String(num);
+}
+
+/**
+ * Reads and parses a JSON file.
+ * @param {string} path - Path to the JSON file.
+ * @returns {object|null}
+ */
+function readJson(path) {
+	try {
+		const content = $.NSString.stringWithContentsOfFileEncodingError(
+			path,
+			$.NSUTF8StringEncoding,
+			null
+		);
+		return content ? JSON.parse(ObjC.unwrap(content)) : null;
+	} catch (e) {
+		return null;
+	}
+}
+
+/**
+ * Gets the set of obsolete (pending removal) extension folder names.
+ * VS Code marks uninstalled extensions in a .obsolete JSON file.
+ * @param {string} extensionsPath - Path to the extensions directory.
+ * @returns {Set&lt;string&gt;} Set of obsolete folder names.
+ */
+function getObsoleteExtensions(extensionsPath) {
+	const obsoleteFile = `${extensionsPath}/.obsolete`;
+	const obsoleteData = readJson(obsoleteFile);
+	return obsoleteData ? new Set(Object.keys(obsoleteData)) : new Set();
+}
+
+/**
+ * Reads installed extension IDs from all found VS Code variants.
+ * @returns {Set&lt;string&gt;} A set of installed extension IDs (lowercase).
+ */
+function getInstalledExtensions() {
+    const ids = new Set();
+    if (!HOME) return ids;
+
+    const variantPaths = VS_CODE_VARIANTS
+        .map(v =&gt; `${HOME}/${v.ext}/extensions`)
+        .filter(path =&gt; fileExists(path));
+
+    for (const extPath of variantPaths) {
+        // Get obsolete extensions to filter them out
+        const obsolete = getObsoleteExtensions(extPath);
+
+        const contents = FILE_MANAGER.contentsOfDirectoryAtPathError(extPath, null);
+        if (!contents) continue;
+
+        const count = contents.count;
+        for (let i = 0; i &lt; count; i++) {
+            const dirName = ObjC.unwrap(contents.objectAtIndex(i));
+
+            // Skip obsolete (uninstalled) extensions
+            if (obsolete.has(dirName)) continue;
+
+            // Extract ID: "ms-python.python-2.0.1" -&gt; "ms-python.python"
+            const match = dirName.match(/^(.+?)-\d/);
+            if (match) ids.add(match[1].toLowerCase());
+        }
+    }
+    return ids;
+}
+
+/**
+ * Fetches extensions from VS Code Marketplace
+ */
+function fetchExtensions(searchText) {
+	const body = JSON.stringify({
+		filters: [
+			{
+				criteria: [
+					{ filterType: 8, value: "Microsoft.VisualStudio.Code" },
+					{ filterType: 10, value: searchText },
+					{ filterType: 12, value: "4096" },
+				],
+				pageNumber: 1,
+				pageSize: MAX_RESULTS,
+				sortBy: 0,
+				sortOrder: 0,
+			},
+		],
+		assetTypes: [],
+		flags: API_FLAGS,
+	});
+
+	const command = `curl -s -X POST '${API_URL}' -H 'Content-Type: application/json' --compressed -d '${body}' --max-time 8`;
+	const result = runShell(command);
+
+	if (!result) return [];
+
+	try {
+		const data = JSON.parse(result);
+		return data.results?.[0]?.extensions || [];
+	} catch (e) {
+		return [];
+	}
+}
+
+/**
+ * Parses extension to Alfred item
+ */
+function parseExtension(ext, installedIds, vscodeVariant) {
+	const id = `${ext.publisher.publisherName}.${ext.extensionName}`;
+	const stats = ext.statistics?.find((s) =&gt; s.statisticName === "install");
+	const version = ext.versions?.[0]?.version || "";
+	const isInstalled = installedIds.has(id.toLowerCase());
+
+	const subtitle = [
+		isInstalled ? "✓ Installed" : null,
+		ext.publisher.displayName,
+		stats ? `↓ ${compactNumber(stats.value)}` : null,
+		version ? `v${version}` : null,
+	]
+		.filter(Boolean)
+		.join(" • ");
+
+	const vscodeUrl = vscodeVariant ? `${vscodeVariant.scheme}:extension/${id}` : MARKETPLACE_URL + id;
+
+	return {
+		uid: ext.extensionId,
+		title: ext.displayName,
+		subtitle,
+		arg: id,
+		autocomplete: ext.displayName,
+		match: `${ext.displayName} ${id} ${ext.shortDescription || ""}`,
+		text: { copy: id, largetype: ext.shortDescription || ext.displayName },
+		quicklookurl: MARKETPLACE_URL + id,
+		icon: { path: DEFAULT_ICON },
+		variables: { extension_name: ext.displayName },
+		mods: {
+			cmd: {
+				subtitle: `⌘ Open in VS Code`,
+				arg: vscodeUrl,
+			},
+		},
+	};
+}
+
+/**
+ * Creates a simple Alfred item
+ */
+function simpleItem(title, subtitle, valid = false) {
+	return { title, subtitle, valid, icon: { path: DEFAULT_ICON } };
+}
+
+/**
+ * Main entry point
+ */
+function run(argv) {
+	const query = argv?.[0]?.trim() || "";
+
+	if (!query) {
+		return JSON.stringify({
+			items: [
+				simpleItem(
+					"Search VS Code Extensions",
+					"Type to search the Marketplace"
+				),
+			],
+		});
+	}
+
+	const extensions = fetchExtensions(query);
+
+	if (!extensions.length) {
+		return JSON.stringify({
+			items: [
+				simpleItem("No extensions found", `No results for "${query}"`),
+			],
+		});
+	}
+
+	const installedIds = getInstalledExtensions();
+	const vscodeVariant = findVSCodeVariant();
+
+	return JSON.stringify({
+		cache: { seconds: 5, loosereload: true },
+		items: extensions.map((ext) =&gt; parseExtension(ext, installedIds, vscodeVariant)),
+	});
+}
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search extensions…</string>
+				<key>title</key>
+				<string>Search extensions</string>
+				<key>type</key>
+				<integer>7</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>D851D54A-F4F2-4728-A1F6-2FE7E22C3C33</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>C2B0AF16-A043-433C-802F-0A21BC46DC04</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict/>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>FB958042-788F-4587-BB9C-5BF728610042</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<true/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>#!/usr/bin/env osascript -l JavaScript
+
+// JXA script to install a VS Code extension from an Alfred workflow.
+// It finds the installed VS Code variant and uses its command-line interface
+// to install the extension passed as an argument.
+
+ObjC.import("Foundation");
+
+const FILE_MANAGER = $.NSFileManager.defaultManager;
+const app = Application.currentApplication();
+app.includeStandardAdditions = true;
+
+// Consistent VS Code variants configuration
+const VS_CODE_VARIANTS = [
+	{
+		name: "Visual Studio Code",
+		path: "/Applications/Visual Studio Code.app",
+		cli: "code",
+	},
+	{
+		name: "Visual Studio Code - Insiders",
+		path: "/Applications/Visual Studio Code - Insiders.app",
+		cli: "code-insiders",
+	},
+	{ name: "VSCodium", path: "/Applications/VSCodium.app", cli: "codium" },
+];
+
+/**
+ * Checks if a file or directory exists.
+ * @param {string} path - The path to check.
+ * @returns {boolean}
+ */
+function fileExists(path) {
+	return FILE_MANAGER.fileExistsAtPath(path);
+}
+
+/**
+ * Finds the first installed VS Code variant.
+ * @returns {{name: string, path: string, cli: string}|null}
+ */
+function findVSCodeVariant() {
+	return VS_CODE_VARIANTS.find(variant =&gt; fileExists(variant.path)) || null;
+}
+
+/**
+ * Executes a shell command.
+ * @param {string} command - The command to execute.
+ * @returns {string|null} The result of the command, or null on error.
+ */
+function runShell(command) {
+	try {
+		return app.doShellScript(command);
+	} catch (e) {
+		console.log(`Error executing command: ${command}`);
+		console.log(e.message);
+		return null;
+	}
+}
+
+/**
+ * Main entry point for the JXA script.
+ * @param {string[]} argv - Arguments passed from the Alfred Run Script action.
+ */
+function run(argv) {
+	"use strict";
+
+	const extensionId = argv?.[0]?.trim();
+	if (!extensionId) {
+		return "No extension ID provided";
+	}
+
+	// Get the extension name from environment variable if available
+	const env = $.NSProcessInfo.processInfo.environment;
+	const extensionName = ObjC.unwrap(env.objectForKey("extension_name")) || extensionId;
+
+	const vscode = findVSCodeVariant();
+	if (!vscode) {
+		return "Application not detected on this system. Please install VS Code first.";
+	}
+
+	// Use the full path to the binary inside the app bundle.
+	const cliPath = `${vscode.path}/Contents/Resources/app/bin/${vscode.cli}`;
+	const command = `'${cliPath}' --install-extension '${extensionId}' --force`;
+
+	const result = runShell(command);
+
+	if (result === null) {
+		return `${extensionName}\nInstallation failed. Please try again.`;
+	}
+
+	return `${extensionName}\nInstalled successfully`;
+}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>817C48B4-775B-4124-9717-EBD4BBCFE342</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>{const:alfred_workflow_name}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>3A8598E0-5CE7-473A-AA5F-AF0E3ACA9435</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict/>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>89FC3073-C0EC-41F9-A6FC-E0068FA0304E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string># Visual Studio Code | Alfred Workflow
+
+Control Visual Studio Code directly from Alfred. Jump to your recent projects in seconds, open any file or folder, search and manage extensions, and open new windows, all without taking your hands off the keyboard.
+
+## Usage
+
+### `code` — New VS Code window
+
+### `coder` — Recent projects and files
+- &lt;kbd&gt;↩&lt;/kbd&gt; Open in VS Code
+- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; Reveal in Finder
+- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; View in Alfred
+- &lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; Remove from list
+- &lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;⇧&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; Clear all
+
+### `codef` — Find and open files/folders
+- &lt;kbd&gt;↩&lt;/kbd&gt; Open in VS Code
+- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; Reveal in Finder
+- &lt;kbd&gt;⌥&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; View in Alfred
+
+### `codep [path]` — Open path in VS Code
+- No path: opens current Finder window
+- With path: opens specified folder
+
+### `codes [query]` — Search extensions
+- &lt;kbd&gt;↩&lt;/kbd&gt; Install extension
+- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; View on Marketplace
+
+### `codex` — Installed extensions
+- &lt;kbd&gt;↩&lt;/kbd&gt; Open in VS Code
+- &lt;kbd&gt;⌘&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; View on Marketplace
+- &lt;kbd&gt;⌃&lt;/kbd&gt;&lt;kbd&gt;↩&lt;/kbd&gt; Uninstall
+
+---
+
+Created by **Pedro Vázquez** (vanstrouble).</string>
+	<key>uidata</key>
+	<dict>
+		<key>0713EB05-61B7-4A89-BF4B-F7A0E1DC7B52</key>
+		<dict>
+			<key>xpos</key>
+			<real>940</real>
+			<key>ypos</key>
+			<real>330</real>
+		</dict>
+		<key>0DF99641-3C65-4832-B2BA-B2B6A5B78B3D</key>
+		<dict>
+			<key>xpos</key>
+			<real>1195</real>
+			<key>ypos</key>
+			<real>15</real>
+		</dict>
+		<key>12965AEA-1050-46A5-ABA3-7D2FCA78A1E6</key>
+		<dict>
+			<key>xpos</key>
+			<real>360</real>
+			<key>ypos</key>
+			<real>440</real>
+		</dict>
+		<key>15125F00-E701-4077-A423-BE7CBF8C0A0F</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>6</integer>
+			<key>note</key>
+			<string>Open path in VS Code</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>300</real>
+		</dict>
+		<key>17B64E35-554B-4627-99FA-EA224AC850F4</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>9</integer>
+			<key>note</key>
+			<string>Uninstall extensions</string>
+			<key>xpos</key>
+			<real>585</real>
+			<key>ypos</key>
+			<real>570</real>
+		</dict>
+		<key>21750E1C-77A3-4F52-81DD-1052976D1742</key>
+		<dict>
+			<key>xpos</key>
+			<real>760</real>
+			<key>ypos</key>
+			<real>335</real>
+		</dict>
+		<key>23DEA358-A623-4725-95B2-79C207AF4556</key>
+		<dict>
+			<key>xpos</key>
+			<real>190</real>
+			<key>ypos</key>
+			<real>150</real>
+		</dict>
+		<key>3A8598E0-5CE7-473A-AA5F-AF0E3ACA9435</key>
+		<dict>
+			<key>xpos</key>
+			<real>860</real>
+			<key>ypos</key>
+			<real>820</real>
+		</dict>
+		<key>40005596-AB84-4A54-9F32-A35FE3429799</key>
+		<dict>
+			<key>xpos</key>
+			<real>490</real>
+			<key>ypos</key>
+			<real>465</real>
+		</dict>
+		<key>50649526-317B-4E15-A15B-C1CF02EDFC86</key>
+		<dict>
+			<key>xpos</key>
+			<real>1120</real>
+			<key>ypos</key>
+			<real>45</real>
+		</dict>
+		<key>5483D3AE-DBE6-4FB8-ACF9-45EF494F0A57</key>
+		<dict>
+			<key>xpos</key>
+			<real>470</real>
+			<key>ypos</key>
+			<real>320</real>
+		</dict>
+		<key>5F4F8F0D-E4B4-4E4E-9D8E-42BE2D641571</key>
+		<dict>
+			<key>xpos</key>
+			<real>585</real>
+			<key>ypos</key>
+			<real>15</real>
+		</dict>
+		<key>64470E15-F206-43B8-A4FE-9B773362994E</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>note</key>
+			<string>Search files to open in VS Code</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>150</real>
+		</dict>
+		<key>66043649-7019-4E85-981D-72D242322D36</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>2</integer>
+			<key>note</key>
+			<string>List recent projects</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>435</real>
+		</dict>
+		<key>7DC8F0A6-31C3-4356-98AC-8AC7B1319396</key>
+		<dict>
+			<key>xpos</key>
+			<real>190</real>
+			<key>ypos</key>
+			<real>435</real>
+		</dict>
+		<key>7EA317DB-83B3-46F1-8F87-376C7239EB75</key>
+		<dict>
+			<key>xpos</key>
+			<real>585</real>
+			<key>ypos</key>
+			<real>705</real>
+		</dict>
+		<key>817C48B4-775B-4124-9717-EBD4BBCFE342</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>note</key>
+			<string>Install extensions from Marketplace</string>
+			<key>xpos</key>
+			<real>585</real>
+			<key>ypos</key>
+			<real>820</real>
+		</dict>
+		<key>89FC3073-C0EC-41F9-A6FC-E0068FA0304E</key>
+		<dict>
+			<key>xpos</key>
+			<real>795</real>
+			<key>ypos</key>
+			<real>850</real>
+		</dict>
+		<key>90040218-BAB9-499A-8B4C-D0AAB0704E17</key>
+		<dict>
+			<key>xpos</key>
+			<real>190</real>
+			<key>ypos</key>
+			<real>570</real>
+		</dict>
+		<key>9CCD5224-6FC1-4663-AD77-3C1F58D1643D</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>4</integer>
+			<key>note</key>
+			<string>List installed extensions</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>570</real>
+		</dict>
+		<key>A6EC7ED3-51E3-479B-9981-444C2C9A8503</key>
+		<dict>
+			<key>xpos</key>
+			<real>190</real>
+			<key>ypos</key>
+			<real>15</real>
+		</dict>
+		<key>C2B0AF16-A043-433C-802F-0A21BC46DC04</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>List extensions from marketplace</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>705</real>
+		</dict>
+		<key>CB080C5E-956D-46AE-B833-3660D68FA9AD</key>
+		<dict>
+			<key>xpos</key>
+			<real>585</real>
+			<key>ypos</key>
+			<real>315</real>
+		</dict>
+		<key>CC170ECD-6B82-4A05-8681-8185ACE453FE</key>
+		<dict>
+			<key>xpos</key>
+			<real>190</real>
+			<key>ypos</key>
+			<real>300</real>
+		</dict>
+		<key>D326DB2F-7119-4603-814D-EC9AAB11AEF6</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>8</integer>
+			<key>note</key>
+			<string>New VS Code window</string>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>15</real>
+		</dict>
+		<key>D57ED314-9F9C-48C7-BA02-4B8E0000DE9A</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>1</integer>
+			<key>note</key>
+			<string>Remove recent files</string>
+			<key>xpos</key>
+			<real>585</real>
+			<key>ypos</key>
+			<real>435</real>
+		</dict>
+		<key>D851D54A-F4F2-4728-A1F6-2FE7E22C3C33</key>
+		<dict>
+			<key>xpos</key>
+			<real>190</real>
+			<key>ypos</key>
+			<real>705</real>
+		</dict>
+		<key>ECA1A949-6E5F-44DE-B164-6217348C2193</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>8</integer>
+			<key>note</key>
+			<string>Create new VS Code window</string>
+			<key>xpos</key>
+			<real>410</real>
+			<key>ypos</key>
+			<real>15</real>
+		</dict>
+		<key>FB958042-788F-4587-BB9C-5BF728610042</key>
+		<dict>
+			<key>xpos</key>
+			<real>490</real>
+			<key>ypos</key>
+			<real>735</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>code</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Open a new Visual Studio Code window.</string>
+			<key>label</key>
+			<string>New VS Code Window</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>code_keyword</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>coder</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>List recently opened projects and files in VS Code.</string>
+			<key>label</key>
+			<string>Recent Projects &amp; Files</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>coder_keyword</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>codef</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Search and open files or folders using VS Code.</string>
+			<key>label</key>
+			<string>Search Files or Folders</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>codef_keyword</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>codep</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Open the frontmost Finder folder in VS Code.</string>
+			<key>label</key>
+			<string>Open Finder Folder in VS Code</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>codep_keyword</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>codes</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Find and install extensions from the VS Code Marketplace.</string>
+			<key>label</key>
+			<string>Search Extensions</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>codes_keyword</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>codex</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>View and uninstall installed extensions.</string>
+			<key>label</key>
+			<string>Manage Extensions</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>codex_keyword</string>
+		</dict>
+	</array>
+	<key>variables</key>
+	<dict>
+		<key>action</key>
+		<string></string>
+		<key>extension_name</key>
+		<string></string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>2.1.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/vanstrouble/vscode-alfred-workflow</string>
+</dict>
+</plist>
