@@ -1,0 +1,47 @@
+{
+  "skill_name": "doc-distiller",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "boil this down for me, it's way too long for a PR description:\n\n[paste content of evals/files/rate-limiting-spec.md]",
+      "expected_output": "A tight technical brief (~150-200 words) that preserves the Redis ZSET implementation detail, specific rate limits (100/min, 10/min writes, 20/15min unauth), Lua script atomicity, response header names, and config file location. Drops the algorithm survey (fixed window, sliding log, token bucket comparisons) to a single line at most.",
+      "files": ["evals/files/rate-limiting-spec.md"],
+      "assertions": [
+        "The brief mentions Redis ZSETs or the specific Redis data structure",
+        "The brief preserves all three specific numeric limits (100/min, 10/min for writes, 20 requests per 15 min unauthenticated)",
+        "The brief does not contain multi-sentence descriptions of fixed window counter, sliding log, and token bucket algorithms",
+        "The brief mentions the Lua script or atomic check-and-increment",
+        "The brief mentions the rate limit response headers (RateLimit-Limit or X-RateLimit-Limit)",
+        "The output is significantly shorter than the original (under 350 words)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "can you distil this into something tighter? need to share with the backend team for review\n\n[paste content of evals/files/soft-deletes-migration.md]",
+      "expected_output": "A concise brief that preserves both new column definitions (deleted_at TIMESTAMPTZ, deleted_by UUID FK), the three-step zero-downtime migration approach, CONCURRENTLY index creation, and the email uniqueness index decision. Does not explain what soft deletes are or extensively compare approaches.",
+      "files": ["evals/files/soft-deletes-migration.md"],
+      "assertions": [
+        "The brief names both new columns: deleted_at and deleted_by",
+        "The brief mentions zero-downtime or the three-step/phased migration approach",
+        "The brief mentions CONCURRENTLY index creation",
+        "The brief surfaces the email uniqueness index question (Option A vs B or equivalent)",
+        "The brief does not contain a multi-sentence explanation of what soft deletes are as a pattern",
+        "The output is significantly shorter than the original (under 350 words)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "this spec has too much noise — can you extract the key decisions and implementation for me?\n\n[paste content of evals/files/feature-flags-design.md]",
+      "expected_output": "A brief that preserves the schema fields (key ones: name VARCHAR(100), enabled BOOLEAN, rollout_pct SMALLINT), Redis caching with 60s TTL, the SHA256-based deterministic bucketing, and the /internal/flags API. Cuts the commercial product evaluation (LaunchDarkly, Statsig, Split discussion) to a single sentence at most.",
+      "files": ["evals/files/feature-flags-design.md"],
+      "assertions": [
+        "The brief preserves the schema field names (name, enabled, rollout_pct or all three)",
+        "The brief mentions Redis caching with the 60-second TTL",
+        "The brief mentions the /internal/flags API endpoint",
+        "The brief mentions deterministic/stable rollout assignment (hash-based or SHA256-based bucketing)",
+        "The brief does not contain multi-sentence evaluations of LaunchDarkly, Statsig, or Split.io",
+        "The output is significantly shorter than the original (under 350 words)"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 agents-bak/
 backups/
 cache/
-commands/
 debug/
 file-history/
 ide/
@@ -21,3 +20,8 @@ history.jsonl
 MODE_*
 FLAGS.md
 stats-cache.json
+
+# Synced from claude.ai, eval scratch space, and Python caches
+skills/synced/
+skills/*-workspace/
+**/__pycache__/
