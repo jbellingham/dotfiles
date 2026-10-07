@@ -27,6 +27,7 @@
 !.config/coc/
 !.config/lazygit/
 !.config/alfred/
+!.config/atuin/
 
 # System tools
 !.ripgreprc

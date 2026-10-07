@@ -30,6 +30,7 @@ You need to do these by hand:
 - Set the terminal font. Ghostty uses `Monaspace Argon` (`font-monaspace` in the Brewfile).
 - Point Alfred at its synced settings: Preferences > Advanced > Syncing > Set preferences folder, then choose `~/.config/alfred`. Needs the Powerpack licence.
 - Create https://gist.github.com/jbellingham/b611568eab6c5b431ed60ab2e6fbd77a locally to be able to run the "Dev Environment" Alfred workflow
+- Sync shell history: `atuin login`, then `atuin sync`. The username, password and key are in Bitwarden. First time ever: `atuin import auto`, `atuin register`.
 - Clone `~/dev/work/chargefox-tools`. `.zshrc` sources files from it.
 - Quit and reopen the terminal.
 
@@ -105,7 +106,7 @@ Set these up by hand on a new Mac.
 
 - **Local dev DNS.** `puma-dev` is in the Brewfile but not set up. Per its docs, run `sudo puma-dev -setup` then `puma-dev -install`. Not tested here.
 - **Secrets and credentials.** Keep these in 1Password, not in git: `~/.ssh`, `~/.gnupg`, `~/.aws`, `~/.netrc`, `~/.wakatime.cfg`, `~/.docker/config.json`, `~/.granted`, and the `.env` files in the work repos.
-- **Shell history.** `~/.zsh_history` and McFly's `history.db` do not carry over.
+- **Shell history.** Synced by Atuin, not git. Keep the Atuin key (`atuin key`) in 1Password. It is encrypted on your machine before upload, and without the key synced history is unreadable.
 - **Other home items to copy or leave behind:** `~/bin`, `~/.talisman*`, `~/.zshenv`, `~/.git-template`, `~/.serverlessrc`, `~/.logseq`, `~/Documents`.
 - **Claude Code.** `~/.claude.json` (MCP servers, may hold tokens) and `~/.claude/hooks/` are not tracked. `settings.json` still points at the hooks, so remove those entries or copy the folder.
 

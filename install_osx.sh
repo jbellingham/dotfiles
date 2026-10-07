@@ -108,6 +108,7 @@ Still manual:
   - Sign in: 1Password, App Store, GitHub (gh auth login), Claude Code.
   - Set the terminal font (Ghostty uses "Monaspace Argon").
   - Alfred: Preferences > Advanced > Syncing > Set preferences folder > ~/.config/alfred
+  - Shell history: atuin login, then atuin sync (credentials and key are in Bitwarden).
   - Clone ~/dev/work/chargefox-tools. ~/.zshrc sources files from it.
   - Quit and reopen the terminal. exec zsh does not reload fonts.
 EOF
