@@ -4,78 +4,40 @@ Managed with [yadm](https://yadm.io). Files live in `~` and yadm tracks them in 
 
 ## Set up a fresh MacBook
 
-### 1. Install the basics
+One command does everything below. Safe to re-run.
 
 ```sh
-xcode-select --install
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-brew install yadm git gnupg
+bash <(curl -fsSL https://raw.githubusercontent.com/jbellingham/dotfiles/trunk/install_osx.sh)
 ```
 
-### 2. Get your SSH key onto the machine
+What `install_osx.sh` runs, in order:
 
-The remote is SSH, so the clone needs a key GitHub accepts.
+1. Xcode command line tools, then Homebrew.
+2. `yadm` and `git`.
+3. `yadm clone` over HTTPS into `~`, then switches the remote to SSH. On a fresh Mac it replaces stock dotfiles such as `.zshrc`.
+4. `brew bundle` from `~/Brewfile`.
+5. oh-my-zsh, its plugins, and tmux's plugin manager.
+6. `mise install`.
+7. `~/osx_defaults.sh`.
+8. A FileVault check.
 
-- Install 1Password, sign in, and enable its SSH agent. Or copy your key into `~/.ssh`.
-- Fix permissions: `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`
-- Test it: `ssh -T git@github.com`
+You need to do these by hand:
 
-### 3. Clone the dotfiles
+- Click through the Xcode tools installer when it appears.
+- Enter your password once when asked.
+- Put your SSH key in place. 1Password's SSH agent works. Test with `ssh -T git@github.com`.
+- Sign in to 1Password, the App Store, GitHub (`gh auth login`) and Claude Code. Mac App Store items in the Brewfile need the App Store sign-in first.
+- Set the terminal font to `MesloLGS Nerd Font`.
+- Clone `~/dev/work/chargefox-tools`. `.zshrc` sources files from it.
+- Quit and reopen the terminal.
+
+Want antidote instead of oh-my-zsh? Add `--antidote` to the command:
 
 ```sh
-yadm clone git@github.com:jbellingham/dotfiles.git
+bash <(curl -fsSL https://raw.githubusercontent.com/jbellingham/dotfiles/trunk/install_osx.sh) --antidote
 ```
 
-If yadm says files would be overwritten, keep the repo's version:
-
-```sh
-yadm reset --hard origin/trunk
-```
-
-### 4. Install apps and tools
-
-```sh
-brew bundle --file ~/Brewfile
-brew install starship
-```
-
-- `brew bundle` can report errors for Java. Run it again after Java installs.
-- `starship` is missing from the `Brewfile`. Add it there.
-
-### 5. Install the shell setup
-
-`~/.zshrc` expects Oh My Zsh and these plugins.
-
-```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc
-C=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins
-git clone --depth=1 https://github.com/mroth/evalcache $C/evalcache
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting $C/zsh-syntax-highlighting
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions $C/zsh-autosuggestions
-git clone --depth=1 https://github.com/Aloxaf/fzf-tab $C/fzf-tab
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
-
-`--keep-zshrc` stops the installer from replacing your `.zshrc`.
-
-Planning to use antidote? Run only the `tpm` clone from that block. Then follow "Move from oh-my-zsh to antidote" below.
-
-### 6. Install languages with mise
-
-```sh
-mise install
-```
-
-- Config is in `~/.config/mise/config.toml` (Ruby 3). Add more tools there.
-
-### 7. Finish by hand
-
-- Open a new terminal. Set the font to `MesloLGS Nerd Font`.
-- Restart the terminal. `exec zsh` does not reload fonts.
-- Turn on FileVault: System Settings > Privacy & Security.
-- Optional: `bash ~/osx_defaults.sh` to apply macOS settings. It lists only non-default values.
-- Sign in to apps: 1Password, GitHub (`gh auth login`), Claude Code.
+This only installs antidote. Your `.zshrc` must already load it, or the script warns. See "Move from oh-my-zsh to antidote" below.
 
 ## Daily use
 
@@ -133,6 +95,5 @@ Notes:
 - `.zshrc` sources work-only paths under `~/dev/work/chargefox-tools`. Clone that repo, or the shell prints errors.
 - `.zshrc` and `.zprofile` hard-code `/Users/jessebellingham`.
 - `~/dev/dotfiles` is a plain clone of this repo, not managed by yadm. It can go stale.
-- `fresh_install_of_osx.sh` is an older, mostly commented-out script. It stops partway on purpose. Prefer the steps above.
 - `nix-darwin-config/` is not applied. `darwin-rebuild` is not installed.
 - `.winget` and `install-linux.sh` are for other platforms.
