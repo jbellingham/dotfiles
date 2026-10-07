@@ -50,6 +50,7 @@ alias intellij="open -na 'IntelliJ IDEA Ultimate.app'"
 alias dotfilesgit="cd ~/ && yadm enter zsh && lazygit"
 
 alias assume="source $(brew --prefix)/bin/assume"
+alias cfxdebug="cd ~/dev/work/chargefox && overmind start -f Procfile.debug"
 
 alias dotfilesgit="cd ~/ && yadm enter zsh && lazygit"
 alias oms="overmind start"
