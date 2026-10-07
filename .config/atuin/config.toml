@@ -1,0 +1,19 @@
+# Atuin config. History is synced encrypted; see README ("Not captured by yadm").
+
+# Built-in filter for known credential formats. On by default; stated here so it stays on.
+secrets_filter = true
+
+# Commands matching any of these are never saved. Rust regex, so (?i) is case-insensitive.
+history_filter = [
+  # HTTP auth headers
+  '(?i)authorization:\s*\S+',
+  '(?i)\bbearer\s+[A-Za-z0-9._~+/=-]{8,}',
+  # Flags that take a secret: --token abc, --password=abc
+  '(?i)--(token|password|passwd|secret|api-?key|access-?key|client-?secret)[= ]\S+',
+  # Inline env vars: FOO_TOKEN=abc, export db_password=abc
+  '(?i)\b[a-z0-9_]*(token|secret|passw(or)?d|api_?key|access_?key|private_?key)[a-z0-9_]*=\S+',
+  # Passwords inside URLs: postgres://user:pass@host
+  '://[^/\s:@]+:[^/\s@]+@',
+  # curl -u user:pass
+  '\bcurl\b.*\s(-u|--user)\s+\S+:\S+',
+]

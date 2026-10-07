@@ -76,9 +76,8 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-# Interactive tool initialization (mcfly after fzf-tab setup)
-eval "$(mcfly init zsh)"
-eval "$(mcfly-fzf init zsh)"
+# History search and sync
+eval "$(atuin init zsh)"
 
 # Personal customizations
 load_file_if_exists "${HOME}/.aliases"
