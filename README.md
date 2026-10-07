@@ -29,6 +29,7 @@ You need to do these by hand:
 - Sign in to 1Password, the App Store, GitHub (`gh auth login`) and Claude Code. Mac App Store items in the Brewfile need the App Store sign-in first.
 - Set the terminal font. Ghostty uses `Monaspace Argon` (`font-monaspace` in the Brewfile).
 - Point Alfred at its synced settings: Preferences > Advanced > Syncing > Set preferences folder, then choose `~/.config/alfred`. Needs the Powerpack licence.
+- Create https://gist.github.com/jbellingham/b611568eab6c5b431ed60ab2e6fbd77a locally to be able to run the "Dev Environment" Alfred workflow
 - Clone `~/dev/work/chargefox-tools`. `.zshrc` sources files from it.
 - Quit and reopen the terminal.
 
