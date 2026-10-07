@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Sets up a fresh Mac from this repo. Safe to re-run: each step skips work already done.
-#   bash <(curl -fsSL https://raw.githubusercontent.com/jbellingham/dotfiles/trunk/fresh_install_of_osx.sh) [--antidote]
+#   bash <(curl -fsSL https://raw.githubusercontent.com/jbellingham/dotfiles/trunk/install_osx.sh) [--antidote]
 # --antidote installs antidote instead of oh-my-zsh. Your .zshrc must already load it (see README).
 set -euo pipefail
 
@@ -107,6 +107,7 @@ Still manual:
   - Put your SSH key in place (1Password SSH agent, or copy ~/.ssh). Then: ssh -T git@github.com
   - Sign in: 1Password, App Store, GitHub (gh auth login), Claude Code.
   - Set the terminal font to "MesloLGS Nerd Font".
+  - Alfred: Preferences > Advanced > Syncing > Set preferences folder > ~/.config/alfred
   - Clone ~/dev/work/chargefox-tools. ~/.zshrc sources files from it.
   - Quit and reopen the terminal. exec zsh does not reload fonts.
 EOF

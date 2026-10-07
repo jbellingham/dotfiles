@@ -26,6 +26,7 @@
 !.config/emacs/
 !.config/coc/
 !.config/lazygit/
+!.config/alfred/
 
 # System tools
 !.ripgreprc

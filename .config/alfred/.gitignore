@@ -1,0 +1,4 @@
+.DS_Store
+**/__pycache__/
+# Alfred's per-machine settings (hotkey, appearance). Keyed by machine, so useless on another Mac.
+Alfred.alfredpreferences/preferences/local/

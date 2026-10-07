@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.jesse.inboxcapture</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>330E617B-3093-46A9-9DEB-396AECA21FFA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A1B2C3D4-0002-0002-0002-000000000002</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A1B2C3D4-0001-0001-0001-000000000001</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A1B2C3D4-0002-0002-0002-000000000002</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A1B2C3D4-0002-0002-0002-000000000002</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A1B2C3D4-0003-0003-0003-000000000003</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A1B2C3D4-0004-0004-0004-000000000004</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A1B2C3D4-0005-0005-0005-000000000005</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Jesse</string>
+	<key>description</key>
+	<string>Capture notes to ~/notes/inbox.md — keyword for quick one-liners, hotkey for longer notes</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Inbox Capture</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>inbox</string>
+				<key>subtext</key>
+				<string>Capture to ~/notes/inbox.md</string>
+				<key>text</key>
+				<string>Add to Inbox</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>A1B2C3D4-0001-0001-0001-000000000001</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Inbox</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>A1B2C3D4-0003-0003-0003-000000000003</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#!/bin/zsh
+INBOX="$HOME/second-brain/inbox.local.md"
+TIMESTAMP=$(date +"%Y-%m-%d %H:%M")
+NOTE="{query}"
+# Insert before the first ## section heading (e.g. ## Yesterday's Playback) to
+# maintain chronological order in the bullet list. If no heading exists, append.
+HEADING_LINE=$(grep -nm1 "^## " "$INBOX" | cut -d: -f1)
+if [ -n "$HEADING_LINE" ]; then
+    INSERT_AT=$((HEADING_LINE - 1))
+    TMP=$(mktemp)
+    { head -n "$INSERT_AT" "$INBOX"; printf -- "- %s: %s\n" "$TIMESTAMP" "$NOTE"; tail -n "+$((INSERT_AT + 1))" "$INBOX"; } &gt; "$TMP" &amp;&amp; mv "$TMP" "$INBOX"
+else
+    printf -- "- %s: %s\n" "$TIMESTAMP" "$NOTE" &gt;&gt; "$INBOX"
+fi
+echo "Captured: $NOTE"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A1B2C3D4-0002-0002-0002-000000000002</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>ib</string>
+				<key>subtext</key>
+				<string>Capture to ~/notes/inbox.md</string>
+				<key>text</key>
+				<string>Add to Inbox</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>330E617B-3093-46A9-9DEB-396AECA21FFA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>#!/bin/zsh
+"$HOME/bin/inbox_capture_ui"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A1B2C3D4-0005-0005-0005-000000000005</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>45</integer>
+				<key>hotmod</key>
+				<integer>786432</integer>
+				<key>hotstring</key>
+				<string>N</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>A1B2C3D4-0004-0004-0004-000000000004</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Two ways to capture:
+  1. `inbox &lt;note&gt;` — quick one-liner via Alfred bar
+  2. Hotkey (assign in Alfred prefs) — opens a floating multi-line window
+
+The floating window requires ~/bin/inbox_capture_ui to be compiled first:
+  swiftc inbox_capture_ui.swift -o ~/bin/inbox_capture_ui</string>
+	<key>uidata</key>
+	<dict>
+		<key>330E617B-3093-46A9-9DEB-396AECA21FFA</key>
+		<dict>
+			<key>xpos</key>
+			<real>40</real>
+			<key>ypos</key>
+			<real>175</real>
+		</dict>
+		<key>A1B2C3D4-0001-0001-0001-000000000001</key>
+		<dict>
+			<key>xpos</key>
+			<real>50</real>
+			<key>ypos</key>
+			<real>50</real>
+		</dict>
+		<key>A1B2C3D4-0002-0002-0002-000000000002</key>
+		<dict>
+			<key>xpos</key>
+			<real>330</real>
+			<key>ypos</key>
+			<real>125</real>
+		</dict>
+		<key>A1B2C3D4-0003-0003-0003-000000000003</key>
+		<dict>
+			<key>xpos</key>
+			<real>535</real>
+			<key>ypos</key>
+			<real>125</real>
+		</dict>
+		<key>A1B2C3D4-0004-0004-0004-000000000004</key>
+		<dict>
+			<key>xpos</key>
+			<real>50</real>
+			<key>ypos</key>
+			<real>350</real>
+		</dict>
+		<key>A1B2C3D4-0005-0005-0005-000000000005</key>
+		<dict>
+			<key>xpos</key>
+			<real>300</real>
+			<key>ypos</key>
+			<real>345</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>version</key>
+	<string>1.5</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
