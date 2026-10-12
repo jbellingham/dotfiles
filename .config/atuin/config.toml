@@ -17,3 +17,6 @@ history_filter = [
   # curl -u user:pass
   '\bcurl\b.*\s(-u|--user)\s+\S+:\S+',
 ]
+
+[tmux]
+enabled = true

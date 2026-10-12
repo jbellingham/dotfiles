@@ -29,5 +29,11 @@
     },
     "github.copilot.editor.enableAutoCompletions": true,
     "diffEditor.codeLens": true,
-    "diffEditor.hideUnchangedRegions.enabled": true
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "terminal.integrated.profiles.osx": {
+        "zsh": {
+        "path": "/bin/zsh",
+        "args": ["-i"]
+        }
+    }
 }
