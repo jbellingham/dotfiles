@@ -69,3 +69,7 @@ AGENTS.md
 .claude/settings.local.json
 .claude/
 .claude/teaching_mode
+**/.claude/settings.local.json
+
+**/.claude/.cc-writes/
+.codegraph/
