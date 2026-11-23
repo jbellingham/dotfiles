@@ -60,6 +60,7 @@ cask "jetbrains-toolbox" if OS.mac?
 cask "logi-options+" if OS.mac?
 cask "meetingbar" if OS.mac?
 cask "notion" if OS.mac?
+cask "orbstack" if OS.mac?
 cask "rectangle" if OS.mac?
 cask "sf-symbols" if OS.mac?
 cask "spotify" if OS.mac?
