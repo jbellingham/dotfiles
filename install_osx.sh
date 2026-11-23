@@ -109,6 +109,7 @@ Still manual:
   - Set the terminal font (Ghostty uses "Monaspace Argon").
   - Alfred: Preferences > Advanced > Syncing > Set preferences folder > ~/.config/alfred
   - Shell history: atuin login, then atuin sync (credentials and key are in Bitwarden).
-  - Restore ~/.zshrc.work and ~/.config/fish/work.fish (work-only config, kept out of git).
+  - Restore ~/.zshrc.work and ~/.config/fish/work.fish from 1Password (work-only, kept out of git).
+  - Install codegraph: curl -fsSL https://raw.githubusercontent.com/colbymchenry/codegraph/main/install.sh | sh
   - Quit and reopen the terminal. exec zsh does not reload fonts.
 EOF

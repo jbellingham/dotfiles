@@ -1,0 +1,14 @@
+# Plugin list for antidote. Not used until .zshrc loads it (see README, "Move from oh-my-zsh to antidote").
+
+# oh-my-zsh pieces. use-omz must come first. lib keeps the history, correction and key settings you had.
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/brew
+ohmyzsh/ohmyzsh path:plugins/sudo
+ohmyzsh/ohmyzsh path:plugins/macos
+ohmyzsh/ohmyzsh path:plugins/direnv
+
+# Order matters: fzf-tab, then autosuggestions, then syntax-highlighting last.
+Aloxaf/fzf-tab
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting
