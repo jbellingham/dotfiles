@@ -1,34 +1,32 @@
 {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_CODE_MODE": "1",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "haiku"
+  },
   "permissions": {
-    "allow": [
-      "Bash(date:*)",
-      "Bash(echo:*)",
-      "Bash(cat:*)",
-      "Bash(ls:*)",
-      "Bash(mkdir:*)",
-      "Bash(wc:*)",
-      "Bash(head:*)",
-      "Bash(tail:*)",
-      "Bash(sort:*)",
-      "Bash(grep:*)",
-      "Bash(tr:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git status:*)",
-      "Bash(git log:*)",
-      "Bash(git diff:*)",
-      "Bash(git tag:*)"
-    ],
     "deny": [
       "Read(.env)",
-      "Read(.env.*)",
       "Read(**/secrets/*)",
-      "Read(**/*credential*)",
+      "Read(.env.local)",
+      "Read(.env.*.local)",
+      "Read(.env.development)",
+      "Read(.env.staging)",
+      "Read(.env.production)",
       "Read(**/*.pem)",
-      "Read(**/*.key)"
+      "Read(**/*.key)",
+      "Read(~/.aws/credentials)",
+      "Read(**/credentials.json)",
+      "Read(**/.credentials*)"
+    ],
+    "allow": [
+      "mcp__codegraph__*"
     ]
   },
-  "model": "opus[1m]",
+  "model": "opus",
+  "fallbackModel": [
+    "sonnet",
+    "haiku"
+  ],
   "hooks": {
     "PreToolUse": [
       {
@@ -37,6 +35,15 @@
           {
             "type": "command",
             "command": "atuin hook claude-code"
+          }
+        ]
+      },
+      {
+        "matcher": "^Bash$|^mcp__.*__save_(diff_)?comment$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/claim-check-gate.py"
           }
         ]
       }
@@ -48,6 +55,15 @@
           {
             "type": "command",
             "command": "atuin hook claude-code"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path'); case \"$f\" in *.rb) ruby -c \"$f\" >/dev/null && bundle exec rubocop --force-exclusion \"$f\" ;; esac"
           }
         ]
       }
@@ -62,11 +78,33 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/jessebellingham/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "codegraph prompt-hook"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
+    "command": "bash ~/.claude/statusline-herdr.sh"
   },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
@@ -95,8 +133,5 @@
         "repo": "DietrichGebert/ponytail"
       }
     }
-  },
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
-  "tui": "fullscreen"
+  }
 }

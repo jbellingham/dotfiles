@@ -13,6 +13,9 @@ Route corrections and mid-session redirects to the right destination: rule files
 Feedback received
       │
       ▼
+Is it mechanical? ── Yes ──▶ Propose a cop, hook or CI check (ask first)
+      │ No
+      ▼
 Does it apply broadly to a file type or editing context?
       │
    Yes│                    No│
@@ -41,6 +44,12 @@ Ask: would this apply to **anyone editing `[file type]` in this project**, or is
 - "Only add RubyDoc to public methods, not private ones" → broadly applicable to `app/**/*.rb` and `engines/**/app/**/*.rb`
 - "Don't use `getByTestId` in frontend tests" → broadly applicable to `web/src/**/*.test.ts`
 - "In this PR description, don't mention X" → one-off, save to memory
+
+### 1b. Could a check catch it instead?
+
+A **mechanical** mistake has a fixed shape: a banned API, an import shape, a file location, a naming pattern. Propose a deterministic check for it instead of a rule: a custom rubocop cop, a packwerk rule, a Claude Code hook, or a CI job. Ask the user before building it. A check can't be ignored late in a long session. A rule can.
+
+Keep rules for **judgement calls** a check can't make. A rule a reviewer can apply from the diff alone belongs in the review skill (`pr-review`), not an always-loaded rules file.
 
 ### 2. Check for a matching rule file
 

@@ -65,9 +65,9 @@ Before writing any content, decide which rules files are needed.
 |---|---|---|
 | `backend.md` | All backend source files (e.g. `api/**/*.cs`, `src/**/*.go`) | Architecture, code conventions, null safety, error handling, logging, doc comments |
 | `ddd.md` | Domain/feature layer only (e.g. `api/src/Features/**/*.cs`, `app/models/**/*.rb`) | Rich models, aggregates, value objects, domain events — only if DDD is applicable |
-| `testing-backend.md` | Backend test files (e.g. `api/tests/**/*.cs`, `spec/**/*_spec.rb`) | TDD cycle, test design rules, framework seams, anti-patterns, naming |
+| `testing-backend.md` | Backend test files (e.g. `api/tests/**/*.cs`, `spec/**/*_spec.rb`) | Test design rules, framework seams, anti-patterns, naming |
 | `frontend.md` | Frontend source files (e.g. `web/src/**/*.{ts,vue,tsx}`, `src/**/*.{ts,tsx}`) | Import conventions, component patterns, state management, API call patterns, form validation, UX patterns, accessibility |
-| `testing-frontend.md` | Frontend test files (e.g. `web/src/**/*.test.ts`, `src/**/*.test.{ts,tsx}`) | TDD cycle, testing-library usage, real stores, accessible queries |
+| `testing-frontend.md` | Frontend test files (e.g. `web/src/**/*.test.ts`, `src/**/*.test.{ts,tsx}`) | Testing-library usage, real stores, accessible queries |
 
 **Propose new rules files** for any detected layer that does not fit the standard categories. Examples:
 
@@ -245,8 +245,7 @@ Merge PRINCIPLES.md mappings (Phase 5) and best practices (Phase 4) into each ru
 ## Critical Rules
 1. Run `<lint>` and `<test>` after every change — no exceptions.
 2. Never suppress a linter warning or compiler error without asking first.
-3. TDD is mandatory — use the `tdd` skill before writing any production code, including in subagents.
-4. <doc comment rule for this stack>
+3. <doc comment rule for this stack>
 
 ## Project Structure
 \`\`\`
@@ -280,7 +279,6 @@ Include: rich models, aggregates, value objects (with typed IDs example), domain
 #### 6d — `testing-backend.md` (scoped to backend test files)
 
 Include from both sources:
-- TDD cycle (Red → Green → Refactor, one test at a time)
 - Core rules (behaviour not implementation, real objects, assert outcomes)
 - Framework seams specific to this stack
 - Framework-specific test patterns (e.g. `[Theory]`/`[InlineData]`, `IClassFixture`, FluentAssertions for .NET; `pytest.mark.parametrize` for Python)
@@ -307,7 +305,6 @@ Include from both sources:
 #### 6f — `testing-frontend.md` (scoped to frontend test files — omit if no frontend)
 
 Include from both sources:
-- TDD cycle
 - Framework seams (what's real vs what needs stubbing)
 - Accessible query rules (role → label → text hierarchy; never testId)
 - Framework-specific patterns (e.g. `userEvent` over `fireEvent`, `findBy*` for async, `vi.useFakeTimers()` for Vitest)

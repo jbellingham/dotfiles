@@ -21,6 +21,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>95CAB2A8-60FB-4AD7-B5EE-FE328E3D7C6D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B7E1C0DE-0006-0006-0006-000000000006</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>A1B2C3D4-0001-0001-0001-000000000001</key>
 		<array>
 			<dict>
@@ -52,6 +65,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>A1B2C3D4-0005-0005-0005-000000000005</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B7E1C0DE-0006-0006-0006-000000000006</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A1B2C3D4-0003-0003-0003-000000000003</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -133,6 +159,8 @@ if [ -n "$HEADING_LINE" ]; then
     TMP=$(mktemp)
     { head -n "$INSERT_AT" "$INBOX"; printf -- "- %s: %s\n" "$TIMESTAMP" "$NOTE"; tail -n "+$((INSERT_AT + 1))" "$INBOX"; } &gt; "$TMP" &amp;&amp; mv "$TMP" "$INBOX"
 else
+    # Start on a fresh line if the file lost its trailing newline.
+    [ -s "$INBOX" ] &amp;&amp; [ -n "$(tail -c1 "$INBOX")" ] &amp;&amp; echo &gt;&gt; "$INBOX"
     printf -- "- %s: %s\n" "$TIMESTAMP" "$NOTE" &gt;&gt; "$INBOX"
 fi
 echo "Captured: $NOTE"</string>
@@ -174,27 +202,23 @@ echo "Captured: $NOTE"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
+				<key>argumenttype</key>
 				<integer>0</integer>
-				<key>script</key>
-				<string>#!/bin/zsh
-"$HOME/bin/inbox_capture_ui"
-</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>11</integer>
+				<key>keyword</key>
+				<string>j</string>
+				<key>subtext</key>
+				<string>Append to ~/second-brain/journal.local.md</string>
+				<key>text</key>
+				<string>Journal</string>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>A1B2C3D4-0005-0005-0005-000000000005</string>
+			<string>95CAB2A8-60FB-4AD7-B5EE-FE328E3D7C6D</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -227,6 +251,67 @@ echo "Captured: $NOTE"</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>#!/bin/zsh
+"$HOME/bin/inbox_capture_ui"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A1B2C3D4-0005-0005-0005-000000000005</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#!/bin/zsh
+JOURNAL="$HOME/second-brain/journal.local.md"
+NOTE="{query}"
+NOW=$(date +"%Y-%m-%d %H:%M")
+DAY=${NOW% *}
+# Start on a fresh line if the file lost its trailing newline.
+[ -s "$JOURNAL" ] &amp;&amp; [ -n "$(tail -c1 "$JOURNAL")" ] &amp;&amp; echo &gt;&gt; "$JOURNAL"
+# First entry of the day gets a heading, after a blank line.
+if ! grep -qx "## $DAY" "$JOURNAL" 2&gt;/dev/null; then
+    [ -s "$JOURNAL" ] &amp;&amp; echo &gt;&gt; "$JOURNAL"
+    printf -- "## %s\n\n" "$DAY" &gt;&gt; "$JOURNAL"
+fi
+printf -- "- %s - %s\n" "$NOW" "$NOTE" &gt;&gt; "$JOURNAL"
+echo "Journalled: $NOTE"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>B7E1C0DE-0006-0006-0006-000000000006</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>Two ways to capture:
@@ -240,44 +325,58 @@ The floating window requires ~/bin/inbox_capture_ui to be compiled first:
 		<key>330E617B-3093-46A9-9DEB-396AECA21FFA</key>
 		<dict>
 			<key>xpos</key>
-			<real>40</real>
+			<real>40.0</real>
 			<key>ypos</key>
-			<real>175</real>
+			<real>175.0</real>
+		</dict>
+		<key>95CAB2A8-60FB-4AD7-B5EE-FE328E3D7C6D</key>
+		<dict>
+			<key>xpos</key>
+			<real>40.0</real>
+			<key>ypos</key>
+			<real>315.0</real>
 		</dict>
 		<key>A1B2C3D4-0001-0001-0001-000000000001</key>
 		<dict>
 			<key>xpos</key>
-			<real>50</real>
+			<real>50.0</real>
 			<key>ypos</key>
-			<real>50</real>
+			<real>50.0</real>
 		</dict>
 		<key>A1B2C3D4-0002-0002-0002-000000000002</key>
 		<dict>
 			<key>xpos</key>
-			<real>330</real>
+			<real>330.0</real>
 			<key>ypos</key>
-			<real>125</real>
+			<real>125.0</real>
 		</dict>
 		<key>A1B2C3D4-0003-0003-0003-000000000003</key>
 		<dict>
 			<key>xpos</key>
-			<real>535</real>
+			<real>535.0</real>
 			<key>ypos</key>
-			<real>125</real>
+			<real>125.0</real>
 		</dict>
 		<key>A1B2C3D4-0004-0004-0004-000000000004</key>
 		<dict>
 			<key>xpos</key>
-			<real>50</real>
+			<real>65.0</real>
 			<key>ypos</key>
-			<real>350</real>
+			<real>560.0</real>
 		</dict>
 		<key>A1B2C3D4-0005-0005-0005-000000000005</key>
 		<dict>
 			<key>xpos</key>
-			<real>300</real>
+			<real>335.0</real>
 			<key>ypos</key>
-			<real>345</real>
+			<real>560.0</real>
+		</dict>
+		<key>B7E1C0DE-0006-0006-0006-000000000006</key>
+		<dict>
+			<key>xpos</key>
+			<real>300.0</real>
+			<key>ypos</key>
+			<real>315.0</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>

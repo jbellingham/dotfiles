@@ -93,7 +93,7 @@ Always provide:
 - If you need more information, ask specific targeted questions
 - Consider edge cases and race conditions
 - Think about what could have changed recently
-- When proposing fixes, follow TDD: write a failing test first that reproduces the bug, then fix the code to make it pass
+- When proposing fixes, include a spec that reproduces the bug
 - Run `bundle exec rspec` on affected spec files after any changes
 - Run `bundle exec rubocop -a` to ensure code quality
 
