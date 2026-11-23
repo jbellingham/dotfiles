@@ -46,13 +46,9 @@ Language-agnostic principles applied to every project. A project's `CLAUDE.md` s
 
 ---
 
-## TDD
+## Before Finishing
 
-1. Write failing test first (Red)
-2. Write minimal code to pass (Green)
-3. Refactor if needed
-4. Run full test suite before finishing
-- **One test at a time**: write and validate a single test before writing the next. Do not write an entire test class in one pass — each test must be confirmed green before moving on.
+Run the full test suite before finishing.
 
 ---
 
