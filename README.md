@@ -31,7 +31,7 @@ You need to do these by hand:
 - Point Alfred at its synced settings: Preferences > Advanced > Syncing > Set preferences folder, then choose `~/.config/alfred`. Needs the Powerpack licence.
 - Create https://gist.github.com/jbellingham/b611568eab6c5b431ed60ab2e6fbd77a locally to be able to run the "Dev Environment" Alfred workflow
 - Sync shell history: `atuin login`, then `atuin sync`. The username, password and key are in Bitwarden. First time ever: `atuin import auto`, `atuin register`.
-- Clone `~/dev/work/work-tools`. `.zshrc` sources files from it.
+- Restore `~/.zshrc.work` and `~/.config/fish/work.fish` from your backup. They hold work-only config and stay out of git.
 - Quit and reopen the terminal.
 
 Want antidote instead of oh-my-zsh? Add `--antidote` to the command:
@@ -112,7 +112,7 @@ Set these up by hand on a new Mac.
 
 ## Known gaps
 
-- `.zshrc` sources work-only paths under `~/dev/work/work-tools`. Clone that repo, or the shell prints errors.
+- Work-only shell config lives in `~/.zshrc.work` and `~/.config/fish/work.fish`. Both load only if present.
 - `.zshrc` and `.zprofile` hard-code `/Users/jessebellingham`.
 - `~/dev/dotfiles` is a plain clone of this repo, not managed by yadm. It can go stale.
 - `nix-darwin-config/` is not applied. `darwin-rebuild` is not installed.

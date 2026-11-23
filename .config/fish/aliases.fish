@@ -3,15 +3,6 @@ function ...   ; cd ../.. ; end
 function ....  ; cd ../../.. ; end
 function ..... ; cd ../../../.. ; end
 
-function reset-database;
-    cd ~/dev/work/work
-    bin/rails db:drop
-    bin/rails db:create
-    bin/rails db:migrate
-    bin/rails db:seed
-    bin/rails dev:fake_data
-end
-
 abbr brwe 'brew'
 abbr bewr 'brew'
 abbr bwer 'brew'
@@ -38,8 +29,6 @@ alias formatjson="pbpaste | jq . | pbcopy"
 alias aliases="alias | less"
 
 alias assume="source (brew --prefix)/bin/assume.fish"
-alias cfxdebug="cd ~/dev/work/work && overmind start -f Procfile.debug"
-alias claude="CLAUDE_CODE_USE_BEDROCK=1 AWS_REGION=us-west-2 AWS_PROFILE=dev command claude"
 
 if type -q trash
     alias rm="trash $argv"

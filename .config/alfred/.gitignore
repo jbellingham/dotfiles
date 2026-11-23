@@ -2,3 +2,14 @@
 **/__pycache__/
 # Alfred's per-machine settings (hotkey, appearance). Keyed by machine, so useless on another Mac.
 Alfred.alfredpreferences/preferences/local/
+# Work bookmarks. Kept on disk, out of the public repo.
+Alfred.alfredpreferences/workflows/user.workflow.2274B453-1093-496A-9E2E-B0E22F353F7B/
+Alfred.alfredpreferences/workflows/user.workflow.20B309A8-4675-4A66-837D-320DFA2EF314/
+Alfred.alfredpreferences/workflows/user.workflow.61F2D4E3-1CAA-4435-861A-D65C87C74D82/
+Alfred.alfredpreferences/workflows/user.workflow.D934F5E0-4083-45C3-B579-A26E31E11611/
+Alfred.alfredpreferences/workflows/user.workflow.D13882C0-37C8-4BA3-B07D-9B8699EE5A9B/
+Alfred.alfredpreferences/workflows/user.workflow.34EE7FFF-6CF3-405B-AC72-9EC599575E8E/
+Alfred.alfredpreferences/workflows/user.workflow.7F951F89-721D-4621-BFE8-A05533D3BECC/
+Alfred.alfredpreferences/workflows/user.workflow.62D2E066-90F8-4216-B540-4EEFD9818309/
+Alfred.alfredpreferences/workflows/user.workflow.9C00C6FD-5B84-426A-953D-4D26C6004D8A/
+Alfred.alfredpreferences/workflows/user.workflow.905C59A2-12A3-4A2F-9347-D423145EA9E1/

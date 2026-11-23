@@ -146,7 +146,7 @@ For each workstream build:
 
 ```markdown
 ## <TARGET_DATE>
-### [<ABC-nnn>](https://linear.app/work/issue/<ABC-nnn>)
+### [<TICKET-nnn>](<issue url from Linear>)
 - <what happened, one bullet per meaningful thing>
 - <ticket/PR numbers kept as written: #7888, ABC-317, r1234567890>
 <callout icon="↩️">
@@ -157,7 +157,7 @@ For each workstream build:
 
 **Ticket attribution.** An H3 heading linking to Linear groups the bullets under the ticket the work was against. It must be a **heading, not bold text** — bold renders as an ordinary paragraph and reads as part of the bullets, which defeats the point. Rules:
 
-- **Link form is `https://linear.app/work/issue/<ABC-nnn>`** — the bare identifier resolves; the title slug is not needed.
+- **Link form is `https://linear.app/<workspace>/issue/<TICKET-nnn>`.** Take the workspace from the issue's URL in Linear. The title slug is not needed.
 - **Only on programme cards** — a card that aggregates several tickets (anything in the redirect table). On a card that already *is* one ticket, the heading is noise; omit it.
 - **The slug is the workstream's ticket, taken from the branch.** Do NOT attribute to a ticket merely named in a bullet: "Created ABC-317" is ABC-270's work that produced ABC-317, so it belongs under `ABC-270`.
 - **Two headings on one date** when the day genuinely spanned two branches. Still one `<callout>` per date block, at the end — it covers the day, not each ticket.

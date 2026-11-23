@@ -6,15 +6,6 @@ function help() {
   curl "https://cht.sh/$(query_string)"
 }
 
-function reset-database {
-    cd ~/dev/work/work
-    bin/rails db:drop
-    bin/rails db:create
-    bin/rails db:migrate
-    bin/rails db:seed
-    bin/rails dev:fake_data
-}
-
 # Interactive kaydet diary entry function
 function kentry() {
     local entry_text=""

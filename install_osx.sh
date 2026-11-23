@@ -109,6 +109,6 @@ Still manual:
   - Set the terminal font (Ghostty uses "Monaspace Argon").
   - Alfred: Preferences > Advanced > Syncing > Set preferences folder > ~/.config/alfred
   - Shell history: atuin login, then atuin sync (credentials and key are in Bitwarden).
-  - Clone ~/dev/work/work-tools. ~/.zshrc sources files from it.
+  - Restore ~/.zshrc.work and ~/.config/fish/work.fish (work-only config, kept out of git).
   - Quit and reopen the terminal. exec zsh does not reload fonts.
 EOF

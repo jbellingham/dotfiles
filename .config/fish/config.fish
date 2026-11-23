@@ -8,6 +8,7 @@ export HOMEBREW_PREFIX="/opt/homebrew"
 
 source ~/.config/fish/aliases.fish
 source ~/.config/fish/path.fish
+test -f ~/.config/fish/work.fish; and source ~/.config/fish/work.fish
 
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.

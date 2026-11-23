@@ -86,7 +86,7 @@ load_file_if_exists "${HOME}/.zshrc.functions"
 # Terminal integrations
 load_file_if_exists "$HOME/.iterm2_shell_integration.zsh"
 
-source /Users/jessebellingham/dev/work/work-tools/awsconsole/function.zsh
+load_file_if_exists "${HOME}/.zshrc.work"
 eval "$(starship init zsh)"
 # bun completions
 [ -s "/Users/jessebellingham/.bun/_bun" ] && source "/Users/jessebellingham/.bun/_bun"
